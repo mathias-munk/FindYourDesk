@@ -1,0 +1,110 @@
+/* Landing page */
+
+.home-forms {
+  height: 100vh;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.top-bar {
+  background-color: white;
+  height: 10%;
+  width: 100%;
+}
+
+.options {
+  display: inline-block;
+  float: right;
+  margin: 1.5em 2em;
+  font-size: 20px;
+  font-family: "Spartan", sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+.options:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.bar {
+  width: 100%;
+  height: 2%;
+  background-image: linear-gradient(
+    to right,
+    rgba(30, 30, 30, 0),
+    rgba(30, 30, 30, 1)
+  );
+}
+
+.logo-container {
+  background-color: white;
+  width: 100%;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  width: auto;
+}
+
+.description-container {
+  display: block;
+  background-color: white;
+  height: 60%;
+  padding: 2em;
+}
+
+.description {
+  margin-top: 0;
+  text-align: center;
+  font-size: 2.5em;
+  font-family: "Spartan", sans-serif;
+  color: rgb(30, 30, 30);
+}
+
+/* Sign-up page */
+.home {
+  float: left;
+}
+
+.form {
+  display: block;
+  text-align: center;
+  font-family: "Spartan", sans-serif;
+}
+
+.form-title {
+  font-size: 2.5em;
+  color: rgb(30, 30, 30);
+}
+
+.form-fields {
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.field {
+  width: 20em;
+  height: 1.2em;
+  margin-bottom: 2em;
+  border: 1px solid black;
+  background-color: rgb(240, 240, 240);
+  font-size: 20px;
+  text-align: center;
+  box-shadow: 1px 1px black;
+}
+
+.button {
+  width: 20%;
+  font-size: 1em;
+  margin: 1em 0 2em 0;
+  border-radius: 5px;
+  transition: 0.2s ease;
+}
+
+.button:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px black;
+}
