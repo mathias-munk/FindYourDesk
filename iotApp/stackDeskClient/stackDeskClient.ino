@@ -46,8 +46,8 @@ const char* password = "";                      // No password for UoB Guest
 
 // MQTT Settings
 const char* MQTT_clientname = "deskClient"; // Make up a short name
-const char* MQTT_sub_topic = "bookingChannel"; // pub/sub topics
-const char* MQTT_pub_topic = "bookingChannel"; // You might want to create your own
+const char* MQTT_sub_topic = "chair_booking"; // pub/sub topics
+const char* MQTT_pub_topic = "chair_booking"; // You might want to create your own
 
 // Please leave this alone - to connect to HiveMQ
 const char* server = "broker.mqttdashboard.com";
