@@ -9,13 +9,16 @@
       type="text/javascript"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/server.js"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Spartan&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="home-forms">
+  <body
+    onload="client.subscribe('chair_booking', {qos: 2}); alert('Subscribed');"
+    class="home-forms"
+  >
     <div class="bar">
       <section class="top-bar">
         <a href="signup.html" class="options">Account</a>

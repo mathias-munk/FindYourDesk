@@ -1,3 +1,5 @@
+var chair = document.querySelector(".book");
+
 // Create a client instance, we create a random id so the broker will allow multiple sessions
 
 client = new Paho.MQTT.Client(
@@ -18,6 +20,11 @@ client.onMessageArrived = onMessageArrived;
 
 // connect the client
 client.connect({ onSuccess: onConnect });
+
+function hiveSubscribe() {
+  console.log("subscribed");
+  client.subscribe("chair_booking");
+}
 
 function makeBooking() {
   console.log("makeBooking");
@@ -52,6 +59,10 @@ function onConnectionLost(responseObject) {
 // called when a message arrives
 function onMessageArrived(message) {
   console.log("onMessageArrived:" + message.payloadString);
+  if (message == "occupied") {
+    chair.className -= "green";
+    chair.className += "red";
+  }
 }
 
 // called to generate the IDs
