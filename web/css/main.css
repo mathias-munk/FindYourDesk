@@ -236,6 +236,10 @@
   background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
 }
 
+.blue {
+  background-image: blue;
+}
+
 /* chairs.html */
 
 .chair-container {
@@ -263,6 +267,7 @@
 
 .book {
   cursor: pointer;
+  transition: all 0.3s linear;
 }
 
 .book:hover {

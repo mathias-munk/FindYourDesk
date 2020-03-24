@@ -1,4 +1,4 @@
-var chair = document.querySelector(".book");
+const chair = document.querySelector(".book");
 
 // Create a client instance, we create a random id so the broker will allow multiple sessions
 
@@ -29,8 +29,9 @@ function hiveSubscribe() {
 function makeBooking() {
   console.log("makeBooking");
   client.subscribe("chair_booking");
-  message = new Paho.MQTT.Message("George");
+  message = new Paho.MQTT.Message("Booked");
   message.destinationName = "chair_booking";
+  chair.style.backgroundColor = "yellow";
   client.send(message);
 }
 
@@ -59,9 +60,8 @@ function onConnectionLost(responseObject) {
 // called when a message arrives
 function onMessageArrived(message) {
   console.log("onMessageArrived:" + message.payloadString);
-  if (message == "occupied") {
-    chair.className -= "green";
-    chair.className += "red";
+  if (message.payloadString == "Lunch") {
+    chair.classList.add("amber");
   }
 }
 
