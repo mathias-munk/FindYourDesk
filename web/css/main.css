@@ -153,7 +153,16 @@
   width: 75%;
   height: 90%;
   float: right;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.chair-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 0.5rem;
 }
 
 .map {
@@ -237,20 +246,72 @@
 }
 
 .blue {
-  background-image: blue;
+  background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
 }
 
 /* chairs.html */
 
-.chair-container {
+/* .chair-container {
   height: 90%;
   width: 75%;
   display: flex;
   align-items: center;
   justify-content: center;
+} */
+
+/* .chair-container {
+  height: 90%;
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 0.5rem;
+} */
+
+.table-group {
+  position: relative;
+  margin: 2%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chair-group {
+  position: relative;
+  height: 100%;
+  width: 80px;
+}
+
+.chair {
+  position: absolute;
+  width: 100%;
+  margin: 15% 0;
+  height: 30%;
+  background-color: rgb(255, 140, 140);
+  border-radius: 5%;
+}
+
+.bottom {
+  bottom: 0;
 }
 
 .table {
+  width: 50%;
+  height: 100%;
+  background-image: linear-gradient(rgb(64, 64, 64), rgb(117, 117, 117));
+  border-radius: 5%;
+}
+
+.book {
+  background-color: green;
+  border: none;
+}
+
+.book_hover:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+}
+
+/* .table {
   display: inline-block;
   height: 50%;
   width: 20%;
@@ -272,4 +333,4 @@
 
 .book:hover {
   box-shadow: 2px 3px 2px rgb(80, 80, 80);
-}
+} */
