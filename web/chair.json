@@ -1,0 +1,25 @@
+{
+  "rooms": [
+    {
+      "id": 1,
+      "name": "Lab 1.1",
+      "tables": 8,
+      "state": "Free",
+      "available": 50
+    },
+    {
+      "id": 2,
+      "name": "Lab 1.13",
+      "tables": 4,
+      "state": "Occupied",
+      "available": 0
+    },
+    {
+      "id": 3,
+      "name": "Lab 2.1",
+      "tables": 6,
+      "state": "Lunch",
+      "available": 6
+    }
+  ]
+}

@@ -3,17 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <title>FindYourDesk</title>
+    <!-- css -->
     <link rel="stylesheet" href="css/main.css" />
+    <!-- MQTT -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
       type="text/javascript"
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="js/LocalStorage.js" defer></script>
+    <!-- Javascript -->
+    <script src="js/rooms.js" defer></script>
+    <!-- Google font -->
     <link
       href="https://fonts.googleapis.com/css?family=Spartan&display=swap"
       rel="stylesheet"
     />
+    <!-- Font awesome -->
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.9.0/js/all.js"
+      integrity="sha384-7Gk1S6elg570RSJJxILsRiq8o0CO99g1zjfOISrqjFUCjxHDn3TmaWoWOqt6eswF"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body class="home-forms">
     <div class="bar">
@@ -34,28 +45,41 @@
     <a href="rooms.html" class="building-text">Biomedical Sciences</a>
   </div>
   <div class="map-container">
-    <a href="chairs.html">
+    <div class="room-button" data-id="1">
       <div class="room-container green">
         <p class="room">Lab 1.1</p>
         <p class="capacity">Available Chairs: 50</p>
       </div>
-    </a>
-
-    <div class="room-container green">
-      <p class="room">Lab 1.13</p>
-      <p class="capacity">Available Chairs: 82</p>
     </div>
-    <div class="room-container amber">
-      <p class="room">Lab 2.1</p>
-      <p class="capacity">Available Chairs: 6</p>
+    <div>
+      <div class="room-container green">
+        <p class="room">Lab 1.13</p>
+        <p class="capacity">Available Chairs: 82</p>
+      </div>
     </div>
-    <div class="room-container red">
-      <p class="room">Lab 2.13</p>
-      <p class="capacity">Available Chairs: 0</p>
+    <div href="chairs.html">
+      <div class="room-container amber">
+        <p class="room">Lab 2.1</p>
+        <p class="capacity">Available Chairs: 6</p>
+      </div>
     </div>
-    <div class="room-container green">
-      <p class="room">Lab 3.1</p>
-      <p class="capacity">Available Chairs: 69</p>
+    <div href="chairs.html">
+      <div class="room-container red">
+        <p class="room">Lab 2.13</p>
+        <p class="capacity">Available Chairs: 0</p>
+      </div>
     </div>
+    <div href="chairs.html">
+      <div class="room-container green">
+        <p class="room">Lab 3.1</p>
+        <p class="capacity">Available Chairs: 69</p>
+      </div>
+    </div>
+  </div>
+  <div class="room-overlay">
+    <div class="close-room">
+      <i class="fas fa-window-close alter"></i>
+    </div>
+    <div class="chair-container"></div>
   </div>
 </html>

@@ -9,13 +9,13 @@ const green = "linear-gradient(rgb(177, 255, 138), rgb(92, 138, 70))";
 // local storage
 class Storage {
   static saveNumber(number) {
-    localStorage.setItem("amount_tables", JSON.stringify(number));
+    localStorage.setItem("tables", JSON.stringify(number));
   }
   static saveState(state) {
     localStorage.setItem("state", state);
   }
   static getNumber() {
-    return localStorage.getItem("amount_tables");
+    return localStorage.getItem("tables");
   }
   static getState() {
     return localStorage.getItem("state");
@@ -52,7 +52,9 @@ function makeBooking() {
   const chair = document.querySelector(".book");
   console.log("makeBooking");
   client.subscribe("chair_booking");
-  message = new Paho.MQTT.Message("Booked");
+  message = new Paho.MQTT.Message(`{
+    "state": "Booked"
+  }`);
   message.destinationName = "chair_booking";
   client.send(message);
   chair.style.backgroundImage = amber;
@@ -79,32 +81,12 @@ function onMessageArrived(message) {
   // var chair = document.querySelector(".book");
   console.log("onMessageArrived:" + message.payloadString);
   var data = JSON.parse(message.payloadString);
-  amountTables = data.amount_tables;
+  amountTables = data.tables;
   state = data.state;
   Storage.saveNumber(amountTables);
   Storage.saveState(state);
   createTables(amountTables);
   setChairState(state);
-
-  // if (message.payloadString == "Lunch") {
-  //   chair.style.backgroundImage = blue;
-  //   return;
-  // }
-  // if (message.payloadString == "Booked") {
-  //   chair.style.backgroundImage = amber;
-  //   return;
-  // }
-  // if (message.payloadString == "Occupied") {
-  //   chair.style.backgroundImage = red;
-  //   return;
-  // }
-  // if (message.payloadString == "Free") {
-  //   chair.style.backgroundImage = green;
-  //   chair.disabled = false;
-  //   // Consider removing book_hover (as will throw an error if removed and not already present.)
-  //   chair.classList.add("book_hover");
-  //   return;
-  // }
 }
 
 function createTables(number) {

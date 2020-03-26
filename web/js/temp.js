@@ -1,3 +1,5 @@
+const container = document.querySelector(".map-container");
+
 // local storage
 class Storage {
   static saveRooms(roomList) {
@@ -20,6 +22,9 @@ class Storage {
   }
 }
 
+var rooms = Storage.getRooms();
+createRooms(rooms);
+
 // Create a client instance, we create a random id so the broker will allow multiple sessions
 
 client = new Paho.MQTT.Client(
@@ -40,6 +45,18 @@ function hiveSubscribe() {
   client.subscribe("chair_booking");
 }
 
+function makeBooking() {
+  const chair = document.querySelector(".book");
+  console.log("makeBooking");
+  client.subscribe("chair_booking");
+  message = new Paho.MQTT.Message("Booked");
+  message.destinationName = "chair_booking";
+  client.send(message);
+  chair.style.backgroundImage = amber;
+  chair.disabled = true;
+  chair.classList.remove("book_hover");
+}
+
 // called when the client connects
 function onConnect() {
   // Once a connection has been made report.
@@ -57,7 +74,7 @@ function onConnectionLost(responseObject) {
 // called when a message arrives
 function onMessageArrived(message) {
   // var chair = document.querySelector(".book");
-  // console.log("onMessageArrived:" + message.payloadString);
+  console.log("onMessageArrived:" + message.payloadString);
   var data = JSON.parse(message.payloadString);
   let rooms = data.rooms;
   rooms = rooms.map(room => {
@@ -65,8 +82,7 @@ function onMessageArrived(message) {
     const name = room.name;
     const tables = room.tables;
     const state = room.state;
-    const available = room.available;
-    return { id, name, tables, state, available };
+    return { id, name, tables, state };
   });
   Storage.saveRooms(rooms);
 }
@@ -81,4 +97,23 @@ function makeid(length) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return result;
+}
+
+function createRooms(rooms) {
+  if (rooms == null) {
+    return;
+  }
+  rooms = JSON.parse(rooms);
+  let result = "";
+  rooms.forEach(room => {
+    result += `
+    <a href="chairs.html" data-id=${room.id}>
+      <div class="room-container green">
+        <p class="room">${room.name}</p>
+        <p class="capacity">Available Chairs: 50</p>
+      </div>
+    </a>
+    `;
+  });
+  container.innerHTML = result;
 }
