@@ -153,7 +153,17 @@
   width: 75%;
   height: 90%;
   float: right;
-  text-align: center;
+  /* text-align: center; */
+}
+
+.chair-container {
+  height: 90%;
+  width: 95%;
+  margin: 0 2.5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 2rem;
+  grid-row-gap: 0.5rem;
 }
 
 .map {
@@ -236,17 +246,119 @@
   background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
 }
 
+.blue {
+  background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
+}
+
 /* chairs.html */
 
-.chair-container {
+/* .chair-container {
   height: 90%;
   width: 75%;
   display: flex;
   align-items: center;
   justify-content: center;
+} */
+
+/* .chair-container {
+  height: 90%;
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 0.5rem;
+} */
+
+.table-group {
+  position: relative;
+  margin: 2%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chair-group {
+  position: relative;
+  height: 100%;
+  width: 80px;
+}
+
+.chair {
+  position: absolute;
+  width: 100%;
+  margin: 15% 0;
+  height: 30%;
+  background-color: rgb(255, 140, 140);
+  border-radius: 5%;
+}
+
+.chair-state {
+  font-family: "Spartan", sans-serif;
+  font-size: 1em;
+  width: 80px;
+  position: absolute;
+  top: -10%;
+  right: -50%;
+  background-color: white;
+  padding: 0 5px;
+  border-radius: 5%;
+  color: black;
+  visibility: hidden;
+}
+
+button {
+  font-size: 1em;
+}
+
+.chair:hover > .chair-state {
+  visibility: visible;
+}
+
+.bottom {
+  bottom: 0;
 }
 
 .table {
+  width: 50%;
+  height: 100%;
+  background-image: linear-gradient(rgb(64, 64, 64), rgb(117, 117, 117));
+  border-radius: 5%;
+}
+
+.book {
+  background-color: green;
+  border: none;
+}
+
+.book_hover:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+}
+
+.room-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s linear;
+  background: rgb(240, 240, 240, 0.8);
+  z-index: 2;
+  visibility: hidden;
+}
+
+.showOverlay {
+  visibility: visible;
+}
+
+.close-room {
+  float: right;
+  font-size: 2em;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+  cursor: pointer;
+}
+
+/* .table {
   display: inline-block;
   height: 50%;
   width: 20%;
@@ -263,8 +375,9 @@
 
 .book {
   cursor: pointer;
+  transition: all 0.3s linear;
 }
 
 .book:hover {
   box-shadow: 2px 3px 2px rgb(80, 80, 80);
-}
+} */
