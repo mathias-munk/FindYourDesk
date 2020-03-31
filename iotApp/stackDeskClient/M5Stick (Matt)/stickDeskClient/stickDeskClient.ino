@@ -5,10 +5,8 @@
  * Library includes.
  *
  ******************************************************************************************/
-
 // M5 Stack system.
-#include <M5Stack.h>
-
+#include <M5StickC.h>
 
 // M5 Stack Wifi connection.
 #include <WiFi.h>
@@ -36,19 +34,22 @@ enum state {Free, Use, Booked, Lunch};
 // - on Linux/MAC, open the command line and type ifconfig.
 // - on Windows, open command line and type ipconfig
 // - On your phone, I have no idea (but it is possible)
-uint8_t guestMacAddress[6] = {0xAC, 0x2B, 0x6E, 0x86, 0xB0, 0xCD};
+// MATT LAPTOP
+//uint8_t guestMacAddress[6] = {0xAC, 0x2B, 0x6E, 0x86, 0xB0, 0xCD};
+// MATT PHONE
+uint8_t guestMacAddress[6] = {0x64, 0xa2, 0xf9, 0xb6, 0xe4, 0xb8};
 
 // Wifi settings - UNIVERSITY
-const char* ssid = "UoB Guest";                 // Set name of Wifi Network
-const char* password = "";                      // No password for UoB Guest
+//const char* ssid = "UoB Guest";                 // Set name of Wifi Network
+//const char* password = "";                      // No password for UoB Guest
 
 //Wifi settings - MATT HOME
-//const char* ssid = "VM4922324";                 // Set name of Wifi Network
-//const char* password = "sbTfhdyK3rwp";          // No password for UoB Guest
+const char* ssid = "VM8865895";                 // Set name of Wifi Network
+const char* password = "cpgwrjMPd3qm";          // No password for UoB Guest        
 
 
 // MQTT Settings
-const char* MQTT_clientname = "deskClient"; // Make up a short name
+const char* MQTT_clientname = "deskClient(Stick)"; // Make up a short name
 const char* MQTT_sub_topic = "chair_booking"; // pub/sub topics
 const char* MQTT_pub_topic = "chair_booking"; // You might want to create your own
 
@@ -62,7 +63,7 @@ const int port = 1883;
 // See Timer.h for more details.
 // Argument = millisecond period to schedule
 // task.  Here, 2 seconds.
-Timer publishing_timer(2000);
+Timer publishing_timer(1000);
 
 
 /*******************************************************************************************
@@ -78,8 +79,10 @@ float initX = 0.0F;
 float initY = 0.0F;
 float initZ = 0.0F;
 int state;
+
 // Time in seconds
 int lunchTimer = 10;
+int bookedTimer = 10;
 uint32_t targetTime = 0;   
 
 // Standard, one time setup function.
@@ -90,8 +93,8 @@ void setup() {
     // Note, other functions are using the
     // LCD so expect errors if you delete this.
     M5.begin();
-    M5.Power.begin();
     M5.IMU.Init();
+    M5.Lcd.setRotation(3);
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor( 10, 10 );
     M5.Lcd.setTextColor( WHITE );
@@ -106,12 +109,12 @@ void setup() {
 
     // Use this with no wifi password set.
     // e.g., UoB Guest network.
-     setupWifi();
+    //setupWifi();
 
     // If you are using your own Wifi access
     // point, you might need to use this call
     // for a password protected connection.
-    //setupWifiWithPassword();
+    setupWifiWithPassword();
 
     // Sets up a connection to hiveMQ.
     // Sets up a call back function to run
@@ -130,6 +133,7 @@ void setup() {
 
 // Standard, iterative loop function (main)
 void loop() {
+  M5.Lcd.setTextSize(3);
   M5.update();
   M5.IMU.getGyroData(&accX,&accY,&accZ);
   // Leave this code here.  It checks that you are
@@ -139,45 +143,153 @@ void loop() {
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
     publishMessage("Free");
-  }
-  ps_client.loop();
-
-
-  // This is an example of using our timer class to
-  // publish a message every 2000 milliseconds, as
-  // set when we initalised the class above.
-  if( publishing_timer.isReady() ) {
-      // Remember to reset your timer when you have
-      // used it. This starts the clock again.
-      publishing_timer.reset();
+    state = Free;
   }
 
-//  if (state == Lunch) {
-//    if (targetTime < millis()) {
-//      targetTime = millis() + 1000;
-//      if (lunchTimer > 0) {
-//        lunchTimer = lunchTimer--;
-//      }
-//      else {
-//        state = Free;
-//      }
-//    }
-//  }
-  if (M5.BtnA.wasReleased()) {
-    publishMessage("Lunch");
+  lunchTimer = 10;
+  bookedTimer = 10;
+
+  if (state == Free) {
+    ps_client.loop();
+    free_loop();
   }
-  if (M5.BtnC.wasReleased()) {
-    publishMessage("Booked");
+  else if (state == Use) {
+    use_loop();
   }
-  if (state == Free || state == Use) {
+  else if (state == Booked) {
+    booked_loop();
+  }
+  else if (state == Lunch) {
+    lunch_loop();
+  }
+}
+
+
+// Chair can be booked through receiving input from MQTT
+// Chair can go to 'In use' through detecting movement
+// Chair can (FOR NOW) change to lunch by pressing the button in free
+void free_loop() {
+  printFreeScreen();
+  while (state == Free) {
+    M5.update();
+    M5.IMU.getGyroData(&accX,&accY,&accZ);
+  
     if ((abs(accX-initX) > 50) || (abs(accY-initY) > 50) || (abs(accZ-initZ) > 50)) {
       state = Use;
+      publishMessage("Use");
     }
-    else {
-      state = Free;
-      delay(1000);
+    else if(digitalRead(M5_BUTTON_HOME) == LOW){
+      state = Lunch;
+      publishMessage("Lunch");
     }
   }
+}
+
+void printFreeScreen() {
+  M5.Lcd.fillScreen( GREEN );
+  M5.Lcd.setTextDatum(CC_DATUM);
+  M5.Lcd.drawString("Free", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+}
+
+// Chair can return to free after no movement detected (for 10s?)
+// Chair can go to 'Lunch' by pressing button
+void use_loop() {
+  printUseScreen();
+  float cumMovement = 100;
+  while (state == Use) {
+    M5.update();
+    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
+    if (cumMovement <= 0) {
+      state = Free;
+      publishMessage("Free");
+    }
+    if(digitalRead(M5_BUTTON_HOME) == LOW){
+      state = Lunch;
+      publishMessage("Lunch");
+    }
+    if (cumMovement >= 0) {
+      cumMovement = cumMovement - 20;
+      delay(10);
+    }
+  }
+}
+
+void printUseScreen() {
+  M5.Lcd.fillScreen(0xfbe4);
+  M5.Lcd.setTextDatum( BC_DATUM );
+  M5.Lcd.drawString("In", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+  M5.Lcd.setTextDatum( TC_DATUM );
+  M5.Lcd.drawString("Use", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+}
+
+// Chair can return to free after 10min timer runs out (20s timer for test)
+// Chair can go to in use if card is scanned (button is pressed in tests)
+void booked_loop() {
+  while (state == Booked) {
+    if(digitalRead(M5_BUTTON_HOME) == LOW){
+      state = Use;
+      publishMessage("Use");
+    }
+    if (bookedTimer <= 0) {
+      state = Free;
+      publishMessage("Free");
+    }
+    if( publishing_timer.isReady() ) {
+      bookedTimer--;
+      printBookedScreen();
+      publishing_timer.reset();
+    }
+  }
+}
+
+void printBookedScreen() {
+  int minutes = bookedTimer / 60;
+  int seconds = bookedTimer % 60;
+  M5.Lcd.fillScreen( RED );
+  M5.Lcd.setTextDatum( BC_DATUM );
+  M5.Lcd.drawString("Booked:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+  M5.Lcd.setTextDatum( TC_DATUM );
+  M5.Lcd.drawString((String)minutes + ":" + (String)seconds, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+}
+
+// Chair can return to 'Use' if movement detected before 45min (10s) timer runs out
+// Chair goes back to 'Free' if no movement detected after 45min timer
+void lunch_loop() {
+  float cumMovement = 0;
+  while (state == Lunch) {
+    M5.update();
+    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
+    if (cumMovement >= 10000) {
+      state = Use;
+      publishMessage("Use");
+    }
+    if (lunchTimer <= 0) {
+      state = Free;
+      publishMessage("Free");
+    }
+    if( publishing_timer.isReady() ) {
+      lunchTimer--;
+      printLunchScreen();
+      publishing_timer.reset();
+    }
+    if (cumMovement >= 0) {
+      cumMovement = cumMovement - 20;
+      delay(10);
+    }
+  }
+}
+
+void printLunchScreen() {
+  int minutes = lunchTimer / 60;
+  int seconds = lunchTimer % 60;
+  // Yellow
+  M5.Lcd.fillScreen(0xff80);
+  M5.Lcd.setTextDatum( BC_DATUM );
+  M5.Lcd.drawString("Lunch:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+  M5.Lcd.setTextDatum( TC_DATUM );
+  M5.Lcd.drawString((String)minutes + ":" + (String)seconds, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
 
 
@@ -237,7 +349,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] ");
   String in_str = "";
-  M5.Lcd.setCursor( 10, 10 );
+  //M5.Lcd.setCursor( 10, 10 );
 
   // Copy chars to a String for convenience.
   // Also prints to USB serial for debugging
@@ -246,42 +358,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
 
-  M5.Lcd.setTextSize(18);
   if (in_str=="Booked") {
-    state = Booked;
-    M5.Lcd.fillScreen( RED );
-    M5.Lcd.setTextDatum( CC_DATUM );
-    M5.Lcd.drawString(in_str, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-  }
-  else if (in_str=="Use") {
-    state = Use;
-    // Orange
-    M5.Lcd.fillScreen(0xfbe4);
-    M5.Lcd.setTextDatum( BC_DATUM );
-    M5.Lcd.drawString("In", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-    M5.Lcd.setTextDatum( CC_DATUM );
-    M5.Lcd.drawString("Use", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-    delay(1000);
-  }
-  else if (in_str=="Free") {
-    state = Free;
-    M5.Lcd.fillScreen( GREEN );
-    M5.Lcd.setTextDatum(CC_DATUM);
-    M5.Lcd.drawString("Free", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-  }
-  else if (in_str=="Lunch") {
-    state = Lunch;
-    lunchTimer = 10;
-    // Yellow
-    M5.Lcd.fillScreen(0xff80);
-    M5.Lcd.setTextDatum( BC_DATUM );
-    M5.Lcd.drawString("At", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-    M5.Lcd.setTextDatum(CC_DATUM);
-    M5.Lcd.drawString("Lunch", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-    M5.Lcd.setTextDatum(TC_DATUM);
-    M5.Lcd.drawString((String)lunchTimer, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
-    
-    
+    if (state == Free) {
+      state = Booked;
+    }
   }
 
 }
@@ -303,7 +383,6 @@ void setupMQTT() {
 }
 
 void setupWifi() {
-
     byte mac[6];
     Serial.println("Original MAC address: " + String(WiFi.macAddress()));
     esp_base_mac_addr_set(guestMacAddress);
@@ -316,7 +395,6 @@ void setupWifi() {
 }
 
 void setupWifiWithPassword( ) {
-
     byte mac[6];
     Serial.println("Original MAC address: " + String(WiFi.macAddress()));
     esp_base_mac_addr_set(guestMacAddress);
@@ -356,7 +434,7 @@ void reconnect() {
       Serial.println("connected");
 
       // Once connected, publish an announcement...
-      ps_client.publish( MQTT_pub_topic, "reconnected");
+      ps_client.publish( MQTT_pub_topic, "M5STICK CONNECTED");
       // ... and resubscribe
       ps_client.subscribe( MQTT_sub_topic );
     } else {
