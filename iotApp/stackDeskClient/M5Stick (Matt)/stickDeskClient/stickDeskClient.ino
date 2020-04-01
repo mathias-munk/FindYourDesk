@@ -150,7 +150,6 @@ void loop() {
   bookedTimer = 10;
 
   if (state == Free) {
-    ps_client.loop();
     free_loop();
   }
   else if (state == Use) {
@@ -173,6 +172,7 @@ void free_loop() {
   while (state == Free) {
     M5.update();
     M5.IMU.getGyroData(&accX,&accY,&accZ);
+    ps_client.loop();
   
     if ((abs(accX-initX) > 50) || (abs(accY-initY) > 50) || (abs(accZ-initZ) > 50)) {
       state = Use;
@@ -349,7 +349,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print(topic);
   Serial.print("] ");
   String in_str = "";
-  //M5.Lcd.setCursor( 10, 10 );
 
   // Copy chars to a String for convenience.
   // Also prints to USB serial for debugging
