@@ -37,7 +37,7 @@ client.connect({ onSuccess: onConnect });
 
 function hiveSubscribe() {
   console.log("Subscribed");
-  client.subscribe("chair_booking");
+  client.subscribe("FindADesk");
 }
 
 // called when the client connects
@@ -56,19 +56,24 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
-  // var chair = document.querySelector(".book");
-  // console.log("onMessageArrived:" + message.payloadString);
-  var data = JSON.parse(message.payloadString);
-  let rooms = data.rooms;
-  rooms = rooms.map(room => {
-    const id = room.id;
-    const name = room.name;
-    const tables = room.tables;
-    const state = room.state;
-    const available = room.available;
-    return { id, name, tables, state, available };
-  });
-  Storage.saveRooms(rooms);
+  if (message.destinationName == "FindADesk") {
+    console.log("hello");
+  }
+  try {
+    var data = JSON.parse(message.payloadString);
+    let rooms = data.rooms;
+    rooms = rooms.map(room => {
+      const id = room.id;
+      const name = room.name;
+      const tables = room.tables;
+      const state = room.state;
+      const available = room.available;
+      return { id, name, tables, state, available };
+    });
+    Storage.saveRooms(rooms);
+  } catch {
+    return;
+  }
 }
 
 // called to generate the IDs

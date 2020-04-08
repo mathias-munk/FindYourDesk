@@ -50,17 +50,17 @@ client.connect({ onSuccess: onConnect });
 
 function hiveSubscribe() {
   console.log("Subscribed");
-  client.subscribe("chair_booking");
+  client.subscribe("FindADesk");
 }
 
 function makeBooking() {
   const chair = document.querySelector(".book");
   console.log("makeBooking");
-  client.subscribe("chair_booking");
+  client.subscribe("FindADesk");
   var r = confirm("Do you want to book this chair?");
   if (r == true) {
     message = new Paho.MQTT.Message("Booked");
-    message.destinationName = "chair_booking";
+    message.destinationName = "FindADesk";
     client.send(message);
     chair.style.backgroundImage = amber;
     chair.disabled = true;
