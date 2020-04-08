@@ -1,0 +1,383 @@
+/* Landing page */
+
+.home-forms {
+  height: 100vh;
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.bar {
+  width: 100%;
+  height: 10%;
+  padding-bottom: 0.5%;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1),
+    rgba(74, 94, 107, 1)
+  );
+  position: fixed;
+}
+
+.top-bar {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+}
+
+.options {
+  display: inline-block;
+  float: right;
+  margin: 1.5em 2em;
+  font-size: 20px;
+  font-family: "Spartan", sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+.options:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filler {
+  height: 10%;
+}
+
+.logo-container {
+  background-color: white;
+  width: 100%;
+}
+
+.logo {
+  display: block;
+  margin: auto;
+  width: auto;
+}
+
+.description-container {
+  display: block;
+  background-color: white;
+  height: auto;
+  padding: 2em;
+}
+
+.description {
+  margin-top: 0;
+  text-align: center;
+  font-size: 2.5em;
+  font-family: "Spartan", sans-serif;
+  color: rgb(30, 30, 30);
+}
+
+/* Sign-up/Login page */
+.home {
+  float: left;
+}
+
+.form {
+  display: block;
+  text-align: center;
+  font-family: "Spartan", sans-serif;
+}
+
+.form-title {
+  font-size: 2.5em;
+  color: rgb(0, 18, 120);
+}
+
+.form-fields {
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.field {
+  width: 20em;
+  height: 1.5em;
+  margin-bottom: 2em;
+  border: 1px solid rgb(30, 30, 30);
+  background-color: white;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.button {
+  width: 10em;
+  font-size: 1em;
+  margin: 1em 0 2em 0;
+  border-radius: 5px;
+  transition: 0.2s ease;
+  color: white;
+  background-color: rgb(36, 57, 173);
+}
+
+.button:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+}
+
+/* buildings.html */
+
+.building-menu {
+  height: 90%;
+  width: 25%;
+  /* background-color: rgb(116, 147, 168); */
+  float: left;
+  text-align: center;
+  background-image: linear-gradient(
+    to left,
+    rgb(74, 94, 107),
+    rgb(116, 147, 168)
+  );
+}
+
+.building-text {
+  font-family: "Spartan", sans-serif;
+  color: white;
+  font-size: 40px;
+  margin-top: 1.2em;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+}
+
+.building-text:hover {
+  font-family: "Spartan", sans-serif;
+  color: rgb(232, 175, 53);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.map-container {
+  width: 75%;
+  height: 90%;
+  float: right;
+  /* text-align: center; */
+}
+
+.chair-container {
+  height: 90%;
+  width: 95%;
+  margin: 0 2.5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 2rem;
+  grid-row-gap: 0.5rem;
+}
+
+.map {
+  margin-top: 3%;
+}
+
+/* rooms.html */
+
+.room-menu {
+  position: fixed;
+  z-index: -1;
+  height: 90%;
+  width: 25%;
+  background-color: rgb(116, 147, 168);
+  float: left;
+  text-align: center;
+  background-image: linear-gradient(
+    to left,
+    rgb(74, 94, 107),
+    rgb(116, 147, 168)
+  );
+}
+
+.building-select {
+  font-family: "Spartan", sans-serif;
+  color: rgb(232, 175, 53);
+  font-size: 40px;
+  margin-top: 1.2em;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+}
+
+.room-container {
+  height: 10em;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5%;
+  /* border: 2px solid rgb(100, 100, 100); */
+}
+
+.room-container:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+}
+
+.room-container:last-child {
+  margin-bottom: 5%;
+}
+
+.room {
+  float: left;
+  font-family: "Spartan", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 1em;
+  color: white;
+  margin-top: 2%;
+}
+
+.capacity {
+  float: right;
+  font-family: "Spartan", sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 1em;
+  color: white;
+  margin-top: 10%;
+}
+
+.green {
+  background-image: linear-gradient(rgb(177, 255, 138), rgb(92, 138, 70));
+}
+
+.amber {
+  background-image: linear-gradient(rgb(255, 188, 94), rgb(201, 145, 66));
+}
+
+.red {
+  background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
+}
+
+.blue {
+  background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
+}
+
+/* chairs.html */
+
+/* .chair-container {
+  height: 90%;
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .chair-container {
+  height: 90%;
+  width: 75%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
+  grid-column-gap: 1.5rem;
+  grid-row-gap: 0.5rem;
+} */
+
+.table-group {
+  position: relative;
+  margin: 2%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chair-group {
+  position: relative;
+  height: 100%;
+  width: 80px;
+}
+
+.chair {
+  position: absolute;
+  width: 100%;
+  margin: 15% 0;
+  height: 30%;
+  background-color: rgb(255, 140, 140);
+  border-radius: 5%;
+}
+
+.chair-state {
+  font-family: "Spartan", sans-serif;
+  font-size: 1em;
+  width: 80px;
+  position: absolute;
+  top: -10%;
+  right: -50%;
+  background-color: white;
+  padding: 0 5px;
+  border-radius: 5%;
+  color: black;
+  visibility: hidden;
+}
+
+button {
+  font-size: 1em;
+}
+
+.chair:hover > .chair-state {
+  visibility: visible;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+.table {
+  width: 50%;
+  height: 100%;
+  background-image: linear-gradient(rgb(64, 64, 64), rgb(117, 117, 117));
+  border-radius: 5%;
+}
+
+.book {
+  background-color: green;
+  border: none;
+}
+
+.book_hover:hover {
+  cursor: pointer;
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+}
+
+.room-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s linear;
+  background: rgb(240, 240, 240, 0.8);
+  z-index: 2;
+  visibility: hidden;
+}
+
+.showOverlay {
+  visibility: visible;
+}
+
+.close-room {
+  float: right;
+  font-size: 2em;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+  cursor: pointer;
+}
+
+/* .table {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.chair {
+  height: 10%;
+  width: 5%;
+  background-color: red;
+  margin: 0 5% 0 5%;
+}
+
+.book {
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.book:hover {
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+} */

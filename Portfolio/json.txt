@@ -1,0 +1,21 @@
+
+Stack-to-web
+{
+      “chairId”: 42;
+      “state”: “lunch”;
+}
+
+
+Processing-to-web
+{
+      “buildingId”: 42;
+      “buildingName”: “name”;
+      “roomId”: 42;
+      “roomName”: “name”;
+      “tables”: 42;
+}
+
+FindADesk_ProcessingToWeb;
+FindADesk_StackToWeb;
+FindADesk_WebToStack;
+FindADesk_WebToProcessing;
