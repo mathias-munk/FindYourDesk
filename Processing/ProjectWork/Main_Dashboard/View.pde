@@ -53,7 +53,7 @@ void updateDashboard() {
         Buildings.add("Wills");
         view.build_list("Buildings", Buildings);
         view.build_list("Rooms", Rooms);
-        view.build_textEntry("Add new Room");
+        
        
 }
 void Buildings(int n) {
@@ -76,18 +76,22 @@ void controlEvent(ControlEvent theEvent) {
            if (list_spacing > list_x_size + 10) {
               list_spacing = list_spacing - list_x_size -10;
            }
-           cp5.remove("Rooms");
-           view.build_list("Rooms", Rooms);
            cp5.remove("addTable");
+           cp5.remove("Rooms");
+           cp5.remove("Add new Room");
+           view.build_list("Rooms", Rooms);
+           view.build_textEntry("Add new Room");
+           
+        }
+     if(label.equals("Rooms ")){
+        System.out.println("hello");
+        cp5.remove("addTable");
+           view.button_state = 0;
            cp5.addButton("addTable")
             .setValue(0)
             .setPosition(500,150)
             .setSize(100, 19);
             view.button_state = view.button_state +1;
-           
-        }
-     if(label.equals("Rooms ")){
-        System.out.println("hello");
         view.currentRoom = 1;
       }
     println(view.listOneSelection);
