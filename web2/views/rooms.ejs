@@ -1,9 +1,9 @@
 <div class="bar">
   <section class="top-bar">
-    <a href="signup.html" class="options">Account</a>
-    <a href="login.html" class="options">Logout</a>
-    <a href="index.html" class="options home" style>Home</a>
-    <a href="buildings.html" class="options home" style>View map</a>
+    <a href="signup" class="options">Account</a>
+    <a href="login" class="options">Logout</a>
+    <a href="/" class="options home" style>Home</a>
+    <a href="map" class="options home" style>View map</a>
   </section>
 </div>
 <div class="filler"></div>
@@ -15,36 +15,18 @@
   <a href="rooms.html" class="building-text">Biomedical Sciences</a>
 </div>
 <div class="map-container">
-  <div class="room-button" data-id="1">
-    <div class="room-container green">
-      <p class="room">Lab 1.1</p>
-      <p class="capacity">Available Chairs: 50</p>
+  <% rooms.forEach(room => { %>
+    <% let colour %>
+    <% if (room.tables >= 7) colour = "green" %>
+    <% if (room.tables < 7) colour = "amber" %>
+    <% if (room.tables < 2) colour = "red" %>
+    <div class="room-button" data-id="<%= room.roomId %>">
+      <div class="room-container <%= colour %>">
+        <p class="room"><%= room.roomName %></p>
+        <p class="capacity">Total chairs: <%= room.tables * 4 %></p>
+      </div>
     </div>
-  </div>
-  <div>
-    <div class="room-container green">
-      <p class="room">Lab 1.13</p>
-      <p class="capacity">Available Chairs: 82</p>
-    </div>
-  </div>
-  <div href="chairs">
-    <div class="room-container amber">
-      <p class="room">Lab 2.1</p>
-      <p class="capacity">Available Chairs: 6</p>
-    </div>
-  </div>
-  <div href="chairs">
-    <div class="room-container red">
-      <p class="room">Lab 2.13</p>
-      <p class="capacity">Available Chairs: 0</p>
-    </div>
-  </div>
-  <div href="chairs">
-    <div class="room-container green">
-      <p class="room">Lab 3.1</p>
-      <p class="capacity">Available Chairs: 69</p>
-    </div>
-  </div>
+  <% })%>
 </div>
 <div class="room-overlay">
   <div class="close-room">

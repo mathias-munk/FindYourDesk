@@ -124,12 +124,16 @@
   width: 25%;
   /* background-color: rgb(116, 147, 168); */
   float: left;
-  text-align: center;
   background-image: linear-gradient(
     to left,
     rgb(74, 94, 107),
     rgb(116, 147, 168)
   );
+}
+
+.building-menu form {
+  display: flex;
+  flex-direction: column;
 }
 
 .building-text {
@@ -140,6 +144,9 @@
   font-weight: bold;
   text-decoration: none;
   display: block;
+  background: none;
+  border: none;
+  text-align: center;
 }
 
 .building-text:hover {
