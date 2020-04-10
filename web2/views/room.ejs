@@ -4,12 +4,49 @@
     <a href="login.html" class="options">Logout</a>
     <a href="index.html" class="options home" style>Home</a>
     <a href="buildings.html" class="options home" style>View map</a>
+
     <a href="rooms.html" class="options home" style>View rooms</a>
   </section>
 </div>
 <div class="filler"></div>
+<div class="building-menu">
+  <% buildingList.forEach(building => { %>
+    <a href="/buildings/<%= building %>" class="building-text"><%= building %></a>
+  <% }) %>
+</div>
 <div class="map-container">
   <div class="chair-container">
+    <% console.log("Room id: " + room.roomId) %>
+    <% j = 0 %>
+    <% for(i = 0; i < room.tables; i++) { %>
+      <article class="table-group">
+        <div class="chair-group">
+          <a href="/book/<%= room.roomId %>/<%= j %>">
+            <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+            <% console.log("Chair " + j + ": " + room.chairs[j].state) %>
+          </a>
+          <% j++ %>
+          <a href="/book/<%= room.roomId %>/<%= j %>">
+            <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+            <% console.log("Chair " + j + ": " + room.chairs[j].state) %>
+          </a>
+            <% j++ %>
+        </div>
+        <div class="table"></div>
+        <div class="chair-group">
+          <a href="/book/<%= room.roomId %>/<%= j %>">
+            <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+            <% console.log("Chair " + j + ": " + room.chairs[j].state) %>
+          </a>
+          <% j++ %>
+          <a href="/book/<%= room.roomId %>/<%= j %>">
+            <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+            <% console.log("Chair " + j + ": " + room.chairs[j].state) %>
+          </a>
+          <% j++ %>
+        </div>
+      </article>
+    <% } %>
     <!-- <article class="table-group">
       <div class="chair-group">
         <div class="chair"></div>

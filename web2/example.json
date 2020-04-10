@@ -25,6 +25,8 @@
 }
 
 {
-  "chairId": 10101,
+  "buildingId": 1,
+  "roomId": 1,
+  "chairId": 1,
   "state": "lunch"
 }

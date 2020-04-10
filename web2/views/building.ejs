@@ -18,7 +18,7 @@
     <% if (room.tables >= 7) colour = "green" %>
     <% if (room.tables < 7) colour = "amber" %>
     <% if (room.tables < 2) colour = "red" %>
-    <a href="/chairs/<%= room.id %>">
+    <a href="/room/<%= room.id %>">
       <div class="room-button" data-id="<%= room.roomId %>">
         <div class="room-container <%= colour %>">
           <p class="room"><%= room.roomName %></p>
