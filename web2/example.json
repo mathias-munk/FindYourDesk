@@ -3,7 +3,25 @@
   "buildingName": "MVB",
   "roomId": 11,
   "roomName": "Lab 1.1",
-  "tables": 42
+  "tables": 42,
+  "chairs": [
+    {
+      "id": 1,
+      "state": "Lunch"
+    },
+    {
+      "id": 2,
+      "state": "Free"
+    },
+    {
+      "id": 3,
+      "state": "Occupied"
+    },
+    {
+      "id": 4,
+      "state": "Booked"
+    },
+    ]
 }
 
 {

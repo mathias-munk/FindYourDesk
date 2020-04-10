@@ -8,8 +8,8 @@
 </div>
 <div class="filler"></div>
 <div class="building-menu">
-  <% buildingList.forEach(room => { %>
-    <a href="/rooms/<%= room %>" class="building-text"><%= room %></a>
+  <% buildingList.forEach(building => { %>
+    <a href="/buildings/<%= building %>" class="building-text"><%= building %></a>
   <% }) %>
 </div>
 <div class="map-container">
@@ -18,7 +18,7 @@
     <% if (room.tables >= 7) colour = "green" %>
     <% if (room.tables < 7) colour = "amber" %>
     <% if (room.tables < 2) colour = "red" %>
-    <a href="/">
+    <a href="/chairs/<%= room.id %>">
       <div class="room-button" data-id="<%= room.roomId %>">
         <div class="room-container <%= colour %>">
           <p class="room"><%= room.roomName %></p>

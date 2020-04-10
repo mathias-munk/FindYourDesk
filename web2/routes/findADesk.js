@@ -40,15 +40,15 @@ client.on("message", function(topic, message) {
 
 // -----ROUTES-----
 
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
   res.render("index");
 });
 
-router.get("/login", async (req, res) => {
+router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/signup", async (req, res) => {
+router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
@@ -63,7 +63,7 @@ router.get("/map", async (req, res) => {
   res.render("map");
 });
 
-router.get("/rooms/:name", async (req, res) => {
+router.get("/buildings/:name", async (req, res) => {
   try {
     // find every building (but just once)
     let buildingList = await Room.collection.distinct("buildingName");
@@ -71,7 +71,21 @@ router.get("/rooms/:name", async (req, res) => {
     const rooms = await Room.find({
       buildingName: req.params.name
     });
-    res.render("rooms", { rooms: rooms, buildingList: buildingList });
+    res.render("building", { rooms: rooms, buildingList: buildingList });
+  } catch {
+    res.redirect("/map");
+  }
+
+  res.render("rooms");
+});
+
+router.get("/chairs/:id", async (req, res) => {
+  try {
+    // find every building (but just once)
+    let buildingList = await Room.collection.distinct("buildingName");
+    // Get the correct room from the params
+    const room = await Room.findById(req.params.id);
+    res.render("chairs", { room: room, buildingList: buildingList });
   } catch {
     res.redirect("/map");
   }
