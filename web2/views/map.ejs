@@ -7,11 +7,9 @@
 </div>
 <div class="filler"></div>
 <div class="building-menu">
-  <form action="rooms" method="post">
-    <% roomList.forEach(room => { %>
-      <button type="submit" formaction="rooms/<%= room %>" class="building-text" name="name"><%= room %></button>
-    <% }) %>
-  </form>
+  <% buildingList.forEach(room => { %>
+    <a href="rooms/<%= room %>" class="building-text"><%= room %></a>
+  <% }) %>
 </div>
 <div class="map-container">
   <div class="map">

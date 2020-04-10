@@ -7,12 +7,10 @@
   </section>
 </div>
 <div class="filler"></div>
-<div class="room-menu">
-  <a href="rooms.html" class="building-select">- MVB</a>
-  <a href="rooms.html" class="building-text">ASS</a>
-  <a href="rooms.html" class="building-text">Queens</a>
-  <a href="rooms.html" class="building-text">Wills</a>
-  <a href="rooms.html" class="building-text">Biomedical Sciences</a>
+<div class="building-menu">
+  <% buildingList.forEach(room => { %>
+    <a href="/rooms/<%= room %>" class="building-text"><%= room %></a>
+  <% }) %>
 </div>
 <div class="map-container">
   <% rooms.forEach(room => { %>
@@ -20,12 +18,14 @@
     <% if (room.tables >= 7) colour = "green" %>
     <% if (room.tables < 7) colour = "amber" %>
     <% if (room.tables < 2) colour = "red" %>
-    <div class="room-button" data-id="<%= room.roomId %>">
-      <div class="room-container <%= colour %>">
-        <p class="room"><%= room.roomName %></p>
-        <p class="capacity">Total chairs: <%= room.tables * 4 %></p>
+    <a href="/">
+      <div class="room-button" data-id="<%= room.roomId %>">
+        <div class="room-container <%= colour %>">
+          <p class="room"><%= room.roomName %></p>
+          <p class="capacity">Total chairs: <%= room.tables * 4 %></p>
+        </div>
       </div>
-    </div>
+    </a>
   <% })%>
 </div>
 <div class="room-overlay">

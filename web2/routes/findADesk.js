@@ -55,41 +55,28 @@ router.get("/signup", async (req, res) => {
 router.get("/map", async (req, res) => {
   try {
     // find every building (but just once)
-    let roomList = await Room.collection.distinct("buildingName");
-    res.render("map", { roomList: roomList });
+    let buildingList = await Room.collection.distinct("buildingName");
+    res.render("map", { buildingList: buildingList });
   } catch {
     res.redirect("/");
   }
   res.render("map");
 });
 
-router.get("/rooms", async (req, res) => {
+router.get("/rooms/:name", async (req, res) => {
   try {
-    // find all rooms
-    const rooms = await Room.find().exec();
-    res.render("rooms", { rooms: rooms });
+    // find every building (but just once)
+    let buildingList = await Room.collection.distinct("buildingName");
+    // find all rooms within the selected building.
+    const rooms = await Room.find({
+      buildingName: req.params.name
+    });
+    res.render("rooms", { rooms: rooms, buildingList: buildingList });
   } catch {
     res.redirect("/map");
   }
 
   res.render("rooms");
-});
-
-router.post("/:name/rooms", async (req, res) => {
-  console.log(req.body.name);
-  try {
-    // find all rooms
-    const rooms = await Room.find().exec();
-    res.render("rooms", { rooms: rooms });
-  } catch {
-    res.redirect("/map");
-  }
-
-  res.render("rooms/:id");
-});
-
-router.get("/chairs", (req, res) => {
-  res.send("chair-router");
 });
 
 async function updateRoomState(string) {

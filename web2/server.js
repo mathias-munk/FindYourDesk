@@ -16,7 +16,7 @@ app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 
 // tells express where our public files will be (i.e. in a folder called public)
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 // -----CONNECT TO DATABASE-----
 mongoose.connect("mongodb://localhost/FindADesk", {
