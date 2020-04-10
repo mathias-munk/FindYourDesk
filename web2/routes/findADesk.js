@@ -115,7 +115,7 @@ router.get("/book/:roomId/:chairId", async function(req, res) {
     chair.state = "booked";
     await room.save();
     // Send message to MQTT
-    messageStack(chair.chairId, room.roomId);
+    messageStack(chair.chairId, room.roomId, room.buildingId);
     // Reload the page
     res.render("room", { room: room, buildingList: buildingList });
   } catch (err) {
@@ -123,8 +123,8 @@ router.get("/book/:roomId/:chairId", async function(req, res) {
   }
 });
 
-function messageStack(chairId, roomId) {
-  let string = `{ "roomId": ${roomId}, "chairId": ${chairId}, "state": "booked" }`;
+function messageStack(chairId, roomId, buildingId) {
+  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId}, "state": "booked" }`;
   client.publish("FindADesk_WebToStack", string);
 }
 
@@ -134,7 +134,7 @@ async function updateRoomState(string) {
   try {
     room = await db.Room.findOne({
       roomId: roomObject.roomId,
-      buildingId: roomObject.roomId
+      buildingId: roomObject.buildingId
     });
     if (room != null) {
       const chairArray = createChairArray(roomObject.tables);
@@ -187,7 +187,7 @@ async function deleteRoom(string) {
   try {
     room = await db.Room.findOne({
       roomId: roomObject.roomId,
-      buildingId: roomObject.roomId
+      buildingId: roomObject.buildingId
     });
     if (room != null) {
       await room.remove();
@@ -207,7 +207,7 @@ async function updateChairState(string) {
     // Search for room with the buildingId and roomId
     room = await db.Room.findOne({
       roomId: chairObject.roomId,
-      buildingId: chairObject.roomId
+      buildingId: chairObject.buildingId
     });
     // Building and room exist
     if (room != null) {
