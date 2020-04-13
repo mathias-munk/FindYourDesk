@@ -1,0 +1,36 @@
+<div class="bar">
+  <section class="top-bar">
+    <a href="signup" class="options">Account</a>
+    <a href="login" class="options">Logout</a>
+    <a href="/" class="options home" style>Home</a>
+    <a href="map" class="options home" style>View map</a>
+  </section>
+</div>
+<div class="filler"></div>
+<div class="building-menu">
+  <% buildingList.forEach(building => { %>
+    <a href="/buildings/<%= building %>" class="building-text"><%= building %></a>
+  <% }) %>
+</div>
+<div class="map-container">
+  <% rooms.forEach(room => { %>
+    <% let colour %>
+    <% if (room.tables >= 7) colour = "green" %>
+    <% if (room.tables < 7) colour = "amber" %>
+    <% if (room.tables < 2) colour = "red" %>
+    <a href="/room/<%= room.id %>">
+      <div class="room-button" data-id="<%= room.roomId %>">
+        <div class="room-container <%= colour %>">
+          <p class="room"><%= room.roomName %></p>
+          <p class="capacity">Total chairs: <%= room.tables * 4 %></p>
+        </div>
+      </div>
+    </a>
+  <% })%>
+</div>
+<div class="room-overlay">
+  <div class="close-room">
+    <i class="fas fa-window-close alter"></i>
+  </div>
+  <div class="chair-container"></div>
+</div>

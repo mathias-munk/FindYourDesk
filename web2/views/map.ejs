@@ -7,11 +7,9 @@
 </div>
 <div class="filler"></div>
 <div class="building-menu">
-  <a href="rooms.html" class="building-text">MVB</a>
-  <a href="rooms.html" class="building-text">ASS</a>
-  <a href="rooms.html" class="building-text">Queens</a>
-  <a href="rooms.html" class="building-text">Wills</a>
-  <a href="rooms.html" class="building-text">Biomedical Sciences</a>
+  <% buildingList.forEach(building => { %>
+    <a href="buildings/<%= building %>" class="building-text"><%= building %></a>
+  <% }) %>
 </div>
 <div class="map-container">
   <div class="map">

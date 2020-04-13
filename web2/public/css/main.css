@@ -124,12 +124,16 @@
   width: 25%;
   /* background-color: rgb(116, 147, 168); */
   float: left;
-  text-align: center;
   background-image: linear-gradient(
     to left,
     rgb(74, 94, 107),
     rgb(116, 147, 168)
   );
+}
+
+.building-menu form {
+  display: flex;
+  flex-direction: column;
 }
 
 .building-text {
@@ -140,6 +144,9 @@
   font-weight: bold;
   text-decoration: none;
   display: block;
+  background: none;
+  border: none;
+  text-align: center;
 }
 
 .building-text:hover {
@@ -246,7 +253,19 @@
   background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
 }
 
-.blue {
+.free {
+  background-image: linear-gradient(rgb(177, 255, 138), rgb(92, 138, 70));
+}
+
+.booked {
+  background-image: linear-gradient(rgb(255, 188, 94), rgb(201, 145, 66));
+}
+
+.occupied {
+  background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
+}
+
+.lunch {
   background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
 }
 

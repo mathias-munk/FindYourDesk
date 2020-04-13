@@ -1,0 +1,14 @@
+{
+  "buildingId": 1,
+  "buildingName": "MVB",
+  "roomId": 11,
+  "roomName": "Lab 1.1",
+  "tables": 42,
+}
+
+{
+  "buildingId": 1,
+  "roomId": 1,
+  "chairId": 1,
+  "state": "lunch"
+}
