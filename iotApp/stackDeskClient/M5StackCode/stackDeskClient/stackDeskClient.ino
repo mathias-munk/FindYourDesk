@@ -85,6 +85,11 @@ int lunchTimer = 10;
 int bookedTimer = 10;
 uint32_t targetTime = 0;   
 
+//Chair identifier
+int buildingId = 1;
+int roomId = 1;
+int chariId = 1;
+
 // Standard, one time setup function.
 void setup() {
 
@@ -142,7 +147,7 @@ void loop() {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
-    publishMessage("Free");
+    publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
     state = Free;
   }
 
@@ -176,11 +181,11 @@ void free_loop() {
   
     if ((abs(accX-initX) > 50) || (abs(accY-initY) > 50) || (abs(accZ-initZ) > 50)) {
       state = Use;
-      publishMessage("Use");
+      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }"));
     }
     else if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("Lunch");
+      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }"));
     }
   }
 }
@@ -202,11 +207,11 @@ void use_loop() {
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement <= 0) {
       state = Free;
-      publishMessage("Free");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
     }
     if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("Lunch");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }");
     }
     if (cumMovement >= 0) {
       cumMovement = cumMovement - 20;
@@ -229,11 +234,11 @@ void booked_loop() {
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
-      publishMessage("Use");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
     }
     if (bookedTimer <= 0) {
       state = Free;
-      publishMessage("Free");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
     }
     if( publishing_timer.isReady() ) {
       bookedTimer--;
@@ -263,11 +268,11 @@ void lunch_loop() {
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement >= 10000) {
       state = Use;
-      publishMessage("Use");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
     }
     if (lunchTimer <= 0) {
       state = Free;
-      publishMessage("Free");
+      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
     }
     if( publishing_timer.isReady() ) {
       lunchTimer--;
