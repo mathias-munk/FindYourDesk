@@ -15,11 +15,9 @@ client.on("connect", async () => {
   try {
     await client.subscribe("FindADesk_WebToStack");
     console.log("Ready to publish to stack.");
-    // await client.subscribe("FindADesk_StackToWeb");
-    await client.subscribe("FindADesk_test2");
+    await client.subscribe("FindADesk_StackToWeb");
     console.log("Ready to receive from stack.");
-    await client.subscribe("FindADesk_test");
-    // await client.subscribe("FindADesk_ProcessingToWeb");
+    await client.subscribe("FindADesk_ProcessingToWeb");
     console.log("Ready to receive from desktop.");
   } catch (err) {
     console.log(err);
@@ -28,13 +26,11 @@ client.on("connect", async () => {
 
 // -----MQTT MESSAGE HANDLER-----
 client.on("message", function (topic, message) {
-  // if (topic == "FindADesk_StackToWeb") {
-  if (topic == "FindADesk_test2") {
+  if (topic == "FindADesk_StackToWeb") {
     updateChairState(message.toString());
     console.log("Received from stack");
   }
-  // if (topic == "FindADesk_ProcessingToWeb") {
-  if (topic == "FindADesk_test") {
+  if (topic == "FindADesk_ProcessingToWeb") {
     updateRoomState(message.toString());
   }
 });
@@ -63,7 +59,6 @@ router.get("/map", async (req, res) => {
     console.log(err);
     res.redirect("/");
   }
-  res.render("map");
 });
 
 // Building page which lists all rooms in that building.
@@ -75,8 +70,21 @@ router.get("/buildings/:name", async (req, res) => {
     const rooms = await db.Room.find({
       buildingName: req.params.name
     });
+    // Loop through each room, counting the number of free chairs in that room
+    // Have to use regular for loop so that we can use await.save() inside the loop
+    for (let room of rooms) {
+      let freeChairs = 0;
+      room.chairs.forEach(chair => {
+        if (chair.state == "free") {
+          freeChairs++;
+        }
+      });
+      room.freeChairs = freeChairs;
+      await room.save();
+    }
     res.render("building", { rooms: rooms, buildingList: buildingList });
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.redirect("/map");
   }
 });
@@ -102,20 +110,22 @@ router.post("/room", async (req, res) => {
   }
 });
 
-// TODO: At the moment, repeated presses of the button will keep sending booked messages to MQTT. Need to switch this off.
 router.get("/book/:roomId/:chairId", async function (req, res) {
   try {
     // find every building (but just once) for the sidebar
     let buildingList = await db.Room.collection.distinct("buildingName");
     // find the room object
-    let room = await db.Room.findOne({ roomId: req.params.roomId });
+    let room = await db.Room.findOne({ _id: req.params.roomId });
     // get the chair object
     let chair = await room.chairs[req.params.chairId];
     // Change state of chair to booked
-    chair.state = "booked";
-    await room.save();
-    // Send message to MQTT
-    messageStack(chair.chairId, room.roomId, room.buildingId);
+    if (chair.state == "free") {
+      chair.state = "booked";
+      await room.save();
+      // Send message to MQTT
+      messageStack(chair.chairId, room.roomId, room.buildingId);
+    }
+
     // Reload the page
     res.render("room", { room: room, buildingList: buildingList });
   } catch (err) {
@@ -124,40 +134,43 @@ router.get("/book/:roomId/:chairId", async function (req, res) {
 });
 
 function messageStack(chairId, roomId, buildingId) {
-  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId}, "state": "booked" }`;
+  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId} } "state": "booked" }`;
   client.publish("FindADesk_WebToStack", string);
 }
 
 async function updateRoomState(string) {
-  const roomObject = JSON.parse(string);
-  let room;
   try {
-    room = await db.Room.findOne({
-      roomId: roomObject.roomId,
-      buildingId: roomObject.buildingId
-    });
-    if (room != null) {
-      const chairArray = createChairArray(roomObject.tables);
-      // Update the old room with the new data
-      room.buildingId = roomObject.buildingId;
-      room.buildingName = roomObject.buildingName;
-      room.roomId = roomObject.roomId;
-      room.roomName = roomObject.roomName;
-      room.tables = roomObject.tables;
-      room.chairs = chairArray;
-      await room.save();
-      console.log("Room updated");
-    } else {
-      const chairArray = createChairArray(roomObject.tables);
-      // Create a new room with the data
-      room = new db.Room({
-        buildingId: roomObject.buildingId,
-        buildingName: roomObject.buildingName,
+    const roomObjects = JSON.parse(string);
+    const roomArray = roomObjects.rooms;
+    for (const roomObject of roomArray) {
+      let room = await db.Room.findOne({
         roomId: roomObject.roomId,
-        roomName: roomObject.roomName,
-        tables: roomObject.tables,
-        chairs: chairArray
+        buildingId: roomObject.buildingId
       });
+      if (room != null) {
+        const chairArray = createChairArray(roomObject.tables);
+        // Update the old room with the new data
+        room.buildingId = roomObject.buildingId;
+        room.buildingName = roomObject.buildingName;
+        room.roomId = roomObject.roomId;
+        room.roomName = roomObject.roomName;
+        room.tables = roomObject.tables;
+        room.chairs = chairArray;
+        // 4 chairs per table. When a room is changed/updated all chairs reset to free.
+        room.freeChairs = roomObject.tables * 4;
+      } else {
+        const chairArray = createChairArray(roomObject.tables);
+        // Create a new room with the data
+        room = new db.Room({
+          buildingId: roomObject.buildingId,
+          buildingName: roomObject.buildingName,
+          roomId: roomObject.roomId,
+          roomName: roomObject.roomName,
+          tables: roomObject.tables,
+          chairs: chairArray,
+          freeChairs: roomObject.tables * 4
+        });
+      }
       await room.save();
       console.log("Room saved");
     }
@@ -166,7 +179,6 @@ async function updateRoomState(string) {
   }
 }
 
-// AT THE MOMENT, WHEN UPDATING IT WILL RESET ALL OF THE CHAIR STATES TO 'FREE'
 function createChairArray(tables) {
   let newChair;
   let chairArray = [];

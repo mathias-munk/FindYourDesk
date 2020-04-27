@@ -35,6 +35,10 @@ const roomSchema = new mongoose.Schema({
   chairs: {
     type: [chairSchema],
     default: undefined
+  },
+  freeChairs: {
+    type: Number,
+    required: true
   }
 });
 
