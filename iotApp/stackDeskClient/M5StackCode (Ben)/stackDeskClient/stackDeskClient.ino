@@ -98,6 +98,7 @@ void setup() {
     // Note, other functions are using the
     // LCD so expect errors if you delete this.
     M5.begin();
+    M5.Power.begin();
     M5.IMU.Init();
     M5.Lcd.setRotation(3);
     M5.Lcd.fillScreen(BLACK);
@@ -129,7 +130,7 @@ void setup() {
 
     // Maybe you need to write your own
     // setup code after this...
-    M5.IMU.getGyroData(&initX,&initY,&initZ);
+    M5.IMU.getAccelData(&initX,&initY,&initZ);
     state = Free;
     targetTime = millis() + 1000;
     
@@ -140,17 +141,18 @@ void setup() {
 void loop() {
   M5.Lcd.setTextSize(3);
   M5.update();
-  M5.IMU.getGyroData(&accX,&accY,&accZ);
+  M5.IMU.getAccelData(&accX,&accY,&accZ);
+ 
   // Leave this code here.  It checks that you are
   // still connected, and performs an update of itself.
   if (!ps_client.connected()) {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
-    publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+    publishMessage("free");
     state = Free;
   }
-
+  
   lunchTimer = 10;
   bookedTimer = 10;
 
@@ -176,16 +178,23 @@ void free_loop() {
   printFreeScreen();
   while (state == Free) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
+    Serial.print("accX-initX: ");
+    Serial.print(accX-initX);
+    Serial.print("accY - initY: ");
+    Serial.print(accY - initY);
+    Serial.print("accZ - initZ: ");
+    Serial.print(accZ - initZ);
+    Serial.println("");
     ps_client.loop();
-  
-    if ((abs(accX-initX) > 50) || (abs(accY-initY) > 50) || (abs(accZ-initZ) > 50)) {
+    if ((abs(accX-initX) > 0.3) || (abs(accY - initY) > 0.3) || (abs(accZ - initZ) > 0.3)) {
       state = Use;
-      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }"));
+      publishMessage("use");
     }
     else if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }"));
+      publishMessage("lunch");
     }
   }
 }
@@ -203,19 +212,20 @@ void use_loop() {
   float cumMovement = 100;
   while (state == Use) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
+ 
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }");
+      publishMessage("lunch");
     }
     if (cumMovement >= 0) {
-      cumMovement = cumMovement - 20;
-      delay(10);
+      cumMovement = cumMovement - 1;
+      delay(100);
     }
   }
 }
@@ -231,14 +241,15 @@ void printUseScreen() {
 // Chair can return to free after 10min timer runs out (20s timer for test)
 // Chair can go to in use if card is scanned (button is pressed in tests)
 void booked_loop() {
+  publishMessage("In booked loop");
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
+      publishMessage("use");
     }
     if (bookedTimer <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if( publishing_timer.isReady() ) {
       bookedTimer--;
@@ -262,17 +273,20 @@ void printBookedScreen() {
 // Chair goes back to 'Free' if no movement detected after 45min timer
 void lunch_loop() {
   float cumMovement = 0;
+  publishMessage("In lunch loop");
   while (state == Lunch) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
+  
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
+  
     if (cumMovement >= 10000) {
       state = Use;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
+      publishMessage("use");
     }
     if (lunchTimer <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if( publishing_timer.isReady() ) {
       lunchTimer--;
@@ -438,7 +452,7 @@ void reconnect() {
       Serial.println("connected");
 
       // Once connected, publish an announcement...
-      ps_client.publish( MQTT_pub_topic, "M5STICK CONNECTED");
+      ps_client.publish( MQTT_pub_topic, "M5STACK CONNECTED");
       // ... and resubscribe
       ps_client.subscribe( MQTT_sub_topic );
     } else {
