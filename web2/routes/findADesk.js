@@ -27,7 +27,7 @@ client.on("connect", async () => {
 });
 
 // -----MQTT MESSAGE HANDLER-----
-client.on("message", function(topic, message) {
+client.on("message", function (topic, message) {
   // if (topic == "FindADesk_StackToWeb") {
   if (topic == "FindADesk_test2") {
     updateChairState(message.toString());
@@ -103,7 +103,7 @@ router.post("/room", async (req, res) => {
 });
 
 // TODO: At the moment, repeated presses of the button will keep sending booked messages to MQTT. Need to switch this off.
-router.get("/book/:roomId/:chairId", async function(req, res) {
+router.get("/book/:roomId/:chairId", async function (req, res) {
   try {
     // find every building (but just once) for the sidebar
     let buildingList = await db.Room.collection.distinct("buildingName");
@@ -225,5 +225,7 @@ async function updateChairState(string) {
     console.log(err);
   }
 }
+
+
 
 module.exports = router;
