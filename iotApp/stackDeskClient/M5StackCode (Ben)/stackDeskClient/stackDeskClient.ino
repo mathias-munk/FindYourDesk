@@ -20,6 +20,11 @@ PubSubClient ps_client( wifi_client );
 // Extra, created by SEGP team
 #include "Timer.h"
 
+//Include JSON Parser library (ArduinoJson.h)
+#include <ArduinoJson.h>
+
+#define BOOKED_RECIEVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
+
 enum state {Free, Use, Booked, Lunch};
 
 /*******************************************************************************************
@@ -88,7 +93,7 @@ uint32_t targetTime = 0;
 //Chair identifier
 int buildingId = 1;
 int roomId = 1;
-int chariId = 1;
+int chairId = 1;
 
 // Standard, one time setup function.
 void setup() {
@@ -178,15 +183,7 @@ void free_loop() {
   printFreeScreen();
   while (state == Free) {
     M5.update();
-    
     M5.IMU.getAccelData(&accX,&accY,&accZ);
-    Serial.print("accX-initX: ");
-    Serial.print(accX-initX);
-    Serial.print("accY - initY: ");
-    Serial.print(accY - initY);
-    Serial.print("accZ - initZ: ");
-    Serial.print(accZ - initZ);
-    Serial.println("");
     ps_client.loop();
     if ((abs(accX-initX) > 0.3) || (abs(accY - initY) > 0.3) || (abs(accZ - initZ) > 0.3)) {
       state = Use;
@@ -273,7 +270,6 @@ void printBookedScreen() {
 // Chair goes back to 'Free' if no movement detected after 45min timer
 void lunch_loop() {
   float cumMovement = 0;
-  publishMessage("In lunch loop");
   while (state == Lunch) {
     M5.update();
     M5.IMU.getAccelData(&accX,&accY,&accZ);
@@ -364,6 +360,8 @@ void publishMessage( String message ) {
 
 void callback(char* topic, byte* payload, unsigned int length) {
 
+  //Set up JSON buffer
+  StaticJsonDocument<200> jsonDoc;
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -376,7 +374,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
 
-  if (in_str=="Booked") {
+  auto error = deserializeJson(jsonDoc, in_str);
+  //If parsing fails, print the error to serial.
+  if (error) {
+    Serial.print(F("deserializeJson() failed with code "));
+    Serial.println(error.c_str());
+    return;
+  }
+  
+  if (BOOKED_RECIEVED) {
     if (state == Free) {
       state = Booked;
     }

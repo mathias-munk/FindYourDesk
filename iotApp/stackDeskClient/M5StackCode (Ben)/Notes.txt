@@ -26,3 +26,6 @@ and found that they were not changing in any of the loops. After comparing with 
 in the setup loop that was not being called in the stick code. After adding this the serial output showed the accelerometer values changing!
 We realised that this command must power up the accelerometer chip via the I2C bus. On the stick the accelerometer must receive power from the main system so
 this was not necessary.
+
+
+Could possibly have an interface to set up chair ID and room on the stack.
