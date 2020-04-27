@@ -1,46 +1,62 @@
+<script src="booking.js"></script>
 <div class="bar">
   <section class="top-bar">
     <a href="signup.html" class="options">Account</a>
     <a href="login.html" class="options">Logout</a>
     <a href="index.html" class="options home" style>Home</a>
     <a href="buildings.html" class="options home" style>View map</a>
-
     <a href="rooms.html" class="options home" style>View rooms</a>
   </section>
 </div>
 <div class="filler"></div>
 <div class="building-menu">
   <% buildingList.forEach(building => { %>
-    <a href="/buildings/<%= building %>" class="building-text"><%= building %></a>
+  <a href="/buildings/<%= building %>" class="building-text"><%= building %></a>
   <% }) %>
 </div>
 <div class="map-container">
   <div class="chair-container">
     <% j = 0 %>
     <% for(i = 0; i < room.tables; i++) { %>
-      <article class="table-group">
-        <div class="chair-group">
-          <a href="/book/<%= room._id %>/<%= j %>">
-            <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
-          </a>
-          <% j++ %>
-          <a href="/book/<%= room._id %>/<%= j %>">
-            <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
-          </a>
-            <% j++ %>
-        </div>
-        <div class="table"></div>
-        <div class="chair-group">
-          <a href="/book/<%= room._id %>/<%= j %>">
-            <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
-          </a>
-          <% j++ %>
-          <a href="/book/<%= room._id %>/<%= j %>">
-            <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
-          </a>
-          <% j++ %>
-        </div>
-      </article>
+    <article class="table-group">
+      <div class="chair-group">
+        <a href="/book/<%= room._id %>/<%= j %>">
+          <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+        </a>
+        <% j++ %>
+        <a href="/book/<%= room._id %>/<%= j %>">
+          <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+        </a>
+        <% j++ %>
+      </div>
+      <div class="table"></div>
+      <div class="chair-group">
+        <a href="/book/<%= room._id %>/<%= j %>">
+          <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+        </a>
+        <% j++ %>
+        <a href="/book/<%= room._id %>/<%= j %>">
+          <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
+        </a>
+        <% j++ %>
+      </div>
+    </article>
     <% } %>
+
   </div>
+  <div class="confirm" id="confirm">
+    <div class="confirm-head">
+
+      <button data-close-button="close" class="close-button">x</button>
+    </div>
+    <div class="confirm-body">
+      From
+      <input type="time">
+      To
+      <input type="time">
+    </div>
+    <button class="confirm-button">Confirm</button>
+
+  </div>
+  <div id="overlay"></div>
 </div>

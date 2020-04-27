@@ -4,7 +4,11 @@
   "buildingName": "MVB",
   "roomId": 1,
   "roomName": "Lab 1.1",
+<<<<<<< HEAD
+  "tables": 42
+=======
   "tables": 1
+>>>>>>> 0cf74d44962e49a9cf470c9e6d825b2665e958ad
 }
 
 // stack to web
@@ -13,6 +17,9 @@
   "roomId": 1,
   "chairId": 1,
   "state": "lunch"
+<<<<<<< HEAD
+}
+=======
 }
 
 // web to stack
@@ -21,3 +28,4 @@
   "roomId": 1,
   "chairId": 1
 }
+>>>>>>> 0cf74d44962e49a9cf470c9e6d825b2665e958ad
