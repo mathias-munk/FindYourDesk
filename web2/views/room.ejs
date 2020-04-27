@@ -20,22 +20,22 @@
     <% for(i = 0; i < room.tables; i++) { %>
       <article class="table-group">
         <div class="chair-group">
-          <a href="/book/<%= room.roomId %>/<%= j %>">
+          <a href="/book/<%= room._id %>/<%= j %>">
             <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
           </a>
           <% j++ %>
-          <a href="/book/<%= room.roomId %>/<%= j %>">
+          <a href="/book/<%= room._id %>/<%= j %>">
             <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
           </a>
             <% j++ %>
         </div>
         <div class="table"></div>
         <div class="chair-group">
-          <a href="/book/<%= room.roomId %>/<%= j %>">
+          <a href="/book/<%= room._id %>/<%= j %>">
             <div class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
           </a>
           <% j++ %>
-          <a href="/book/<%= room.roomId %>/<%= j %>">
+          <a href="/book/<%= room._id %>/<%= j %>">
             <div class="chair bottom book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>></div>
           </a>
           <% j++ %>

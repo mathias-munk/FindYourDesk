@@ -15,14 +15,14 @@
 <div class="map-container">
   <% rooms.forEach(room => { %>
     <% let colour %>
-    <% if (room.tables >= 7) colour = "green" %>
-    <% if (room.tables < 7) colour = "amber" %>
-    <% if (room.tables < 2) colour = "red" %>
+    <% if (room.freeChairs >= 20) colour = "green" %>
+    <% if (room.freeChairs < 20) colour = "amber" %>
+    <% if (room.freeChairs < 10) colour = "red" %>
     <a href="/room/<%= room.id %>">
       <div class="room-button" data-id="<%= room.roomId %>">
         <div class="room-container <%= colour %>">
           <p class="room"><%= room.roomName %></p>
-          <p class="capacity">Total chairs: <%= room.tables * 4 %></p>
+          <p class="capacity">Free chairs: <%= room.freeChairs %></p>
         </div>
       </div>
     </a>

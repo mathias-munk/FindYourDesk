@@ -269,25 +269,6 @@
   background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
 }
 
-/* chairs.html */
-
-/* .chair-container {
-  height: 90%;
-  width: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
-/* .chair-container {
-  height: 90%;
-  width: 75%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
-  grid-column-gap: 1.5rem;
-  grid-row-gap: 0.5rem;
-} */
-
 .table-group {
   position: relative;
   margin: 2%;
@@ -306,8 +287,8 @@
   width: 100%;
   margin: 15% 0;
   height: 30%;
-  background-color: rgb(255, 140, 140);
   border-radius: 5%;
+  border: none;
 }
 
 .chair-state {
@@ -341,11 +322,6 @@ button {
   height: 100%;
   background-image: linear-gradient(rgb(64, 64, 64), rgb(117, 117, 117));
   border-radius: 5%;
-}
-
-.book {
-  background-color: green;
-  border: none;
 }
 
 .book_hover:hover {
