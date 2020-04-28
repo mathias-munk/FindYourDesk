@@ -23,9 +23,10 @@ PubSubClient ps_client( wifi_client );
 //Include JSON Parser library (ArduinoJson.h)
 #include <ArduinoJson.h>
 
-#define BOOKED_RECIEVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
+#define BOOKED_RECEIVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
 
-enum state {Free, Use, Booked, Lunch};
+enum state {Free, Use, Booked, Lunch, Setup};
+enum screen {setBuilding, setRoom, setChair};
 
 /*******************************************************************************************
  *
@@ -91,9 +92,9 @@ int bookedTimer = 10;
 uint32_t targetTime = 0;   
 
 //Chair identifier
-int buildingId = 1;
-int roomId = 1;
-int chairId = 1;
+int buildingId;
+int roomId;
+int chairId;
 
 // Standard, one time setup function.
 void setup() {
@@ -155,7 +156,7 @@ void loop() {
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
     publishMessage("free");
-    state = Free;
+    state = Setup;
   }
   
   lunchTimer = 10;
@@ -172,6 +173,9 @@ void loop() {
   }
   else if (state == Lunch) {
     lunch_loop();
+  }
+  else if (state == Setup){
+    setup_loop();
   }
 }
 
@@ -192,6 +196,9 @@ void free_loop() {
     else if(M5.BtnC.wasReleased()){
       state = Lunch;
       publishMessage("lunch");
+    }
+    else if(M5.BtnA.wasReleased() && M5.BtnC.wasReleased()){
+      state = Setup;
     }
   }
 }
@@ -307,6 +314,96 @@ void printLunchScreen() {
   M5.Lcd.drawString((String)minutes + ":" + (String)seconds, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
 
+//Loop used to set up chair when first installing stack in a room. Accessed by pressing buttons A and C simultaneously.
+void setup_loop(){
+
+  int idsSet = 0;
+  buildingId = 0;
+  roomId = 0;
+  chairId = 0;
+  
+  int screen = setBuilding;
+  
+  printSetupScreen(&screen);
+  
+  while (state == Setup)
+  {
+   
+    if (screen == setBuilding) {
+    setup_building_loop(&screen);
+    }
+    else if (screen == setRoom)
+    {
+      setup_room_loop(&screen);
+    }
+    else if (screen == setChair)
+    {
+      setup_chair_loop(&screen);
+    } 
+  }
+  
+  
+}
+
+void setup_building_loop(int *screen)
+{
+  printSetupScreen(screen);
+
+  while (*screen == setBuilding)
+  {
+    
+    if (M5.BtnC.wasReleased())
+    {
+      if (buildingId > 0) 
+      {
+        buildingId--;
+      }
+    }
+    if (M5.BtnA.wasReleased())
+    {
+      Serial.print("Button a pressed");
+      buildingId++;
+      printSetupScreen(screen);
+    }
+  }
+}
+
+void setup_room_loop(int *screen)
+{
+  
+}
+
+void setup_chair_loop(int *screen)
+{
+  
+}
+
+void printSetupScreen(int *screen){
+  M5.Lcd.fillScreen(0x3B98);
+  if (*screen == setBuilding)
+  { 
+    M5.Lcd.setTextDatum( BC_DATUM );
+    M5.Lcd.drawString("Set BuildingId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+    M5.Lcd.setTextDatum( TC_DATUM );
+    M5.Lcd.drawString((String) buildingId, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+  }
+  else if (*screen == setRoom)
+  {  
+    M5.Lcd.setTextDatum( BC_DATUM );
+    M5.Lcd.drawString("Set RoomId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+    M5.Lcd.setTextDatum( TC_DATUM );
+    M5.Lcd.print(roomId);
+  }
+  else if (*screen == setChair)
+  {
+     M5.Lcd.setTextDatum( BC_DATUM );
+     M5.Lcd.drawString("Set ChairId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+     M5.Lcd.setTextDatum( TC_DATUM );
+     M5.Lcd.print(chairId);
+  }
+  
+  
+}
 
 /*******************************************************************************************
  *
@@ -382,7 +479,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     return;
   }
   
-  if (BOOKED_RECIEVED) {
+  if (BOOKED_RECEIVED) {
     if (state == Free) {
       state = Booked;
     }
