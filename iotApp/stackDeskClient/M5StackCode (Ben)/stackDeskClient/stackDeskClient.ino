@@ -25,7 +25,7 @@ PubSubClient ps_client( wifi_client );
 
 #define BOOKED_RECEIVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
 
-enum state {Free, Use, Booked, Lunch, Setup};
+enum state {Free, Use, Booked, Lunch, Setup, Broken};
 enum screen {setBuilding, setRoom, setChair};
 
 /*******************************************************************************************
@@ -177,6 +177,9 @@ void loop() {
   else if (state == Setup){
     setup_loop();
   }
+  else if (state == Broken){
+    broken_loop();
+  }
 }
 
 
@@ -199,6 +202,11 @@ void free_loop() {
     }
     else if(M5.BtnA.wasReleased() && M5.BtnC.wasReleased()){
       state = Setup;
+    }
+    else if(M5.BtnB.wasReleased())
+    {
+      state = Broken;
+      publishMessage("broken");
     }
   }
 }
@@ -245,7 +253,6 @@ void printUseScreen() {
 // Chair can return to free after 10min timer runs out (20s timer for test)
 // Chair can go to in use if card is scanned (button is pressed in tests)
 void booked_loop() {
-  publishMessage("In booked loop");
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
@@ -314,17 +321,15 @@ void printLunchScreen() {
   M5.Lcd.drawString((String)minutes + ":" + (String)seconds, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
 
-//Loop used to set up chair when first installing stack in a room. Accessed by pressing buttons A and C simultaneously.
+//Loop used to set up chair when first installing stack in a room. Can also be accessed by pressing buttons A and C simultaneously but only in 'Free' state.
 void setup_loop(){
 
-  int idsSet = 0;
   buildingId = 0;
   roomId = 0;
   chairId = 0;
   
   int screen = setBuilding;
-  
-  printSetupScreen(&screen);
+  printSetupScreens(&screen);
   
   while (state == Setup)
   {
@@ -340,45 +345,81 @@ void setup_loop(){
     {
       setup_chair_loop(&screen);
     } 
+    Serial.print(state);
   }
-  
-  
 }
 
+//Building ID loop
 void setup_building_loop(int *screen)
 {
-  printSetupScreen(screen);
+  printSetupScreens(screen);
 
   while (*screen == setBuilding)
   {
-    
+    M5.update();
+    intOrDecIds(&buildingId, screen);
+    if (M5.BtnB.wasReleased())
+    {
+        *screen = setRoom;
+    } 
+  }   
+}
+
+//Function to increment or decrement the device IDs
+void intOrDecIds(int *idToModify, int *screen)
+{
+  if ((*idToModify) > 0)
+  {
     if (M5.BtnC.wasReleased())
     {
-      if (buildingId > 0) 
+      (*idToModify)--;
+      printSetupScreens(screen);
+    }
+   }
+   if ((*idToModify) < 10)
+   {
+     if (M5.BtnA.wasReleased())
       {
-        buildingId--;
+        (*idToModify)++;
+        printSetupScreens(screen);
       }
     }
-    if (M5.BtnA.wasReleased())
-    {
-      Serial.print("Button a pressed");
-      buildingId++;
-      printSetupScreen(screen);
-    }
-  }
 }
 
+//Room ID loop
 void setup_room_loop(int *screen)
 {
-  
+  printSetupScreens(screen);
+
+  while (*screen == setRoom)
+  {
+    M5.update();
+    intOrDecIds(&roomId, screen);
+    if (M5.BtnB.wasReleased())
+    {
+        *screen = setChair;
+    } 
+  }  
 }
 
+//Chair ID loop
 void setup_chair_loop(int *screen)
 {
-  
+  printSetupScreens(screen);
+
+  while (*screen == setChair)
+  {
+    M5.update();
+    intOrDecIds(&chairId, screen);
+    if (M5.BtnB.wasReleased())
+    {
+      *screen = setBuilding;
+      state = Free;
+    } 
+  }  
 }
 
-void printSetupScreen(int *screen){
+void printSetupScreens(int *screen){
   M5.Lcd.fillScreen(0x3B98);
   if (*screen == setBuilding)
   { 
@@ -392,17 +433,37 @@ void printSetupScreen(int *screen){
     M5.Lcd.setTextDatum( BC_DATUM );
     M5.Lcd.drawString("Set RoomId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
     M5.Lcd.setTextDatum( TC_DATUM );
-    M5.Lcd.print(roomId);
+    M5.Lcd.drawString((String) roomId, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
   }
   else if (*screen == setChair)
   {
      M5.Lcd.setTextDatum( BC_DATUM );
      M5.Lcd.drawString("Set ChairId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
      M5.Lcd.setTextDatum( TC_DATUM );
-     M5.Lcd.print(chairId);
+     M5.Lcd.drawString((String) chairId, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
   }
-  
-  
+}
+
+//Function for the broken state that will be entered if a chair/desk has been flagged as brokem. This will be done by pressing a button and scanning the UCard.
+void broken_loop()
+{
+  printBrokenScreen();
+  while (state == Broken)
+  {
+    M5.update();
+    if (M5.BtnB.wasReleased())
+    {
+      state = Free;
+    } 
+  }
+}
+
+//Function to print the broken screen
+void printBrokenScreen()
+{
+  M5.Lcd.fillScreen(0xF800);
+  M5.Lcd.setTextDatum( BC_DATUM );
+  M5.Lcd.drawString("OUT OF ORDER", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
 
 /*******************************************************************************************
