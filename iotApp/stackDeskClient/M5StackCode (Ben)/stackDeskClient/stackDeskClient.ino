@@ -20,7 +20,13 @@ PubSubClient ps_client( wifi_client );
 // Extra, created by SEGP team
 #include "Timer.h"
 
-enum state {Free, Use, Booked, Lunch};
+//Include JSON Parser library (ArduinoJson.h)
+#include <ArduinoJson.h>
+
+#define BOOKED_RECEIVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
+
+enum state {Free, Use, Booked, Lunch, Setup};
+enum screen {setBuilding, setRoom, setChair};
 
 /*******************************************************************************************
  *
@@ -86,9 +92,9 @@ int bookedTimer = 10;
 uint32_t targetTime = 0;   
 
 //Chair identifier
-int buildingId = 1;
-int roomId = 1;
-int chariId = 1;
+int buildingId;
+int roomId;
+int chairId;
 
 // Standard, one time setup function.
 void setup() {
@@ -98,6 +104,7 @@ void setup() {
     // Note, other functions are using the
     // LCD so expect errors if you delete this.
     M5.begin();
+    M5.Power.begin();
     M5.IMU.Init();
     M5.Lcd.setRotation(3);
     M5.Lcd.fillScreen(BLACK);
@@ -129,7 +136,7 @@ void setup() {
 
     // Maybe you need to write your own
     // setup code after this...
-    M5.IMU.getGyroData(&initX,&initY,&initZ);
+    M5.IMU.getAccelData(&initX,&initY,&initZ);
     state = Free;
     targetTime = millis() + 1000;
     
@@ -140,17 +147,18 @@ void setup() {
 void loop() {
   M5.Lcd.setTextSize(3);
   M5.update();
-  M5.IMU.getGyroData(&accX,&accY,&accZ);
+  M5.IMU.getAccelData(&accX,&accY,&accZ);
+ 
   // Leave this code here.  It checks that you are
   // still connected, and performs an update of itself.
   if (!ps_client.connected()) {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
-    publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
-    state = Free;
+    publishMessage("free");
+    state = Setup;
   }
-
+  
   lunchTimer = 10;
   bookedTimer = 10;
 
@@ -166,6 +174,9 @@ void loop() {
   else if (state == Lunch) {
     lunch_loop();
   }
+  else if (state == Setup){
+    setup_loop();
+  }
 }
 
 
@@ -176,16 +187,18 @@ void free_loop() {
   printFreeScreen();
   while (state == Free) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
     ps_client.loop();
-  
-    if ((abs(accX-initX) > 50) || (abs(accY-initY) > 50) || (abs(accZ-initZ) > 50)) {
+    if ((abs(accX-initX) > 0.3) || (abs(accY - initY) > 0.3) || (abs(accZ - initZ) > 0.3)) {
       state = Use;
-      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }"));
+      publishMessage("use");
     }
     else if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage(("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }"));
+      publishMessage("lunch");
+    }
+    else if(M5.BtnA.wasReleased() && M5.BtnC.wasReleased()){
+      state = Setup;
     }
   }
 }
@@ -203,19 +216,20 @@ void use_loop() {
   float cumMovement = 100;
   while (state == Use) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
+ 
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: lunch" + " }");
+      publishMessage("lunch");
     }
     if (cumMovement >= 0) {
-      cumMovement = cumMovement - 20;
-      delay(10);
+      cumMovement = cumMovement - 1;
+      delay(100);
     }
   }
 }
@@ -231,14 +245,15 @@ void printUseScreen() {
 // Chair can return to free after 10min timer runs out (20s timer for test)
 // Chair can go to in use if card is scanned (button is pressed in tests)
 void booked_loop() {
+  publishMessage("In booked loop");
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
+      publishMessage("use");
     }
     if (bookedTimer <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if( publishing_timer.isReady() ) {
       bookedTimer--;
@@ -264,15 +279,17 @@ void lunch_loop() {
   float cumMovement = 0;
   while (state == Lunch) {
     M5.update();
-    M5.IMU.getGyroData(&accX,&accY,&accZ);
+    M5.IMU.getAccelData(&accX,&accY,&accZ);
+  
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
+  
     if (cumMovement >= 10000) {
       state = Use;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: use" + " }");
+      publishMessage("use");
     }
     if (lunchTimer <= 0) {
       state = Free;
-      publishMessage("{ " + "buildingID: " + (String) buildinId + " roomId: " + (String) roomId + " chairId: " + (String) chairId + " state: free" + " }");
+      publishMessage("free");
     }
     if( publishing_timer.isReady() ) {
       lunchTimer--;
@@ -297,6 +314,96 @@ void printLunchScreen() {
   M5.Lcd.drawString((String)minutes + ":" + (String)seconds, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
 
+//Loop used to set up chair when first installing stack in a room. Accessed by pressing buttons A and C simultaneously.
+void setup_loop(){
+
+  int idsSet = 0;
+  buildingId = 0;
+  roomId = 0;
+  chairId = 0;
+  
+  int screen = setBuilding;
+  
+  printSetupScreen(&screen);
+  
+  while (state == Setup)
+  {
+   
+    if (screen == setBuilding) {
+    setup_building_loop(&screen);
+    }
+    else if (screen == setRoom)
+    {
+      setup_room_loop(&screen);
+    }
+    else if (screen == setChair)
+    {
+      setup_chair_loop(&screen);
+    } 
+  }
+  
+  
+}
+
+void setup_building_loop(int *screen)
+{
+  printSetupScreen(screen);
+
+  while (*screen == setBuilding)
+  {
+    
+    if (M5.BtnC.wasReleased())
+    {
+      if (buildingId > 0) 
+      {
+        buildingId--;
+      }
+    }
+    if (M5.BtnA.wasReleased())
+    {
+      Serial.print("Button a pressed");
+      buildingId++;
+      printSetupScreen(screen);
+    }
+  }
+}
+
+void setup_room_loop(int *screen)
+{
+  
+}
+
+void setup_chair_loop(int *screen)
+{
+  
+}
+
+void printSetupScreen(int *screen){
+  M5.Lcd.fillScreen(0x3B98);
+  if (*screen == setBuilding)
+  { 
+    M5.Lcd.setTextDatum( BC_DATUM );
+    M5.Lcd.drawString("Set BuildingId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+    M5.Lcd.setTextDatum( TC_DATUM );
+    M5.Lcd.drawString((String) buildingId, (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+  }
+  else if (*screen == setRoom)
+  {  
+    M5.Lcd.setTextDatum( BC_DATUM );
+    M5.Lcd.drawString("Set RoomId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+    M5.Lcd.setTextDatum( TC_DATUM );
+    M5.Lcd.print(roomId);
+  }
+  else if (*screen == setChair)
+  {
+     M5.Lcd.setTextDatum( BC_DATUM );
+     M5.Lcd.drawString("Set ChairId:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
+     M5.Lcd.setTextDatum( TC_DATUM );
+     M5.Lcd.print(chairId);
+  }
+  
+  
+}
 
 /*******************************************************************************************
  *
@@ -350,6 +457,8 @@ void publishMessage( String message ) {
 
 void callback(char* topic, byte* payload, unsigned int length) {
 
+  //Set up JSON buffer
+  StaticJsonDocument<200> jsonDoc;
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -362,7 +471,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
 
-  if (in_str=="Booked") {
+  auto error = deserializeJson(jsonDoc, in_str);
+  //If parsing fails, print the error to serial.
+  if (error) {
+    Serial.print(F("deserializeJson() failed with code "));
+    Serial.println(error.c_str());
+    return;
+  }
+  
+  if (BOOKED_RECEIVED) {
     if (state == Free) {
       state = Booked;
     }
@@ -438,7 +555,7 @@ void reconnect() {
       Serial.println("connected");
 
       // Once connected, publish an announcement...
-      ps_client.publish( MQTT_pub_topic, "M5STICK CONNECTED");
+      ps_client.publish( MQTT_pub_topic, "M5STACK CONNECTED");
       // ... and resubscribe
       ps_client.subscribe( MQTT_sub_topic );
     } else {
