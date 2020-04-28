@@ -23,7 +23,7 @@ PubSubClient ps_client( wifi_client );
 //Include JSON Parser library (ArduinoJson.h)
 #include <ArduinoJson.h>
 
-#define BOOKED_RECEIVED (jsonDoc["buildingId"] == buildingId && jsonDoc["roomId"] == roomId && jsonDoc["chairId"] == chairId && jsonDoc["state"] == "booked")
+#define BOOKED_RECEIVED (jsonReceived["buildingId"] == buildingId && jsonReceived["roomId"] == roomId && jsonReceived["chairId"] == chairId && jsonReceived["state"] == "booked")
 
 enum state {Free, Use, Booked, Lunch, Setup, Broken};
 enum screen {setBuilding, setRoom, setChair};
@@ -96,6 +96,9 @@ int buildingId;
 int roomId;
 int chairId;
 
+//JSON document to send
+StaticJsonDocument<200> jsonSent;
+
 // Standard, one time setup function.
 void setup() {
 
@@ -148,14 +151,16 @@ void loop() {
   M5.Lcd.setTextSize(3);
   M5.update();
   M5.IMU.getAccelData(&accX,&accY,&accZ);
- 
+  String jsonMessage = "";
   // Leave this code here.  It checks that you are
   // still connected, and performs an update of itself.
   if (!ps_client.connected()) {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor( 10, 10 );
     reconnect();
-    publishMessage("free");
+    jsonSent["state"] = "setup";
+    serializeJson(jsonSent, jsonMessage);
+    publishMessage(jsonMessage);
     state = Setup;
   }
   
@@ -188,17 +193,22 @@ void loop() {
 // Chair can (FOR NOW) change to lunch by pressing the button in free
 void free_loop() {
   printFreeScreen();
+  String jsonMessage = "";
   while (state == Free) {
     M5.update();
     M5.IMU.getAccelData(&accX,&accY,&accZ);
     ps_client.loop();
     if ((abs(accX-initX) > 0.3) || (abs(accY - initY) > 0.3) || (abs(accZ - initZ) > 0.3)) {
       state = Use;
-      publishMessage("use");
+      jsonSent["state"] = "use";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     else if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("lunch");
+      jsonSent["state"] = "lunch";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     else if(M5.BtnA.wasReleased() && M5.BtnC.wasReleased()){
       state = Setup;
@@ -206,7 +216,9 @@ void free_loop() {
     else if(M5.BtnB.wasReleased())
     {
       state = Broken;
-      publishMessage("broken");
+      jsonSent["state"] = "broken";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
   }
 }
@@ -221,6 +233,7 @@ void printFreeScreen() {
 // Chair can go to 'Lunch' by pressing button
 void use_loop() {
   printUseScreen();
+  String jsonMessage = "";
   float cumMovement = 100;
   while (state == Use) {
     M5.update();
@@ -229,11 +242,15 @@ void use_loop() {
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement <= 0) {
       state = Free;
-      publishMessage("free");
+      jsonSent["state"] = "free";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if(M5.BtnC.wasReleased()){
       state = Lunch;
-      publishMessage("lunch");
+      jsonSent["state"] = "lunch";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if (cumMovement >= 0) {
       cumMovement = cumMovement - 1;
@@ -253,14 +270,19 @@ void printUseScreen() {
 // Chair can return to free after 10min timer runs out (20s timer for test)
 // Chair can go to in use if card is scanned (button is pressed in tests)
 void booked_loop() {
+  String jsonMessage = "";
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
-      publishMessage("use");
+      jsonSent["state"] = "use";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if (bookedTimer <= 0) {
       state = Free;
-      publishMessage("free");
+      jsonSent["state"] = "free";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if( publishing_timer.isReady() ) {
       bookedTimer--;
@@ -284,6 +306,7 @@ void printBookedScreen() {
 // Chair goes back to 'Free' if no movement detected after 45min timer
 void lunch_loop() {
   float cumMovement = 0;
+  String jsonMessage = "";
   while (state == Lunch) {
     M5.update();
     M5.IMU.getAccelData(&accX,&accY,&accZ);
@@ -292,11 +315,15 @@ void lunch_loop() {
   
     if (cumMovement >= 10000) {
       state = Use;
-      publishMessage("use");
+      jsonSent["state"] = "use";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if (lunchTimer <= 0) {
       state = Free;
-      publishMessage("free");
+      jsonSent["state"] = "free";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     }
     if( publishing_timer.isReady() ) {
       lunchTimer--;
@@ -324,6 +351,7 @@ void printLunchScreen() {
 //Loop used to set up chair when first installing stack in a room. Can also be accessed by pressing buttons A and C simultaneously but only in 'Free' state.
 void setup_loop(){
 
+  String jsonMessage = "";
   buildingId = 0;
   roomId = 0;
   chairId = 0;
@@ -345,8 +373,14 @@ void setup_loop(){
     {
       setup_chair_loop(&screen);
     } 
-    Serial.print(state);
   }
+ //Add ids to JSON
+  jsonSent["buildingId"] = buildingId;
+  jsonSent["roomId"] = roomId;
+  jsonSent["chairId"] = chairId;
+  jsonSent["state"] = "free";
+  serializeJson(jsonSent, jsonMessage);
+  publishMessage(jsonMessage);
 }
 
 //Building ID loop
@@ -447,6 +481,7 @@ void printSetupScreens(int *screen){
 //Function for the broken state that will be entered if a chair/desk has been flagged as brokem. This will be done by pressing a button and scanning the UCard.
 void broken_loop()
 {
+  String jsonMessage = "";
   printBrokenScreen();
   while (state == Broken)
   {
@@ -454,6 +489,9 @@ void broken_loop()
     if (M5.BtnB.wasReleased())
     {
       state = Free;
+      jsonSent["state"] = "free";
+      serializeJson(jsonSent, jsonMessage);
+      publishMessage(jsonMessage);
     } 
   }
 }
@@ -519,7 +557,7 @@ void publishMessage( String message ) {
 void callback(char* topic, byte* payload, unsigned int length) {
 
   //Set up JSON buffer
-  StaticJsonDocument<200> jsonDoc;
+  StaticJsonDocument<200> jsonReceived;
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -532,7 +570,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
 
-  auto error = deserializeJson(jsonDoc, in_str);
+  auto error = deserializeJson(jsonReceived, in_str);
   //If parsing fails, print the error to serial.
   if (error) {
     Serial.print(F("deserializeJson() failed with code "));
