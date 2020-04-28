@@ -56,8 +56,8 @@ const char* password = "";          // No password for UoB Guest
 
 // MQTT Settings
 const char* MQTT_clientname = "deskClient(Stick)"; // Make up a short name
-const char* MQTT_sub_topic = "chair_booking"; // pub/sub topics
-const char* MQTT_pub_topic = "chair_booking"; // You might want to create your own
+const char* MQTT_sub_topic = "FindADesk_WebToStack"; // pub/sub topics
+const char* MQTT_pub_topic = "FindADesk_StackToWeb"; // You might want to create your own
 
 // Please leave this alone - to connect to HiveMQ
 const char* server = "broker.mqttdashboard.com";
@@ -200,7 +200,7 @@ void free_loop() {
     ps_client.loop();
     if ((abs(accX-initX) > 0.3) || (abs(accY - initY) > 0.3) || (abs(accZ - initZ) > 0.3)) {
       state = Use;
-      jsonSent["state"] = "use";
+      jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
       publishMessage(jsonMessage);
     }
@@ -274,7 +274,7 @@ void booked_loop() {
   while (state == Booked) {
     if(M5.BtnA.wasReleased()){
       state = Use;
-      jsonSent["state"] = "use";
+      jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
       publishMessage(jsonMessage);
     }
@@ -315,7 +315,7 @@ void lunch_loop() {
   
     if (cumMovement >= 10000) {
       state = Use;
-      jsonSent["state"] = "use";
+      jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
       publishMessage(jsonMessage);
     }
