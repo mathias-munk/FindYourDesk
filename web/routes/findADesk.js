@@ -25,7 +25,7 @@ client.on("connect", async () => {
 });
 
 // -----MQTT MESSAGE HANDLER-----
-client.on("message", function (topic, message) {
+client.on("message", function(topic, message) {
   if (topic == "FindADesk_StackToWeb") {
     updateChairState(message.toString());
     console.log("Received from stack");
@@ -110,7 +110,7 @@ router.post("/room", async (req, res) => {
   }
 });
 
-router.get("/book/:roomId/:chairId", async function (req, res) {
+router.get("/book/:roomId/:chairId", async function(req, res) {
   try {
     // find every building (but just once) for the sidebar
     let buildingList = await db.Room.collection.distinct("buildingName");
@@ -134,7 +134,7 @@ router.get("/book/:roomId/:chairId", async function (req, res) {
 });
 
 function messageStack(chairId, roomId, buildingId) {
-  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId} } "state": "booked" }`;
+  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId}, "state": "booked" }`;
   client.publish("FindADesk_WebToStack", string);
 }
 
@@ -237,7 +237,5 @@ async function updateChairState(string) {
     console.log(err);
   }
 }
-
-
 
 module.exports = router;

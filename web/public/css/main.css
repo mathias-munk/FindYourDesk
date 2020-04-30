@@ -124,12 +124,16 @@
   width: 25%;
   /* background-color: rgb(116, 147, 168); */
   float: left;
-  text-align: center;
   background-image: linear-gradient(
     to left,
     rgb(74, 94, 107),
     rgb(116, 147, 168)
   );
+}
+
+.building-menu form {
+  display: flex;
+  flex-direction: column;
 }
 
 .building-text {
@@ -140,6 +144,9 @@
   font-weight: bold;
   text-decoration: none;
   display: block;
+  background: none;
+  border: none;
+  text-align: center;
 }
 
 .building-text:hover {
@@ -246,28 +253,21 @@
   background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
 }
 
-.blue {
-  background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
+.free {
+  background-image: linear-gradient(rgb(177, 255, 138), rgb(92, 138, 70));
 }
 
-/* chairs.html */
+.booked {
+  background-image: linear-gradient(rgb(255, 188, 94), rgb(201, 145, 66));
+}
 
-/* .chair-container {
-  height: 90%;
-  width: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
+.occupied {
+  background-image: linear-gradient(rgb(245, 93, 93), rgb(171, 26, 26));
+}
 
-/* .chair-container {
-  height: 90%;
-  width: 75%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25em, 1fr));
-  grid-column-gap: 1.5rem;
-  grid-row-gap: 0.5rem;
-} */
+.lunch {
+  background-image: linear-gradient(rgb(79, 117, 255), rgb(48, 75, 176));
+}
 
 .table-group {
   position: relative;
@@ -287,8 +287,11 @@
   width: 100%;
   margin: 15% 0;
   height: 30%;
-  background-color: rgb(255, 140, 140);
   border-radius: 5%;
+  border: none;
+}
+/* .chair:hover > .chair-state {
+  visibility: visible;
 }
 
 .chair-state {
@@ -298,19 +301,15 @@
   position: absolute;
   top: -10%;
   right: -50%;
-  background-color: white;
+  background-color: red;
   padding: 0 5px;
   border-radius: 5%;
   color: black;
   visibility: hidden;
-}
+} */
 
 button {
   font-size: 1em;
-}
-
-.chair:hover > .chair-state {
-  visibility: visible;
 }
 
 .bottom {
@@ -322,11 +321,6 @@ button {
   height: 100%;
   background-image: linear-gradient(rgb(64, 64, 64), rgb(117, 117, 117));
   border-radius: 5%;
-}
-
-.book {
-  background-color: green;
-  border: none;
 }
 
 .book_hover:hover {
@@ -357,27 +351,3 @@ button {
   margin-top: 0.5em;
   cursor: pointer;
 }
-
-/* .table {
-  display: inline-block;
-  height: 50%;
-  width: 20%;
-  background-color: black;
-  border-radius: 5px;
-}
-
-.chair {
-  height: 10%;
-  width: 5%;
-  background-color: red;
-  margin: 0 5% 0 5%;
-}
-
-.book {
-  cursor: pointer;
-  transition: all 0.3s linear;
-}
-
-.book:hover {
-  box-shadow: 2px 3px 2px rgb(80, 80, 80);
-} */
