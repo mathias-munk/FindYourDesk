@@ -1,12 +1,16 @@
-<<<<<<< HEAD
-function makeBooking(id) {
-  $("#result").load("/room");
-}
+const chairDOM = document.querySelectorAll(".chair");
+const openConfirmButtons = document.querySelectorAll('[data-open-button]');
+const closeConfirmButtons = document.querySelectorAll('[data-close-button]');
+const overlay = document.getElementById('overlay');
 
+document.addEventListener("DOMContentLoaded", () => {
+  chairDOM.forEach(chair => {
+    if (!chair.classList.contains("free")) {
+      chair.classList.remove("book_hover");
+    }
+  });
+});
 
-const openConfirmButtons = document.querySelectorAll('[data-modal-target]')
-const closeConfirmButtons = document.querySelectorAll('[data-close-button]')
-const overlay = document.getElementById('overlay')
 
 openConfirmButtons.forEach(button => {
   button.addEventListener('click', () => {
@@ -33,14 +37,3 @@ function closePopup(modal) {
   modal.classList.remove('active');
   overlay.classList.remove('active')
 }
-=======
-const chairDOM = document.querySelectorAll(".chair");
-
-document.addEventListener("DOMContentLoaded", () => {
-  chairDOM.forEach(chair => {
-    if (!chair.classList.contains("free")) {
-      chair.classList.remove("book_hover");
-    }
-  });
-});
->>>>>>> 0cf74d44962e49a9cf470c9e6d825b2665e958ad
