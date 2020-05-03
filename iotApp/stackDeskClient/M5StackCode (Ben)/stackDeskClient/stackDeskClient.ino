@@ -500,7 +500,6 @@ void broken_loop()
       state = Free;
       jsonSent["state"] = "free";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage, stackToProcessing);
       publishMessage(jsonMessage, stackToWeb);
     } 
   }
