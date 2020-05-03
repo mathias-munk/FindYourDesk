@@ -21,4 +21,11 @@ public class Building{
      return roomNames;
    }
    
+   public int brokenInBuilding(){
+    int numBroken = 0;
+     for(Room r: Rooms){
+        numBroken += r.countBroken();
+      }
+      return numBroken;
+   }
 }

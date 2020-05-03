@@ -134,7 +134,7 @@ router.get("/book/:roomId/:chairId", async function(req, res) {
 });
 
 function messageStack(chairId, roomId, buildingId) {
-  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId}, "state": "booked" }`;
+  let string = `{ "buildingId": ${buildingId}, "roomId": ${roomId}, "chairId": ${chairId} } "state": "booked" }`;
   client.publish("FindADesk_WebToStack", string);
 }
 

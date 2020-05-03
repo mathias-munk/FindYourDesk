@@ -1,4 +1,4 @@
-public class Room{
+public class Room {
     String name;
     boolean status;
     int RoomId;
@@ -23,4 +23,27 @@ public class Room{
       return true;
     }
     
+    public boolean removeDesk(){
+      if(Desks.size() < 2){
+        return false;
+    }
+    Desks.remove(Desks.size() - 1);
+    return true;
+    }
+    public boolean findDesk(int deskID, int chairID){
+      for(Desk d: Desks){
+        if(d.DeskId == deskID){
+          d.markBroken(chairID);
+          return true;
+        }
+      }
+      return false;
+    }
+  public int countBroken(){
+     int numBroken = 0;
+     for(Desk d: Desks){
+       numBroken += d.countBroken();
+     }
+     return numBroken;
+  }
 }

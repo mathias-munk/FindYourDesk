@@ -11,9 +11,25 @@ public class Desk{
       this.RoomID = RoomID;
       this.DeskId = DeskID;
       for(int i = 0; i <=4; i++){
-           Chairs.add(new Chair(1,BuildingID, RoomID, DeskID,i));
+           Chairs.add(new Chair("Broken",BuildingID, RoomID, DeskID,i));
        }
     }
     
+    public void markBroken(int chairID){
+    for(Chair c: Chairs){
+        if(c.chairNum  == chairID){
+          c.status = "Broken";
+        }
+    }
+    }
     
+    public int countBroken(){
+      int numBroken = 0;
+      for(Chair c: Chairs){
+        if(c.status.equals("Broken")){
+            numBroken++;
+        }
+    }
+    return numBroken;
+  }
 }
