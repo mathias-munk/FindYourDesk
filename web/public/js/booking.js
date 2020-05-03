@@ -1,5 +1,5 @@
 const chairDOM = document.querySelectorAll(".chair");
-const openConfirmButtons = document.querySelectorAll('[data-open-button]');
+const openConfirmButtons = document.querySelectorAll('[data-modal-target]');
 const closeConfirmButtons = document.querySelectorAll('[data-close-button]');
 const overlay = document.getElementById('overlay');
 
