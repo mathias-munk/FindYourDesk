@@ -14,6 +14,7 @@ public class Dashboard_view {
     int listOneSelection = -1;
     int listTwoSelection = -1;
     int button_state = 0;
+    int publish_state = 0;
 
     void build_list(String list_name, ArrayList<String> items){
       
@@ -44,56 +45,84 @@ public class Dashboard_view {
         textEntry.setFont(cf1);
     }
   
+  void build_metric(String name, int value, int x, int y) {
+        cp5.addNumberbox(name)
+            .setValue(value)
+            .setPosition(x, y)
+            .setSize(60, 20);   
+  }
 }
 
+
+
 void updateDashboard() {
-    surface.setTitle("Stack Delivery Management Dashboard");
-      
+        surface.setTitle("Stack Delivery Management Dashboard");
         Buildings.add("MVB");
         Buildings.add("Wills");
         view.build_list("Buildings", Buildings);
         view.build_list("Rooms", Rooms);
-        
-       
+        cp5.addButton("Publish")
+          .setValue(0)
+          .setPosition(500,150)
+          .setSize(150,34);
+        view.build_metric("Total Broken", countTotalBroken(), 350, 65); 
 }
+
+int countTotalBroken(){
+  int result = 0;
+  
+  for(Building b: buildingList){
+    result += b.brokenInBuilding();
+  }
+ 
+  return result;
+}
+
+
 void Buildings(int n) {
   view.listOneSelection=n;
 }
-void Rooms(int n) {
+
+  void Rooms(int n) {
   view.listTwoSelection=n;
+  cp5.addButton("addTable")
+            .setValue(0)
+            .setPosition(800,50)
+            .setSize(150, 34);     
+            
+  cp5.addButton("removeTable")
+            .setValue(0)
+            .setPosition(800,100)
+            .setSize(150, 34);       
+   view.button_state = view.button_state +1;
+   view.currentRoom = 1;
+
 }
 void controlEvent(ControlEvent theEvent) {
     // expand order if clicked via API call
     String label = theEvent.getController().getLabel();
     String valueLabel = theEvent.getController().getValueLabel().getText();
-    System.out.println(label + valueLabel +  theEvent.getController().getName() );
+    System.out.println(label + valueLabel +  theEvent.getController().getName());
     
     if(label.equals("Buildings ") || Buildings.contains(label)){
            currentBuilding = buildingList.get(view.listOneSelection);
            println("hellohello");
            Rooms.clear();
-           Rooms.addAll(buildingList.get(view.listOneSelection).returnRoomNames()); 
+           Rooms.addAll(buildingList.get(view.listOneSelection).returnRoomNames());
+           cp5.remove("Broken in Current Building");
+           cp5.remove("Add new Room");
+           view.build_textEntry("Add new Room");
+           view.build_metric("Broken in Current Building", buildingList.get(view.listOneSelection).brokenInBuilding(), 350, 105);
            if (list_spacing > list_x_size + 10) {
               list_spacing = list_spacing - list_x_size -10;
            }
-           cp5.remove("addTable");
            cp5.remove("Rooms");
-           cp5.remove("Add new Room");
            view.build_list("Rooms", Rooms);
-           view.build_textEntry("Add new Room");
-           
+           cp5.remove("addTable");
+           cp5.remove("removeTable");
+                   
         }
-     if(label.equals("Rooms ")){
-        System.out.println("hello");
-        cp5.remove("addTable");
-           view.button_state = 0;
-           cp5.addButton("addTable")
-            .setValue(0)
-            .setPosition(500,150)
-            .setSize(100, 19);
-            view.button_state = view.button_state +1;
-        view.currentRoom = 1;
-      }
+     
     println(view.listOneSelection);
     if(label.equals("Add new Room")){
       buildingList.get(view.listOneSelection).setRoom(new Room(valueLabel, 1, view.listOneSelection,buildingList.get(view.listOneSelection).Rooms.size()));
@@ -105,6 +134,11 @@ void controlEvent(ControlEvent theEvent) {
       
     }
     
+    if(label.equals("Disconnect From Broker")) {
+      client.disconnect();
+      println("Disconnected From Broker");
+    }
+    
 }
 void addTable(int theValue){
   if(view.button_state >1) {
@@ -112,7 +146,21 @@ void addTable(int theValue){
   }
   view.button_state = view.button_state +1;
 }
+void removeTable(int theValue){
+  if(view.button_state > 1){
+    buildingList.get(view.listOneSelection).Rooms.get(view.listTwoSelection).removeDesk();
+  }
+  view.button_state = view.button_state +1;
+}
 
+void Publish(int theValue){
+  if(view.publish_state > 1){
+      for(int i = 0; i < buildingList.size(); i++) {
+      publishToBroker(buildingList.get(i).Rooms, buildingList);
+    }
+  }
+  view.publish_state++;
+}
 void drawRoom(Room CurrentRoom){
   
 }
