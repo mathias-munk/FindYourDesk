@@ -16,7 +16,6 @@
     <% j = 0 %>
     <% for(i = 0; i < room.tables; i++) { %>
     <article class="table-group">
-      <!-- LEFT SIDE CHAIRS -->
       <div class="chair-group">
           <div data-room=<%= room._id%> class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>>
             <%= j %>
@@ -29,9 +28,7 @@
           </div>
         <% j++ %>
       </div>
-      <!-- TABLE -->
       <div class="table"></div>
-      <!-- RIGHT SIDE CHAIRS -->
       <div class="chair-group">
           <div data-room=<%= room._id%> class="chair book book_hover <%= room.chairs[j].state %>" data-id=<%= j %>>
             <%= j %>
