@@ -27,6 +27,7 @@ PubSubClient ps_client( wifi_client );
 
 enum state {Free, Use, Booked, Lunch, Setup, Broken};
 enum screen {setBuilding, setRoom, setChair};
+enum pubTopic {stackToWeb, stackToProcessing};
 
 /*******************************************************************************************
  *
@@ -58,6 +59,7 @@ const char* password = "";          // No password for UoB Guest
 const char* MQTT_clientname = "deskClient(Stick)"; // Make up a short name
 const char* MQTT_sub_topic = "FindADesk_WebToStack"; // pub/sub topics
 const char* MQTT_pub_topic = "FindADesk_StackToWeb"; // You might want to create your own
+const char* MQTT_pub_topic_processing = "FindADesk_StackToProcessing";
 
 // Please leave this alone - to connect to HiveMQ
 const char* server = "broker.mqttdashboard.com";
@@ -95,6 +97,9 @@ uint32_t targetTime = 0;
 int buildingId;
 int roomId;
 int chairId;
+
+//Current booking flag
+int currentBookingFlag = 0;
 
 //JSON document to send
 StaticJsonDocument<200> jsonSent;
@@ -160,7 +165,7 @@ void loop() {
     reconnect();
     jsonSent["state"] = "setup";
     serializeJson(jsonSent, jsonMessage);
-    publishMessage(jsonMessage);
+    publishMessage(jsonMessage, stackToWeb);
     state = Setup;
   }
   
@@ -202,13 +207,7 @@ void free_loop() {
       state = Use;
       jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
-    }
-    else if(M5.BtnC.wasReleased()){
-      state = Lunch;
-      jsonSent["state"] = "lunch";
-      serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     else if(M5.BtnA.wasReleased() && M5.BtnC.wasReleased()){
       state = Setup;
@@ -218,13 +217,15 @@ void free_loop() {
       state = Broken;
       jsonSent["state"] = "broken";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToProcessing);
     }
   }
 }
 
 void printFreeScreen() {
   M5.Lcd.fillScreen( GREEN );
+  M5.Lcd.setTextDatum(TC_DATUM);
+  M5.Lcd.drawString("Chair ID: " + (String) chairId, 200, 10, 1);
   M5.Lcd.setTextDatum(CC_DATUM);
   M5.Lcd.drawString("Free", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
@@ -241,16 +242,17 @@ void use_loop() {
  
     cumMovement += abs(accX-initX) + abs(accY-initY) + abs(accZ-initZ);
     if (cumMovement <= 0) {
+      currentBookingFlag = 0;
       state = Free;
       jsonSent["state"] = "free";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
-    if(M5.BtnC.wasReleased()){
+    if(M5.BtnC.wasReleased() && currentBookingFlag == 1){
       state = Lunch;
       jsonSent["state"] = "lunch";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     if (cumMovement >= 0) {
       cumMovement = cumMovement - 1;
@@ -261,6 +263,8 @@ void use_loop() {
 
 void printUseScreen() {
   M5.Lcd.fillScreen(0xfbe4);
+  M5.Lcd.setTextDatum(TC_DATUM);
+  M5.Lcd.drawString("Chair ID: " + (String) chairId, 200, 10, 1);
   M5.Lcd.setTextDatum( BC_DATUM );
   M5.Lcd.drawString("In", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
   M5.Lcd.setTextDatum( TC_DATUM );
@@ -272,17 +276,18 @@ void printUseScreen() {
 void booked_loop() {
   String jsonMessage = "";
   while (state == Booked) {
-    if(M5.BtnA.wasReleased()){
+    if(M5.BtnB.wasReleased()){
+      Serial.print("Booked button pressed");
       state = Use;
       jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     if (bookedTimer <= 0) {
       state = Free;
       jsonSent["state"] = "free";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     if( publishing_timer.isReady() ) {
       bookedTimer--;
@@ -295,6 +300,8 @@ void booked_loop() {
 void printBookedScreen() {
   int minutes = bookedTimer / 60;
   int seconds = bookedTimer % 60;
+  M5.Lcd.setTextDatum(TC_DATUM);
+  M5.Lcd.drawString("Chair ID: " + (String) chairId, 200, 10, 1);
   M5.Lcd.fillScreen( RED );
   M5.Lcd.setTextDatum( BC_DATUM );
   M5.Lcd.drawString("Booked:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
@@ -317,13 +324,13 @@ void lunch_loop() {
       state = Use;
       jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     if (lunchTimer <= 0) {
       state = Free;
       jsonSent["state"] = "free";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToWeb);
     }
     if( publishing_timer.isReady() ) {
       lunchTimer--;
@@ -342,6 +349,8 @@ void printLunchScreen() {
   int seconds = lunchTimer % 60;
   // Yellow
   M5.Lcd.fillScreen(0xff80);
+  M5.Lcd.setTextDatum(TC_DATUM);
+  M5.Lcd.drawString("Chair ID: " + (String) chairId, 200, 10, 1);
   M5.Lcd.setTextDatum( BC_DATUM );
   M5.Lcd.drawString("Lunch:", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
   M5.Lcd.setTextDatum( TC_DATUM );
@@ -380,7 +389,7 @@ void setup_loop(){
   jsonSent["chairId"] = chairId;
   jsonSent["state"] = "free";
   serializeJson(jsonSent, jsonMessage);
-  publishMessage(jsonMessage);
+  publishMessage(jsonMessage, stackToWeb);
 }
 
 //Building ID loop
@@ -491,7 +500,8 @@ void broken_loop()
       state = Free;
       jsonSent["state"] = "free";
       serializeJson(jsonSent, jsonMessage);
-      publishMessage(jsonMessage);
+      publishMessage(jsonMessage, stackToProcessing);
+      publishMessage(jsonMessage, stackToWeb);
     } 
   }
 }
@@ -500,6 +510,8 @@ void broken_loop()
 void printBrokenScreen()
 {
   M5.Lcd.fillScreen(0xF800);
+  M5.Lcd.setTextDatum(TC_DATUM);
+  M5.Lcd.drawString("Chair ID: " + (String) chairId, 200, 10, 1);
   M5.Lcd.setTextDatum( BC_DATUM );
   M5.Lcd.drawString("OUT OF ORDER", (int)(M5.Lcd.width()/2), (int)(M5.Lcd.height()/2), 2);
 }
@@ -522,8 +534,9 @@ void printBrokenScreen()
 // publishMessage( "my text" + millis() );
 // So instead, pre-prepare a String variable, and then
 // pass that.
-void publishMessage( String message ) {
+void publishMessage( String message, int pubTopic ) {
 
+ 
   if( ps_client.connected() ) {
 
     // Make sure the message isn't blank.
@@ -533,8 +546,16 @@ void publishMessage( String message ) {
       char msg[ message.length()+1 ];
       message.toCharArray( msg, message.length()+1 );
 
-      // Send
-      ps_client.publish( MQTT_pub_topic, msg );
+      // Send, check which channel to send to
+      if(pubTopic == stackToWeb)
+      {
+        ps_client.publish( MQTT_pub_topic, msg );
+      }
+      else if (pubTopic == stackToProcessing)
+      {
+        ps_client.publish( MQTT_pub_topic_processing, msg );
+      }
+      
     }
 
   } else {
@@ -581,6 +602,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (BOOKED_RECEIVED) {
     if (state == Free) {
       state = Booked;
+      currentBookingFlag = 1;
     }
   }
 
