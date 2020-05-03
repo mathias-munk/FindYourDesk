@@ -52,7 +52,7 @@ uint8_t guestMacAddress[6] = {0x64, 0xa2, 0xf9, 0xb6, 0xe4, 0xb8};
 
 //Wifi settings - MATT HOME
 const char* ssid = "VM1945866";                 // Set name of Wifi Network
-const char* password = "";          // No password for UoB Guest        
+const char* password = "gwWwkvmG8gdh";          // No password for UoB Guest        
 
 
 // MQTT Settings
