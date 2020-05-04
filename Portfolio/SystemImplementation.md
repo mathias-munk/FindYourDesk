@@ -7,10 +7,9 @@
 [\* Social and Ethical Implications](#ethicalImplications)
 
 PROBABLY SHOULD HAVE SOME INTRO TEXT HERE
+<a name="sprintBreakdown"></a>
 
 ## Breakdown of the Sprints
-
-<a name="sprintBreakdown"></a>
 
 #### Sprint 1
 
@@ -18,13 +17,13 @@ Sprint one involved group brainstorming, designing basic UI, and converting pape
 
 ###### Goals:
 
-    * To solve the overarching user story of both students’ and administrators’ need for a straightforward, easy to use UI for each of the subsystems which visually represent the product’s concept and functionality.
+- To solve the overarching user story of both students’ and administrators’ need for a straightforward, easy to use UI for each of the subsystems which visually represent the product’s concept and functionality.
 
-    * Agreeing on design of basic UI based on user feedback from paper prototypes
+- Agreeing on design of basic UI based on user feedback from paper prototypes
 
-    * Using feedback gathered through Wizard of Oz techniques to determine basic building blocks for each subsystem from which to build out the rest of the program
+- Using feedback gathered through Wizard of Oz techniques to determine basic building blocks for each subsystem from which to build out the rest of the program
 
-    * Decide on the initial stack functionality and placement - we were unsure at this stage exactly how the M5Stack would be incorporated into the system design.
+- Decide on the initial stack functionality and placement - we were unsure at this stage exactly how the M5Stack would be incorporated into the system design.
 
 Sprint one was heavily design oriented, using user feedback gathered through Wizard of Oz techniques on the initial paper prototype to determine the basic building blocks for each subsystem from which to build out the rest of the program. At this stage, little functionality was implemented other than to mirror the basic visual layout of the wireframes, with the goal of gathering further UI-related user feedback in a software context. This involved designing static HTML and CSS pages for the website and for the stack to display single words such as “booked” or “occupied” to indicate chair status. For the desktop application this involved developing the basic dropdown menus for navigation through buildings and rooms, as well as graphic representation of the tables and chairs within each room.
 
@@ -36,15 +35,15 @@ We agreed the next most important feature to implement was communication between
 
 ###### Goals
 
-    * Following the ‘substitution’ principle, deciding to establish a common contract between all modules via the MQTT protocol.
+- Following the ‘substitution’ principle, deciding to establish a common contract between all modules via the MQTT protocol.
 
-    * Agreeing on the MQTT subscriptions for each subsystem and the structure and content of data sent via MQTT.
+- Agreeing on the MQTT subscriptions for each subsystem and the structure and content of data sent via MQTT.
 
-    * Minor bug fixing and optimization of work completed in sprint 1.
+- Minor bug fixing and optimization of work completed in sprint 1.
 
-    * Deciding on which additional functionality was feasible and worthwhile given the aim of completing a functional prototype.
+- Deciding on which additional functionality was feasible and worthwhile given the aim of completing a functional prototype.
 
-    * Following the ‘Open/closed’ principle we implemented a ‘state machine’ to define each state of the stack. This would allow us to implement additional states in the future whilst ensuring the fundamental state mechanism.
+- Following the ‘Open/closed’ principle we implemented a ‘state machine’ to define each state of the stack. This would allow us to implement additional states in the future whilst ensuring the fundamental state mechanism.
 
 For the website, setting up a communication with the MQTT broker involved linking the HTML pages with JavaScript files. This allowed for connecting and subscribing to the correct topic, as well as applying functions to connect DOM elements to the publishing of messages to the MQTT. At this stage a single ‘chair’ HTML element was chosen to act as the button which, when clicked, sent a simple text message with the word ‘booked’. The JavaScript would simply console log any messages received from the other subsystems.
 
@@ -58,17 +57,17 @@ The priorities in this sprint were to implement a data persistence mechanism to 
 
 ###### Goals
 
-    * Agree on the different subscription names we would need for all the different MQTT messaging directions.
+- Agree on the different subscription names we would need for all the different MQTT messaging directions.
 
-    * Implement functions in the web application allowing for dynamic HTML page loading of buildings, rooms and number of chairs based on the received messages from the desktop application.
+- Implement functions in the web application allowing for dynamic HTML page loading of buildings, rooms and number of chairs based on the received messages from the desktop application.
 
-    * Implement some basic data persistence on the web application, using local storage in the browser.
+- Implement some basic data persistence on the web application, using local storage in the browser.
 
-    * Refactor M5Stack code so that the chair stays in the ‘occupied’ state even when it doesn’t detect movement for a few seconds (based on user feedback).
+- Refactor M5Stack code so that the chair stays in the ‘occupied’ state even when it doesn’t detect movement for a few seconds (based on user feedback).
 
-    * Add an RFID scanner to the M5Stack so that users can scan their U-Card and authenticate their chair booking.
+- Add an RFID scanner to the M5Stack so that users can scan their U-Card and authenticate their chair booking.
 
-    * Implement an add/remove room and desk feature to desktop app, finalizing basic desktop functionality.
+- Implement an add/remove room and desk feature to desktop app, finalizing basic desktop functionality.
 
 Following discussions with the product owner member of the team, the UI wireframes were redesigned for each of the subsystems. Some of the key points from previous user feedback were that the colour key for the chairs on the website was not obvious and that users were not sure how they would recognise their chair when they would get to the study space.
 
@@ -86,11 +85,11 @@ The main focus of sprint 4 was to convert the web application to use a server an
 
 ###### Goals
 
-    * Implement a Node.js web server.
+- Implement a Node.js web server.
 
-    * Change our approach to data persistence and implement the NoSQL database MongoDB.
+- Change our approach to data persistence and implement the NoSQL database MongoDB.
 
-    * Add ‘broken’ and ‘setup’ states to the M5Stack to allow the chair id to be set and to allow the chair to be reported faulty
+- Add ‘broken’ and ‘setup’ states to the M5Stack to allow the chair id to be set and to allow the chair to be reported faulty
 
 Express was used as the framework for implementing the web application server. We connected the web application to a local MongoDB database using the JavaScript library Mongoose. EJS was also integrated to help create dynamic web pages based on the data stored in the database) The UI design was updated on the web application based on the feedback from the last sprint (a hover effects on chairs to display the current state and the chair ID given to the user as an identifier of their chair).
 
@@ -102,13 +101,13 @@ The ‘broken’ state (as shown in the M5Stack State Diagram) was added, after 
 
 Throughout our project we used the following methods to evaluate our designs:
 
-    * Wizard of Oz
+- Wizard of Oz
 
-    * User testing (with think aloud and interview)
+- User testing (with think aloud and interview)
 
-    * Assigning product owner
+- Assigning product owner
 
-    * SWOT analysis
+- SWOT analysis
 
 The very first evaluation technique that we used was “Wizard of Oz” which was used at the paper prototype phase. This combined with think aloud evaluation provided quick and cheap feedback to rapidly iterate our initial designs. The next iteration of paper prototypes was digitised with Processing allowing us to expand on this and give the users a better sense of the UI. These initial evaluations worked quite well, and because these tests were conducted during unit workshops we were able to gather a variety of participants.
 
@@ -120,7 +119,7 @@ Considering the difficulties of conducting user research, we decided to assign a
 
 Finally, when evaluating where we have arrived as of writing this report, we decided to conduct a SWOT analysis to identify the strengths and weaknesses of the current product to understand where to make improvements for future work. Ideally, we would have done this after a final large round of user testing, however for obvious reasons this was not possible, and may have limited the scope of our insight.
 
-![](images/Picture_20.png)
+![](/images/Picture_20.png)
 
 ## Social and Ethical Implications
 
