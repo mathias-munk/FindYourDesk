@@ -2,9 +2,9 @@
 
 #### Contents
 
-[\* Breakdown of the Sprints](#sprintBreakdown)
-[\* Evaluation Techniques](#evaluationTechniques)
-[\* Social and Ethical Implications](#ethicalImplications)
+- [Breakdown of the Sprints](#sprintBreakdown)
+- [Evaluation Techniques](#evaluationTechniques)
+- [Social and Ethical Implications](#ethicalImplications)
 
 PROBABLY SHOULD HAVE SOME INTRO TEXT HERE
 <a name="sprintBreakdown"></a>
@@ -94,10 +94,9 @@ The main focus of sprint 4 was to convert the web application to use a server an
 Express was used as the framework for implementing the web application server. We connected the web application to a local MongoDB database using the JavaScript library Mongoose. EJS was also integrated to help create dynamic web pages based on the data stored in the database) The UI design was updated on the web application based on the feedback from the last sprint (a hover effects on chairs to display the current state and the chair ID given to the user as an identifier of their chair).
 
 The ‘broken’ state (as shown in the M5Stack State Diagram) was added, after consulting the Product Owner, to fulfill the user story which focuses on the librarian wanting a convenient system to report broken chairs. The ‘setup’ state was also added to allow administrators (e.g. the university/library workers) to easily set each chair up with an ID that corresponds to its allocated ID in the database. A ‘faulty chair’ report was added to the desktop and communication between the stack and desktop was finalised.
+<a name="evaluationTechniques"></a>
 
 ## Evaluation Techniques
-
-<a name="evaluationTechniques"></a>
 
 Throughout our project we used the following methods to evaluate our designs:
 
@@ -121,9 +120,9 @@ Finally, when evaluating where we have arrived as of writing this report, we dec
 
 ![](/images/Picture_20.png)
 
-## Social and Ethical Implications
-
 <a name="ethicalImplications"></a>
+
+## Social and Ethical Implications
 
 In terms of the ethics of our project, we made sure to follow the ethical guidelines set out by the university. Participants in each user-feedback study gave verbal consent, and were both briefed and debriefed as to the purpose of each study they were involved in. In terms of the data we are currently storing all of it is related to participants’ opinions regarding the layout and design of our user interfaces, with no personal data collected. We are not aware of any way in which our user testing could cause harm, and we made sure to give participants the ability to withdraw their responses.
 
