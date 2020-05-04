@@ -289,7 +289,6 @@
 }
 
 .chair {
-  /* position: absolute; */
   width: 100%;
   margin: 15% 0;
   height: 30%;
@@ -325,10 +324,6 @@ button {
   visibility: visible;
 }
 
-.bottom {
-  bottom: 0;
-}
-
 .table {
   width: 50%;
   height: 100%;
@@ -340,51 +335,3 @@ button {
   cursor: pointer;
   box-shadow: 2px 3px 2px rgb(80, 80, 80);
 }
-
-/* .room-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s linear;
-  background: rgb(240, 240, 240, 0.8);
-  z-index: 2;
-  visibility: hidden;
-}
-
-.showOverlay {
-  visibility: visible;
-}
-
-.close-room {
-  float: right;
-  font-size: 2em;
-  margin-right: 0.5em;
-  margin-top: 0.5em;
-  cursor: pointer;
-} */
-
-/* .table {
-  display: inline-block;
-  height: 50%;
-  width: 20%;
-  background-color: black;
-  border-radius: 5px;
-}
-
-.chair {
-  height: 10%;
-  width: 5%;
-  background-color: red;
-  margin: 0 5% 0 5%;
-}
-
-.book {
-  cursor: pointer;
-  transition: all 0.3s linear;
-}
-
-.book:hover {
-  box-shadow: 2px 3px 2px rgb(80, 80, 80);
-} */
