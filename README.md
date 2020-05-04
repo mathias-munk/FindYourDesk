@@ -20,6 +20,6 @@ Philippe O&#39;Malley: <td19582@bristol.ac.uk>
 
 ### Portoflio
 
-1. [System Design](portfolio/SystemDesign.md)
-2. [System Implementation](portfolio/SystemImplementation.md)
-3. [Project Evaluation](portfolio/ProjectEvaluation.md)
+1. [System Design](portfolio/SystemDesign)
+2. [System Implementation](portfolio/SystemImplementation)
+3. [Project Evaluation](portfolio/ProjectEvaluation)
