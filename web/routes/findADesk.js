@@ -115,7 +115,7 @@ router.get("/room/:id", async (req, res) => {
 //   }
 // });
 
-router.get("/book/:roomId/:chairId", async function(req, res) {
+router.post("/book/:roomId/:chairId", async function(req, res) {
   try {
     // find every building (but just once) for the sidebar
     let buildingList = await db.Room.collection.distinct("buildingName");
@@ -132,6 +132,7 @@ router.get("/book/:roomId/:chairId", async function(req, res) {
     }
     // Reload the page
     res.render("room", { room: room, buildingList: buildingList });
+    // res.render("index");
     // res.send("Hello");
   } catch (err) {
     console.log(err);
@@ -191,7 +192,7 @@ function createChairArray(tables) {
   for (let i = 0; i < chairs; i++) {
     newChair = new db.Chair({
       chairId: i,
-      state: "free"
+      state: "occupied"
     });
     chairArray.push(newChair);
   }

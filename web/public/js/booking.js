@@ -12,24 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
             chair.dataset.id
         );
         if (result == true) {
-          // $.ajax({
-          //   type: "POST",
-          //   url: `/book/${chair.dataset.room}/${chair.dataset.id}`,
-          //   success: function() {
-          //     alert("Booking confirmed.\n\nChair ID: " + chair.dataset.id);
-          //     document.location.href = `/`;
-          //   },
-          //   error: function(xhr, status, err) {
-          //     console.log(xhr.responseText);
-          //   }
-          // });
-          // var xhttp = new XMLHttpRequest();
-          // alert("Booking confirmed.\n\nChair ID: " + chair.dataset.id);
-          // let url = `/book/${chair.dataset.room}/${chair.dataset.id}`;
-          // xhttp.open("GET", url, true);
-          // xhttp.send();
-          alert("Booking confirmed.\n\nChair ID: " + chair.dataset.id);
-          document.location.href = `/book/${chair.dataset.room}/${chair.dataset.id}`;
+          $.ajax({
+            type: "POST",
+            url: `/book/${chair.dataset.room}/${chair.dataset.id}`,
+            success: function() {
+              alert("Booking confirmed.\n\nChair ID: " + chair.dataset.id);
+              document.location.href = `/room/${chair.dataset.room}`;
+            },
+            error: function(xhr, status, err) {
+              console.log(xhr.responseText);
+            }
+          });
         }
       });
     }
