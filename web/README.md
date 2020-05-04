@@ -16,6 +16,6 @@ npm install
 
 ### You then can start the local server with:
 
-npm start
+npm run start
 
 #### The server will be running on local host port 5000
