@@ -275,9 +275,10 @@ void printUseScreen() {
 // Chair can go to in use if card is scanned (button is pressed in tests)
 void booked_loop() {
   String jsonMessage = "";
+  
   while (state == Booked) {
-    if(M5.BtnB.wasReleased()){
-      Serial.print("Booked button pressed");
+    M5.update();
+    if(M5.BtnA.wasReleased()){
       state = Use;
       jsonSent["state"] = "occupied";
       serializeJson(jsonSent, jsonMessage);
@@ -674,8 +675,6 @@ void reconnect() {
     if (ps_client.connect( id_array ) ) {
       Serial.println("connected");
 
-      // Once connected, publish an announcement...
-      ps_client.publish( MQTT_pub_topic, "M5STACK CONNECTED");
       // ... and resubscribe
       ps_client.subscribe( MQTT_sub_topic );
     } else {
