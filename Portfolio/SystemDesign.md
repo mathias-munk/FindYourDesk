@@ -21,31 +21,31 @@ Students and administrators need a straightforward, easy to use UI for each of t
 
 One of the 3 subsystems of our product is the desktop application that administrators can use to design rooms, add tables and chairs, and view maintenance reports. Some examples of user stories for this are:
 
-\*An administrator wants to create new study spaces at their university and display this information to students, so they open the desktop application and add a new study space. This includes creating rooms, desks, chairs and buildings and being able to manage the IDs of these separate entities.
+- _An administrator wants to create new study spaces at their university and display this information to students, so they open the desktop application and add a new study space. This includes creating rooms, desks, chairs and buildings and being able to manage the IDs of these separate entities._
 
-An administrator wants to be able to find the locations of chairs that are faulty in order to schedule maintenance.
+- _An administrator wants to be able to find the locations of chairs that are faulty in order to schedule maintenance._
 
-An administrator wants to be able to monitor usage in each of the different study spaces.\*
+- _An administrator wants to be able to monitor usage in each of the different study spaces._
 
 The second subsystem of our product is the web application that students use to view the learning spaces, the available chairs in each and to make a booking for a chair. Some user stories are:
 
-\*A student who is new to a university wants to see a list of all the available buildings and rooms where they can study.
+- _A student who is new to a university wants to see a list of all the available buildings and rooms where they can study._
 
-A student who wants to go into university to study is not sure they will find a study space to work. They want to check if there are free seats available.
+- _A student who wants to go into university to study is not sure they will find a study space to work. They want to check if there are free seats available._
 
-A student is not sure whether seats will still be available by the time they get into the university. They want to be able to make a booking to guarantee a space for when they arrive.
+- _A student is not sure whether seats will still be available by the time they get into the university. They want to be able to make a booking to guarantee a space for when they arrive._
 
-A student struggles to study when rooms are very busy and noisy. They want to be able to easily check which study spaces are the quietest at the university.\*
+- _A student struggles to study when rooms are very busy and noisy. They want to be able to easily check which study spaces are the quietest at the university._
 
 The final component of our product is the M5Stack which is attached to the back of every chair and displays the chairs current state. Some examples of user stories for this are:
 
-\*A student working at a desk wants to be able to leave the desk for breaks/lunch without the worry of having their desk taken by another student in their absence.
+- _A student working at a desk wants to be able to leave the desk for breaks/lunch without the worry of having their desk taken by another student in their absence._
 
-A student looking around a library for a seat sees a desk with a bag near it, but nobody is sitting in the chair, so they aren’t sure if the chair is still in use.
+- _A student looking around a library for a seat sees a desk with a bag near it, but nobody is sitting in the chair, so they aren’t sure if the chair is still in use._
 
-An administrator has been tasked with installing the physical M5 stack devices on each chair. Rather than setting the chair, room and building IDs in the code and downloading to every device manually, a setup state was needed. The IDs could then be manually configured while installation took place.
+- _An administrator has been tasked with installing the physical M5 stack devices on each chair. Rather than setting the chair, room and building IDs in the code and downloading to every device manually, a setup state was needed. The IDs could then be manually configured while installation took place._
 
-A librarian walking around the library notices that a chair is broken. They think it would be useful to have a system of reporting these broken chairs.\*
+- _A librarian walking around the library notices that a chair is broken. They think it would be useful to have a system of reporting these broken chairs._
 
 ![](/images/Picture_2.png)
 <a name="theSubsystems"></a>
@@ -135,21 +135,21 @@ For the web application UI wireframes we started with a basic paper prototype, w
 
 Some of the key points included:
 
-_What is the purpose of the application. What are users supposed to get out of it?_
+- _What is the purpose of the application. What are users supposed to get out of it?_
 
-_Oftentimes users had to be guided towards the next page - the flow wasn’t natural to them._
+- _Oftentimes users had to be guided towards the next page - the flow wasn’t natural to them._
 
-_Colour of chairs not explained (e.g. green = free, red = occupied). A colour key would be beneficial._
+- _Colour of chairs not explained (e.g. green = free, red = occupied). A colour key would be beneficial._
 
 Based on this feedback, changes were made to the wireframes before beginning implementation of the website.
 
 The UI layout was reassessed with each subsequent iteration/sprint and the design was changed based on the user feedback. Some of the comments recorded over subsequent sprints are:
 
-_Wasn’t clear how many free chairs in a room. Did the number on room overview page refer to total chairs or total free chairs?_
+- _Wasn’t clear how many free chairs in a room. Did the number on room overview page refer to total chairs or total free chairs?_
 
-_Not clear about booking time. For example, how long do I have to get there?_
+- _Not clear about booking time. For example, how long do I have to get there?_
 
-_How to identify what chair I have booked? Is there an ID/code?_
+- _How to identify what chair I have booked? Is there an ID/code?_
 
 Changes to the UI were continuously updated based on these feedback comments throughout the iterations.
 
