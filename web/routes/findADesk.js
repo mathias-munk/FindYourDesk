@@ -19,6 +19,8 @@ client.on("connect", async () => {
     console.log("Ready to receive from stack.");
     await client.subscribe("FindADesk_ProcessingToWeb");
     console.log("Ready to receive from desktop.");
+    await client.subscribe("FindADesk_RequestDatabase");
+    console.log("Ready to send database information to desktop.");
   } catch (err) {
     console.log(err);
   }
@@ -32,6 +34,9 @@ client.on("message", function(topic, message) {
   }
   if (topic == "FindADesk_ProcessingToWeb") {
     updateRoomState(message.toString());
+  }
+  if (topic == "FindADesk_RequestDatabase") {
+    requestDatabaseForDesktop(message.toString());
   }
 });
 
@@ -103,12 +108,12 @@ router.get("/room/:id", async (req, res) => {
 });
 
 // Room page which displays tables and chairs in that room.
-router.post("/room", async (req, res) => {
-  try {
-  } catch {
-    res.redirect("/map");
-  }
-});
+// router.post("/room", async (req, res) => {
+//   try {
+//   } catch {
+//     res.redirect("/map");
+//   }
+// });
 
 router.get("/book/:roomId/:chairId", async function(req, res) {
   try {
@@ -125,9 +130,9 @@ router.get("/book/:roomId/:chairId", async function(req, res) {
       // Send message to MQTT
       messageStack(chair.chairId, room.roomId, room.buildingId);
     }
-
     // Reload the page
     res.render("room", { room: room, buildingList: buildingList });
+    // res.send("Hello");
   } catch (err) {
     console.log(err);
   }
@@ -213,9 +218,9 @@ async function deleteRoom(string) {
 
 // Reads JSON object from stack and updates chair state
 async function updateChairState(string) {
-  const chairObject = JSON.parse(string);
-  let chair;
   try {
+    const chairObject = JSON.parse(string);
+    let chair;
     // Search for room with the buildingId and roomId
     room = await db.Room.findOne({
       roomId: chairObject.roomId,
@@ -235,6 +240,32 @@ async function updateChairState(string) {
     }
   } catch (err) {
     console.log(err);
+  }
+}
+
+// Sends all the information regarding buildings and rooms to desktop application
+async function requestDatabaseForDesktop(message) {
+  if (message == "request") {
+    try {
+      const rooms = await db.Room.find();
+      let roomsObj = {
+        rooms: []
+      };
+      rooms.forEach(room => {
+        let roomObj = {
+          buildingId: room.buildingId,
+          buildingName: room.buildingName,
+          roomId: room.roomId,
+          roomName: room.roomName,
+          tables: room.tables
+        };
+        roomsObj.rooms.push(roomObj);
+      });
+      let response = JSON.stringify(roomsObj);
+      client.publish("FindADesk_RequestDatabase", response);
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
 
