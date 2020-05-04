@@ -8,8 +8,9 @@
 }
 
 .bar {
+  z-index: 1;
   width: 100%;
-  height: 10%;
+  height: 4rem;
   padding-bottom: 0.5%;
   background-image: linear-gradient(
     to right,
@@ -120,6 +121,8 @@
 /* buildings.html */
 
 .building-menu {
+  position: fixed;
+  /* z-index: -1; */
   height: 90%;
   width: 25%;
   /* background-color: rgb(116, 147, 168); */
@@ -280,36 +283,46 @@
   position: relative;
   height: 100%;
   width: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .chair {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
   margin: 15% 0;
   height: 30%;
   border-radius: 5%;
   border: none;
-}
-/* .chair:hover > .chair-state {
-  visibility: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Spartan", sans-serif;
+  font-size: 12px;
+  color: white;
 }
 
 .chair-state {
   font-family: "Spartan", sans-serif;
-  font-size: 1em;
-  width: 80px;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
   position: absolute;
-  top: -10%;
-  right: -50%;
-  background-color: red;
   padding: 0 5px;
   border-radius: 5%;
-  color: black;
+  color: white;
+  margin-top: 60%;
+  background-color: rgb(79, 92, 97);
   visibility: hidden;
-} */
+}
 
 button {
   font-size: 1em;
+}
+
+.chair:hover > .chair-state {
+  visibility: visible;
 }
 
 .bottom {
@@ -328,7 +341,7 @@ button {
   box-shadow: 2px 3px 2px rgb(80, 80, 80);
 }
 
-.room-overlay {
+/* .room-overlay {
   position: fixed;
   top: 0;
   right: 0;
@@ -350,4 +363,28 @@ button {
   margin-right: 0.5em;
   margin-top: 0.5em;
   cursor: pointer;
+} */
+
+/* .table {
+  display: inline-block;
+  height: 50%;
+  width: 20%;
+  background-color: black;
+  border-radius: 5px;
 }
+
+.chair {
+  height: 10%;
+  width: 5%;
+  background-color: red;
+  margin: 0 5% 0 5%;
+}
+
+.book {
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+
+.book:hover {
+  box-shadow: 2px 3px 2px rgb(80, 80, 80);
+} */
