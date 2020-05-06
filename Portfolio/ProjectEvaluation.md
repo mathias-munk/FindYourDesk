@@ -48,6 +48,9 @@ We used Trello as a makeshift Kanban board, updating and checking off to-do list
 
 
 
+
+
+
 WhatsApp ended up being an invaluable tool both for meeting organisation as well as regular team contact as we transitioned to online learning and did not have opportunities to organise meetings while at university. Any issues that arose that were not mentioned during arranged meetings were often discussed and solved here. The WhatsApp group also doubled up as a general discussion forum for non-SEGP related topics. Using it in this capacity helped improve morale and indirectly made SEGP discussions more frequent.
 
 Naturally the closure of the university and subsequent lockdown made face to face meetings impossible and made integration of subsystems more difficult. Previously each sub-team had been doing pair programming with one person writing the code whilst the other watched and gave guidance where needed. Remotely this proved to be much more difficult even with screen sharing, and it was decided that each person would work on a section of their subsystem, whilst ensuring regular check-ins and integration took place. Face to face meetings instead took place via Skype, and in the initial stages of the lockdown, less regularly. A couple of meetings were derailed due to power outages / poor internet for some members, and overall communication was more difficult in this format. This forced us to commit to our initial design ideas because there was less scope to pivot from our key design decisions given the increased difficulty to communicate and integrate new features, which felt like a shame given the open-ended nature of the assignment. The lockdown made a live demonstration incredibly difficult and coordinating and editing a video remotely has added significant stress while also being a poorer format through which to demonstrate the product.
