@@ -13,7 +13,7 @@ FindADesk has a system design composed of 3 different subsystems, intended for 3
 
 <div style="text-align:center"><img src="images/Picture_17.png" /></div>
 
-<div style="text-align:center; width:100%;"><i>Figure 1. Overview of System Architecture</i></div>
+<div style="text-align:center"><i>Figure 1. Overview of System Architecture</i></div>
 
 <a name="userStories"></a>
 
@@ -49,7 +49,6 @@ The final component of our product is the M5Stack which is attached to the back 
 
 - _A librarian walking around the library notices that a chair is broken. They think it would be useful to have a system of reporting these broken chairs._
 
-![](images/Picture_2.png)
 <a name="theSubsystems"></a>
 
 ## The 3 Subsystems
@@ -110,6 +109,12 @@ When the stack changes between two states, it publishes its new state to the MQT
 The stack can also receive information from the website and send information to the processing application. Both of these are compartmentalised and it is only able to receive the ‘booked’ command from the website when it is in ‘free’ mode (as dictated by the state machine), and it will only send out information to the processing application when it enters the ‘broken’ state (this is also achieved through the use of MQTT).
 
 In terms of Object-Oriented design, the code for the stack itself is written in C++ in a functional way, but in terms of the entire system the stack in itself is very much a Stack object, which has an id and a state which can be passed around and stored by the processing and web applications.
+
+<div style="text-align:center"><img src="images/Picture_2.png" /></div>
+
+<div style="display:flex; align-items:center">
+  <div style="text-align:center"><i>Figure .... Booking sequence diagram</i></div>
+</div>
 <a name="evolutionWireframes"></a>
 
 ## Evolution of Wireframes
