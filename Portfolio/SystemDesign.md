@@ -11,7 +11,9 @@
 
 FindADesk has a system design composed of 3 different subsystems, intended for 3 different user cases. These are a desktop application, a web application and an IoT device application (M5Stack). It centers around ‘chair’ objects, with the 3 different sub-systems all interacting with ‘chair’ objects in different ways. Information is communicated between the systems regarding the number and location of chairs, the state that any chairs are currently in and if there is a booking made for the chair. This allows students to see exactly where any chairs are and whether they are available. The communication is carried out by sending JSON objects through MQTT, a lightweight messaging protocol, with the message sending automated by each of the sub-systems.
 
-![](images/Picture_17.png)
+<center>![](images/Picture_17.png)</center>
+
+<center>_Overview of System Architecture_</center>
 
 <a name="userStories"></a>
 
@@ -43,7 +45,7 @@ The final component of our product is the M5Stack which is attached to the back 
 
 - _A student looking around a library for a seat sees a desk with a bag near it, but nobody is sitting in the chair, so they aren’t sure if the chair is still in use._
 
-- _An administrator has been tasked with installing the physical M5 stack devices on each chair. Rather than setting the chair, room and building IDs in the code and downloading to every device manually, a setup state was needed. The IDs could then be manually configured while installation took place._
+- _An administrator wants to be able to easily setup chairs in study spaces so that the FindADesk web application can be used._
 
 - _A librarian walking around the library notices that a chair is broken. They think it would be useful to have a system of reporting these broken chairs._
 
