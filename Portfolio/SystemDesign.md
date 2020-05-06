@@ -16,7 +16,7 @@ FindADesk has a system design composed of 3 different subsystems, intended for 3
 
 ## User Stories
 
-Students and administrators need a straightforward, easy to use UI for each of the subsystems which visually represent product’s concept and functionality.
+Students and administrators need a straightforward, easy to use UI for each of the subsystems which visually represent our products concept and functionality. Our system was designed to comply with this, but also to meet the requirements of all the different user stories.
 
 One of the 3 subsystems of our product is the desktop application that administrators can use to design rooms, add tables and chairs, and view maintenance reports. Some examples of user stories for this are:
 
