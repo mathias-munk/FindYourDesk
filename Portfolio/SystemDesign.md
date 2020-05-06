@@ -13,8 +13,7 @@ FindADesk has a system design composed of 3 different subsystems, intended for 3
 
 <div style="text-align:center"><img src="images/Picture_17.png" /></div>
 
-
-<center>_Overview of System Architecture_</center>
+<div style="text-align:center"><i>Overview of System Architecture</i></div>
 
 <a name="userStories"></a>
 
