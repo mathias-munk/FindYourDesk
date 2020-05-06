@@ -192,7 +192,7 @@ function createChairArray(tables) {
   for (let i = 0; i < chairs; i++) {
     newChair = new db.Chair({
       chairId: i,
-      state: "occupied"
+      state: "free"
     });
     chairArray.push(newChair);
   }
