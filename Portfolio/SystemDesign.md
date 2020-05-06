@@ -252,7 +252,7 @@ The UI layout was reassessed with each subsequent iteration/sprint and the desig
 Changes to the UI were continuously updated based on these feedback comments throughout the iterations.
 
 <p align="center">
-![](images/Picture_13.png)
+  <img src="images/Picture_13.png" />
  </p>
  <p align="center">
   <i>Figure 15. _Changes in the UI design of one of the web pages over time_</i>
@@ -263,7 +263,7 @@ Changes to the UI were continuously updated based on these feedback comments thr
 
 ## Communication Protocols
 
-MQTT, a lightweight messaging protocol, was used for communication between the different applications. The MQTT transfers information as text and therefore some sort of text structure is required to make the communication simpler and more efficient. It was decided that a JSON type text structure would be able to send information in the most efficient way, allowing for easier parsing when receiving a message.
+MQTT, a lightweight messaging protocol, was used for communication between the different applications. The MQTT transfers information as text and therefore a text structure is required to make the communication simpler and more efficient. It was decided that a JSON type text structure would be able to send information in the most efficient way, allowing for easier parsing when receiving a message.
 
 Our system required that there be multiple communications going in different directions between the different devices. Because of the complicated communication design of our system, we decided to use multiple different subscriptions so that it was clear which messages were being published to which application. These are:
 
