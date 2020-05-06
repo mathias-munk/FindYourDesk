@@ -113,11 +113,10 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 
 <p align="center">
   <img src="images/Picture_2.png" />
-</p>
-
-<p align="center">
   <i>Figure .... Booking sequence diagram</i>
 </p>
+
+
 
 
 <a name="evolutionWireframes"></a>
