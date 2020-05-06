@@ -11,7 +11,7 @@
 
 FindADesk is an system composed of 3 different subsystems, intended for 3 different user cases. These are a desktop application, a web application and an IoT device application (M5Stack). It centers around ‘chair’ objects, with the 3 different sub-systems all interacting with ‘chair’ objects in different ways. Information is communicated between the systems regarding the number and location of chairs, the state that any chairs are currently in and if there is a booking made for the chair. This allows students to see exactly where any chairs are and whether they are available. The communication is carried out by sending JSON objects through MQTT, a lightweight messaging protocol, with the messages automated by the programs in the applications.
 
-![](/images/Picture_1.png)
+![](images/Picture_1.png)
 
 <a name="userStories"></a>
 
@@ -47,7 +47,7 @@ The final component of our product is the M5Stack which is attached to the back 
 
 - _A librarian walking around the library notices that a chair is broken. They think it would be useful to have a system of reporting these broken chairs._
 
-![](/images/Picture_2.png)
+![](images/Picture_2.png)
 <a name="theSubsystems"></a>
 
 ## The 3 Subsystems
@@ -60,7 +60,7 @@ The Processing application is built around a cascade of objects representing bui
 
 The building and room classes have both name and ID attributes, while each subsequent sub-object also stores the ID of its parents such that a desk, for example, will also have attributes denoting the IDs of the room and building to which it belongs. The chair is somewhat different; its ID (instead of being an integer) is a string composed of the cumulative ids of its parents combined with its own ID. This ID is unique per room. This allows the processing app to easily send chair information to the web app and subsequently receive chair information from the stack. We did not see much value in using inheritance in the application, primarily because the objects function as data structures with little extra functionality gained from using it. In effect, the desktop application uses Object Oriented design to closely mirror the real world layout of a library / study space, and to also act as data storage containers for easy communication between applications.
 
-![](/images/Picture_3.png)
+![](images/Picture_3.png)
 
 The desktop application also contains classes representing the main dashboard and one which updates the view based on the user’s interaction. The view class updates the dashboard and also handles the user interactions with the application, including adding rooms and desks. The main dashboard class sets up the dashboard, draws the tables and handles the parsing and publishing of MQTT messages
 
@@ -76,32 +76,32 @@ Further to this, a student is able to select a chair and make a booking. This wi
 
 #### M5Stack Application
 
-![](/images/Picture_4.png)
+![](images/Picture_4.png)
 
 The M5Stack subsystem is responsible for detecting the current state of the chair and displaying it, which is determined by following the above state machine diagram. When the stack initialises for the first time, it enters the 'setup' state:
 
-![](/images/Picture_5.png)
+![](images/Picture_5.png)
 _Setting the IDs within the 'Setup' state_
 
 Here the user can enter the relevant building, room and chair IDs on to the stack directly using the buttons.
 
 Once setup is complete the stack enters the ‘free’ state, then stays in free until one of the stated conditions is met:
 
-![](/images/Picture_6.png)
+![](images/Picture_6.png)
 
 It can only then move between the states which are connected by the arrows shown above (e.g. it cannot move from ‘booked’ to ‘at lunch’ directly). The stacks onboard accelerometer is used to measure vibration from the chair, and if it is above a certain threshold the state then moves to ‘occupied’:
 
-![](/images/Picture_7.png)
+![](images/Picture_7.png)
 
 While in use, the leftmost button can be used to start the chair user’s lunch break, initialising a 45-minute timer in which the chair is reserved and cannot leave this state. To exit this state, either the user must scan their U-Card, returning the chair to the ‘occupied’ state, or the timer can run out, returning to the ‘free’ state (because evidently the user hasn’t made it back in time from lunch, so their seat is now available).
 
 From ‘free’, the chair can also change to the ‘booked’ state, which means that a user has reserved that seat through the website application. This initialises a 10-minute timer, allowing the user to get to the seat and scan their U-Card, changing the state of the chair to ‘occupied’:
 
-![](/images/Picture_8.png)
+![](images/Picture_8.png)
 
 If they fail to scan their U-Card within 10 minutes, the chair state reverts to ‘free’. A fifth administrator state was added to the state machine, allowing the chair to be declared ‘broken’ if an administrator U-Card is scanned and the leftmost button is pressed. Changing to this state then notifies the processing application that a chair is broken so it can be repaired – the only way out of this state is for an admin to once again scan their U-Card and press a button, thereby preventing the chair from being used when it is broken.
 
-![](/images/Picture_9.png)
+![](images/Picture_9.png)
 
 When the stack changes between two states, it publishes its new state to the MQTT WebSocket (which the web client receives and updates on the website and within the database). This can be seen in the diagram above; where a condition is met, the state is changed and published to MQTT, and then the stack loops through its new state until another condition is met and the state changes again.
 
@@ -112,12 +112,12 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 
 ## Evolution of Wireframes
 
-[View all wireframes](../Wireframes)
+[View all wireframes](images/Wireframes)
 On the desktop application we first experimented with having a search bar to find buildings. This proved to be both difficult to implement and difficult to use for the user. Based on user feedback, we decided instead to use dropdown lists for users to navigate through buildings and rooms. We tried to do this by adapting the code from the processing code walkthrough, however quickly found out that it only partially fulfilled what we wanted to get done. By using controlP5 and by creating functions with the same names as the controlP5 controllers we were creating (similar to how you write code in CSS/javascript) we were able to extract which items were being clicked in the drop down lists and from that we could start to navigate between classrooms and display them individually.
 
 The fundamental design of the desktop UI revolves around showing the user a graphical representation of the desks and chairs on a room by room basis. Available chairs are shown in green while red chairs signal any other status. Clicking on a drop-down menu and selecting a building and room allows users to add a new desk to the room one at a time. The user can also choose to add a new room to the selected building. Users understood the UI intuitively and needed little help navigating it. One user however did comment that when creating a new room, the program should automatically navigate to the new room instead of it having to be selected post-creation. This happened after the user accidentally added more desks to the current room instead of the new one.
 
-![](/images/Picture_10.png)
+![](images/Picture_10.png)
 
 The initial user interface designs for the M5Stack were basic, simply indicating the current state with text and a unique colour so that the user could see the state of the chair from a distance. The ‘lunch’ and ‘booked’ states also had timers counting down to indicate the time left in that state – both reverted back to free if the timers expired without any user input. The lunch and booked states were originally designed for the user to be able to scan their U-Card to access that chair, but as an initial temporary measure the user simply had to press the left-most button to access the chair.
 
@@ -125,9 +125,9 @@ Later versions of the UI include a chair id which allows administrators to know 
 
 As a later design change, we also added in the fifth state of ‘broken’, which allows an administrator to scan their U-Card, press a button and report the chair as broken to the processing application (so administrators can arrange for it to be repaired).
 
-![](/images/Picture_11.png)
+![](images/Picture_11.png)
 
-![](/images/Picture_12.png)
+![](images/Picture_12.png)
 
 Finally, so that the stacks could be more ‘plug and play’ and the ID isn’t hard-coded, we created a sixth ‘setup’ mode into which the stack initialises, allowing an administrator to set the 8-digit chair ID. This screen will only show on first use, so every other time the stack starts it will go straight to the ‘free’ state. It can however be accessed at a later date to modify the chair ID by pressing buttons 1 and 3 simultaneously – this allows chairs to be moved around buildings and reprogrammed easily.
 
@@ -153,7 +153,7 @@ The UI layout was reassessed with each subsequent iteration/sprint and the desig
 
 Changes to the UI were continuously updated based on these feedback comments throughout the iterations.
 
-![](/images/Picture_13.png)
+![](images/Picture_13.png)
 _Changes in the UI design of one of the web pages over time_
 
 <a name="communicationProtocols"></a>
@@ -168,7 +168,7 @@ Our system required that there be multiple communications going in different dir
 
 The desktop application needs to publish information to the web application regarding the current state of the university study spaces, including the number of buildings, the building names, number of rooms in each building, room names and the number of tables and chairs in each room. This is sent as an array of ‘room’ objects.
 
-![](/images/Picture_14.png)
+![](images/Picture_14.png)
 
 #### FindADesk_WebToProcessing
 
@@ -178,19 +178,19 @@ Likewise, the desktop application is able to make a request to the server to get
 
 The M5Stack publishes to the web application, sending information about the current state of the chair it is on (whether this be “free”, “lunch”, “occupied” or “booked”).
 
-![](/images/Picture_15.png)
+![](images/Picture_15.png)
 
 #### FindADesk_WebToStack
 
 The web application also needs to publish information to the M5Stack, informing it if a student has made a booking.
 
-![](/images/Picture_16.png)
+![](images/Picture_16.png)
 
 #### FindADesk_StackToProcessing
 
 Finally, the M5Stack publishes information to the desktop application regarding any faulty chairs that the admin team will want to respond to.
 
-![](/images/Picture_17.png)
+![](images/Picture_17.png)
 
 <a name="dataPersistence"></a>
 
@@ -204,7 +204,7 @@ The database schemas were designed as below, with the room objects containing an
 
 |         roomSchema          |         chairSchema         |
 | :-------------------------: | :-------------------------: |
-| ![](/images/Picture_18.png) | ![](/images/Picture_19.png) |
+| ![](images/Picture_18.png) | ![](images/Picture_19.png) |
 
 <a name="webTechnologies"></a>
 
