@@ -196,13 +196,13 @@ Finally, the M5Stack publishes information to the desktop application regarding 
 
 ## Data Persistence
 
-To achieve data persistence, we originally tried using the browser’s local storage to store the data. However this would rely on the other sub-systems continuously sending out messages to ensure the web pages were concurrent with the current state of the rooms and chairs. Furthermore, the user would have to be on the website whilst a message was received from the desktop application or the stack which would result in missed data if the page crashed or was closed. Also, if a user was to delete their local storage then they would again lose all the information and could potentially try to make a booking on a chair that was already occupied by someone else.
-
-
 ![](images/Diagram%20Folder/ERD%20For%20Software%20Dev.png)
 
+In the initial system design stages we initially considered and designed a relational database (figure .. ), however quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
 
-Following this we considered using an SQL database due to some of the entities having relational features (e.g. each building contains many rooms and each room contains many chairs). However, as we were investigating this avenue, we realised that NoSQL had the advantage of allowing us to reuse the same JSON structures that we were already using to communicate, removing the need to design a relational database. Therefore, we decided to use MongoDB as it is well supported with node.js and express.
+In our first attempts to achieve data persistence, we tried using the browser’s local storage to store the data. However this would rely on the other sub-systems continuously sending out messages to ensure the web pages were concurrent with the current state of the rooms and chairs. Furthermore, the user would have to be on the website whilst a message was received from the desktop application or the stack which would result in missed data if the page crashed or was closed. Also, if a user was to delete their local storage then they would again lose all the information and could potentially try to make a booking on a chair that was already occupied by someone else.
+
+Following this we considered designing a new SQL database due to some of the entities having relational features (e.g. each building contains many rooms and each room contains many chairs). However, as we were investigating this avenue, we realised that NoSQL had the advantage of allowing us to reuse the same JSON structures that we were already using to communicate, removing the need to design a relational database. Therefore, we decided to use MongoDB as it is well supported with node.js and express.
 
 The database schemas were designed as below, with the room objects containing an array of chair objects. The ‘freeChairs’ attribute is calculated based on the number of chairs currently in the ‘free’ state. As mentioned previously, the ‘chair’ attribute is calculated by multiplying the number of tables by four (it is assumed there will be 4 chairs per table for this prototype).
 
@@ -212,7 +212,7 @@ The database schemas were designed as below, with the room objects containing an
 | ![](images/Picture_18.png) | ![](images/Picture_19.png) |
 
 
-Another database schema could entail having 3 different objects; a building object, room object and chair object with each building containing an array of room objects and each room object containing an array of chair objects. It then may be better to implement it using a relational SQL database and it would likely scale better than having lots of nested arrays of objects in NoSQL documents. This would also allow the data to be better normalised, as the building names would not have to be repeated with each new room. However for our purposes and the relatively low number of buildings that there would likely be, it was much simpler to implement a NoSQL database because of the similarity between the information sent by the JSON strings through MQTT and a Document Database such as MongoDB. 
+Another database schema could entail having 3 different objects; a building object, room object and chair object with each building containing an array of room objects and each room object containing an array of chair objects. It then may be better to implement it using a relational SQL database and it would likely scale better than having lots of nested arrays of objects in NoSQL documents, particularly if we then decided to add in user accounts and attach bookings to said accounts later in development. This would also allow the data to be better normalised, as the building names would not have to be repeated with each new room. However for our purposes and the relatively low number of buildings that there would likely be, it was much simpler to implement a NoSQL database because of the similarity between the information sent by the JSON strings through MQTT and a Document Database such as MongoDB. 
 
 
 <a name="webTechnologies"></a>
