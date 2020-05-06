@@ -243,16 +243,21 @@ Based on this feedback, changes were made to the wireframes before beginning imp
 
 The UI layout was reassessed with each subsequent iteration/sprint and the design was changed based on the user feedback. Some of the comments recorded over subsequent sprints are:
 
-- _It's not clear how many free chairs are available in a room. Did the number on room overview page refer to total chairs or total free chairs?_
+- _It's not clear how many free chairs are available in a room. Does the number on room overview page refer to total chairs or total free chairs?_
 
-- _Not clear about booking time. For example, how long do I have to get there?_
+- _Booking time is not clear. For example, how long do I have to get there?_
 
-- _How to identify what chair I have booked? Is there an ID/code?_
+- _How do I identify what chair I've booked? Is there an ID/code?_
 
 Changes to the UI were continuously updated based on these feedback comments throughout the iterations.
 
+<p align="center">
 ![](images/Picture_13.png)
-_Changes in the UI design of one of the web pages over time_
+ </p>
+ <p align="center">
+  <i>Figure 15. _Changes in the UI design of one of the web pages over time_</i>
+</p>
+
 
 <a name="communicationProtocols"></a>
 
