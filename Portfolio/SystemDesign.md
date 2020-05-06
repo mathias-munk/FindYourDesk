@@ -200,7 +200,7 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 </p>
 
 <p align="center">
-  <i>Figure .... Booking sequence diagram</i>
+  <i>Figure 13. The sequence of operations occuring between the subsystems when booking a chair</i>
 </p>
 
 
