@@ -115,7 +115,7 @@ Throughout our project we used the following methods to evaluate our designs:
 
 The very first evaluation technique that we used was “Wizard of Oz” which was used at the paper prototype phase. This combined with think aloud evaluation provided quick and cheap feedback to rapidly iterate our initial designs. The next iteration of paper prototypes was digitised with Processing allowing us to expand on this and give the users a better sense of the UI. These initial evaluations worked quite well, and because these tests were conducted during unit workshops we were able to gather a variety of participants.
 
-We repeated these processes when fleshing out the three key subsystems, using Wizard of Oz and think aloud with the paper wireframes, paint mockups, and finally the basic desktop app. These proved useful, however in hindsight we probably should have tried to draw from a wider pool of participants as we reused the same three test subjects for this testing, which meant the feedback received lacked breadth and exposed our feedback to potential individual biases as they began to envision what they thought the product should look like.
+We repeated these processes when fleshing out the three key subsystems, continuing to use Wizard of Oz and think aloud with the paper wireframes, paint mockups, and finally the basic desktop app. These proved useful, however in hindsight we probably should have tried to draw from a wider pool of participants as we reused the same three test subjects for this testing, which meant the feedback received lacked breadth and exposed our feedback to potential individual biases as they began to envision what they thought the product should look like.
 
 The lockdown in mid-March complicated user testing. Without access to a wide pool of potential subjects or indeed the ability to fully demonstrate each subsystem, we were forced to base the rest of our development on our early testing. At this stage we had considered using storyboarding as well which could have been drawn up at home. However, as the user journeys for the MVP were relatively short everyone involved in the project agreed on the general direction that it should take, we felt that this was unnecessary.
 
@@ -126,6 +126,9 @@ Finally, when evaluating where we have arrived as of writing this report, we dec
 ![](images/Picture_20.png)
 
 <a name="ethicalImplications"></a>
+<p align="center">
+  <i>Figure 1. SWOT analysis</i>
+</p>
 
 ## Social and Ethical Implications
 
