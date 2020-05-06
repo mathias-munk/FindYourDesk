@@ -227,8 +227,6 @@ Later versions of the UI include a chair ID which allows administrators to know 
 
 As a later design change, we also added in the fifth state of ‘broken’, which allows an administrator to press the centre button and report the chair as broken to the processing application (so administrators can arrange for it to be repaired).
 
-![](images/Picture_12.png)
-
 Finally, so that the stacks could be more ‘plug and play’ and the ID isn’t hard-coded, we created a sixth ‘setup’ mode into which the stack initialises, allowing an administrator to set the 8-digit chair ID. This screen will only show on first use, so every other time the stack starts it will go straight to the ‘free’ state. It can however be accessed at a later date to modify the chair ID by pressing buttons 1 and 3 simultaneously – this allows chairs to be moved around buildings and reprogrammed easily.
 
 For the web application UI wireframes we started with a basic paper prototype, we tested this on volunteers to try and get some early feedback.
