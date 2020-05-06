@@ -160,7 +160,7 @@ From ‘free’, the chair can also change to the ‘booked’ state, which mean
 If they fail to scan their U-Card within 10 minutes, the chair state reverts to ‘free’. A fifth administrator state was added to the state machine, allowing the chair to be declared ‘broken’ if an administrator U-Card is scanned and the leftmost button is pressed. Changing to this state then notifies the processing application that a chair is broken so it can be repaired – the only way out of this state is for an admin to once again scan their U-Card and press a button, thereby preventing the chair from being used when it is broken.
 
 <p align="center">
-  <img src="images/Picture_9.png" />
+  <img src="images/Picture_9.jpg" />
 </p>
 
 <p align="center">
