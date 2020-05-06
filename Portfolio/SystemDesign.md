@@ -342,7 +342,7 @@ Another database schema could entail having 3 different objects; a building obje
 
 ## Web Technologies
 
-In order to build on our original wireframes and get a minimal viable product working, we originally built a simple static website with HTML CSS and JavaScript (as mentioned before using the browser local storage for data persistence). As our application developed over subsequent sprints, we realised that we would need a server and back-end to process the communication protocols and data-persistence mechanisms.
+In order to build on our original wireframes and get a minimal viable product working, we originally built a simple static website with HTML, CSS and JavaScript (as mentioned before using the browser local storage for data persistence). As our application developed over subsequent sprints, we realised that we would need a server and back-end to process the communication protocols and data-persistence mechanisms.
 
 As we wanted to build a fast-scalable application which wouldn’t need to be CPU intensive, we decided to use Node JS as it also provides a lot of features and doesn’t involve using another language for the backend. We also used the framework Express as it provides a lot of tools to quickly and easily build a server-side application with minimal hassle.
 
