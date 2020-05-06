@@ -35,7 +35,7 @@ That being said, there were advantages to this modular approach. Breaking down t
 We used Trello as a makeshift Kanban board, updating and checking off to-do lists on a sprint by sprint basis as well as checking off non-coding related requirements. This was also used as a makeshift sharing board for charts and basic prototypes. We opted to use Trello for its depth of functionality and it ended up being as much a hub for our group work as the GitHub repository was.
 
 <p align="center">
-  <img src="images/TrelloBoardSprint3" />
+  <img src="images/TrelloBoardSprint3.jpg" />
 </p>
 
 
