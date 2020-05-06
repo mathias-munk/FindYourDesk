@@ -1,4 +1,4 @@
-# Product Description
+# FindADesk!
 
 Imagine you are a student with the stress of approaching exams. You want to head into university to study, but every exam season the libraries become full to bursting with your like-minded peers; you aren&#39;t sure you will be able to find a free chair. Every time you&#39;ve tried this week you have wasted half an hour going from library to library before giving up and heading home.
 
