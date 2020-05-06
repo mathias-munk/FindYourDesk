@@ -255,7 +255,7 @@ Changes to the UI were continuously updated based on these feedback comments thr
   <img src="images/Picture_13.png" />
  </p>
  <p align="center">
-  <i>Figure 15. _Changes in the UI design of one of the web pages over time_</i>
+  <i>Figure 15. Changes in the UI design of one of the web pages over time</i>
 </p>
 
 
@@ -272,6 +272,9 @@ Our system required that there be multiple communications going in different dir
 The desktop application needs to publish information to the web application regarding the current state of the university study spaces, including the number of buildings, the building names, number of rooms in each building, room names and the number of tables and chairs in each room. This is sent as an array of ‘room’ objects.
 
 ![](images/Picture_14.png)
+<p align="center">
+  <i>Figure 16. JSON of room objects</i>
+</p>
 
 #### FindADesk_WebToProcessing
 
@@ -279,15 +282,18 @@ Likewise, the desktop application is able to make a request to the server to get
 
 #### FindADesk_StackToWeb
 
-The M5Stack publishes to the web application, sending information about the current state of the chair it is on (whether this be “free”, “lunch”, “occupied” or “booked”).
+The M5Stack publishes to the web application, sending information about the current state of the chair it is on (whether this be “free”, “lunch”, “occupied” or “booked”) (See figure 17).
 
-![](images/Picture_15.png)
 
 #### FindADesk_WebToStack
 
 The web application also needs to publish information to the M5Stack, informing it if a student has made a booking.
 
 ![](images/Picture_16.png)
+
+<p align="center">
+  <i>Figure 17. Chair object in the booked state</i>
+</p>
 
 #### FindADesk_StackToProcessing
 
