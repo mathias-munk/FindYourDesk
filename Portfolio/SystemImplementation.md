@@ -118,7 +118,7 @@ Considering the difficulties of conducting user research, we decided to assign a
 
 Finally, when evaluating where we have arrived as of writing this report, we decided to conduct a SWOT analysis to identify the strengths and weaknesses of the current product to understand where to make improvements for future work. Ideally, we would have done this after a final large round of user testing, however for obvious reasons this was not possible, and may have limited the scope of our insight.
 
-![](/images/Picture_20.png)
+![](images/Picture_20.png)
 
 <a name="ethicalImplications"></a>
 
