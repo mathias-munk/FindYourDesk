@@ -115,7 +115,7 @@ Throughout our project we used the following methods to evaluate our designs:
 
 The very first evaluation technique that we used was “Wizard of Oz” which was used at the paper prototype phase. This combined with think aloud evaluation provided quick and cheap feedback to rapidly iterate our initial designs. The next iteration of paper prototypes was digitised with Processing allowing us to expand on this and give the users a better sense of the UI. These initial evaluations worked quite well, and because these tests were conducted during unit workshops we were able to gather a variety of participants.
 
-We repeated these processes when fleshing out the three key subsystems, using Wizard of Oz and think aloud with the paper wireframes, paint mockups, and finally the basic desktop app. These proved useful, however in hindsight we probably should have tried to draw from a wider pool of participants as we reused the same three test subjects for this testing, which meant the feedback received lacked breadth and exposed our feedback to potential individual biases as they began to envision what they thought the product should look like.
+We repeated these processes when fleshing out the three key subsystems, continuing to use Wizard of Oz and think aloud with the paper wireframes, paint mockups, and finally the basic desktop app. These proved useful, however in hindsight we probably should have tried to draw from a wider pool of participants as we reused the same three test subjects for this testing, which meant the feedback received lacked breadth and exposed our feedback to potential individual biases as they began to envision what they thought the product should look like.
 
 The lockdown in mid-March complicated user testing. Without access to a wide pool of potential subjects or indeed the ability to fully demonstrate each subsystem, we were forced to base the rest of our development on our early testing. At this stage we had considered using storyboarding as well which could have been drawn up at home. However, as the user journeys for the MVP were relatively short everyone involved in the project agreed on the general direction that it should take, we felt that this was unnecessary.
 
@@ -126,6 +126,9 @@ Finally, when evaluating where we have arrived as of writing this report, we dec
 ![](images/Picture_20.png)
 
 <a name="ethicalImplications"></a>
+<p align="center">
+  <i>Figure 1. SWOT analysis</i>
+</p>
 
 ## Social and Ethical Implications
 
@@ -135,4 +138,4 @@ The main ethical issue to consider when the system is fully implemented is the d
 
 Socially there are some potential implications that can be considered. This product aims to improve student’s ability to find study spaces, but it also has the potential to hinder students who are less willing to interact with, or those who are not aware of, the product. To try to avoid this situation, desks can only be booked for a limited amount of time (10 mins) before they revert to ‘free’ again. Also, students who don’t interact with the stack or use the website to reserve seats can still interact with libraries in the same way they always have by physically finding a seat and sitting in it (as long as it is ‘free’). Therefore, we do not believe the introduction of this product will pose a problem in terms of disrupting the current social norm when finding study spaces.
 
-Another social consequence to consider is the conflict that might arise when students sit in seats that have already been booked. It might be difficult to enforce the rules of the FindADesk system, possibly requiring a team of administrators in each study space to resolve any disagreements. However, this issue is not too indifferent to normal student study space conflicts (e.g. moving someone’s things off a desk whilst they have gone to lunch) and therefore we don’t believe that the FindADesk system introduces a new problem. Research could also be done into the best way to solve this, such as an alarm or vibration setting when a chair is sat in while in its ‘booked’ state, allowing FindADesk to actually become part of the solution.
+Another social consequence to consider is the conflict that might arise when students sit in seats that have already been booked. It might be difficult to enforce the rules of the FindADesk system, possibly requiring a team of administrators in each study space to resolve any disagreements. However, this issue is not too disimilar to normal student study space conflicts (e.g. moving someone’s things off a desk whilst they have gone to lunch) and therefore we don’t believe that the FindADesk system introduces a new problem. Research could also be done into the best way to solve this, such as an alarm or vibration setting when a chair is sat in while in its ‘booked’ state, allowing FindADesk to actually become part of the solution.
