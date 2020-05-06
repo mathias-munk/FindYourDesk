@@ -151,6 +151,7 @@ From ‘free’, the chair can also change to the ‘booked’ state, which mean
 
 <p align="center">
   <img src="images/Picture_8.png" />
+  <i>Figure 9. M5Stack "booked" state.</i>
 </p>
 
 <p align="center">
@@ -158,7 +159,7 @@ From ‘free’, the chair can also change to the ‘booked’ state, which mean
 </p>
 
 <p align="center">
-  <i>Figure 9. M5Stack "lunch" state.</i>
+  <i>Figure 10. M5Stack "lunch" state.</i>
 </p>
 
 If they fail to scan their U-Card within 10 minutes, the chair state reverts to ‘free’. A fifth administrator state was added to the state machine, allowing the chair to be declared ‘broken’ if an administrator U-Card is scanned and the leftmost button is pressed. Changing to this state then notifies the processing application that a chair is broken so it can be repaired – the only way out of this state is for an admin to once again scan their U-Card and press a button, thereby preventing the chair from being used when it is broken.
@@ -169,7 +170,7 @@ If they fail to scan their U-Card within 10 minutes, the chair state reverts to 
 
 
 <p align="center">
-  <i>Figure 10. M5Stack publishes its new states to MQTT.</i>
+  <i>Figure 11. M5Stack publishes its new states to MQTT.</i>
 </p>
 
 
@@ -180,7 +181,7 @@ When the stack changes between two states, it publishes its new state to the MQT
 </p>
 
 <p align="center">
-  <i>Figure 11. M5Stack publishes its new states to MQTT.</i>
+  <i>Figure 12. M5Stack publishes its new states to MQTT.</i>
 </p>
 
 The stack can also receive information from the website and send information to the processing application. Both of these are compartmentalised and it is only able to receive the ‘booked’ command from the website when it is in ‘free’ mode (as dictated by the state machine), and it will only send out information to the processing application when it enters the ‘broken’ state (this is also achieved through the use of MQTT).
