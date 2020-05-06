@@ -271,7 +271,10 @@ Our system required that there be multiple communications going in different dir
 
 The desktop application needs to publish information to the web application regarding the current state of the university study spaces, including the number of buildings, the building names, number of rooms in each building, room names and the number of tables and chairs in each room. This is sent as an array of ‘room’ objects.
 
-![](images/Picture_14.png)
+<p align="center">
+  <img src="images/Picture_14.png" />
+</p>
+
 <p align="center">
   <i>Figure 16. JSON of room objects</i>
 </p>
@@ -289,7 +292,9 @@ The M5Stack publishes to the web application, sending information about the curr
 
 The web application also needs to publish information to the M5Stack, informing it if a student has made a booking.
 
-![](images/Picture_16.png)
+<p align="center">
+  <img src="images/Picture_16.png" />
+</p>
 
 <p align="center">
   <i>Figure 17. Chair object in the booked state</i>
@@ -303,7 +308,9 @@ Finally, the M5Stack publishes information to the desktop application regarding 
 
 ## Data Persistence
 
-![](images/Diagram%20Folder/ERD%20For%20Software%20Dev.png)
+<p align="center">
+  <img src="images/Diagram%20Folder/ERD%20For%20Software%20Dev.png" />
+</p>
 
 In the early system design stages we considered and designed a relational database (figure .. ), however we quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
 
