@@ -313,7 +313,7 @@ Finally, the M5Stack publishes information to the desktop application regarding 
 </p>
 
 <p align="center">
-  <i>Figure 18. Initial database schema/i>
+  <i>Figure 18. Initial database schema</i>
 </p>
 
 In the early system design stages we considered and designed a relational database (figure .. ), however we quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
