@@ -147,20 +147,22 @@ It can only then move between the states which are connected by the arrows shown
 
 While in use, the leftmost button can be used to start the chair user’s lunch break, initialising a 45-minute timer in which the chair is reserved and cannot leave this state. To exit this state, either the user must scan their U-Card, returning the chair to the ‘occupied’ state, or the timer can run out, returning to the ‘free’ state (because evidently the user hasn’t made it back in time from lunch, so their seat is now available).
 
-From ‘free’, the chair can also change to the ‘booked’ state, which means that a user has reserved that seat through the website application. This initialises a 10-minute timer, allowing the user to get to the seat and scan their U-Card, changing the state of the chair to ‘occupied’:
-
-<p align="center">
-  <img src="images/Picture_8.png" />
-  <i>Figure 9. M5Stack "booked" state.</i>
-</p>
-
 <p align="center">
   <img width="262" height="258" src="images/Picture_9.jpg" />
 </p>
 
 <p align="center">
-  <i>Figure 10. M5Stack "lunch" state.</i>
+  <i>Figure 9. M5Stack "lunch" state.</i>
 </p>
+
+From ‘free’, the chair can also change to the ‘booked’ state, which means that a user has reserved that seat through the website application. This initialises a 10-minute timer, allowing the user to get to the seat and scan their U-Card, changing the state of the chair to ‘occupied’:
+
+<p align="center">
+  <img src="images/Picture_8.png" />
+  <i>Figure 10. M5Stack "booked" state.</i>
+</p>
+
+
 
 If they fail to scan their U-Card within 10 minutes, the chair state reverts to ‘free’. A fifth administrator state was added to the state machine, allowing the chair to be declared ‘broken’ if an administrator U-Card is scanned and the leftmost button is pressed. Changing to this state then notifies the processing application that a chair is broken so it can be repaired – the only way out of this state is for an admin to once again scan their U-Card and press a button, thereby preventing the chair from being used when it is broken.
 
