@@ -9,7 +9,7 @@
 Throughout the project we strived to adhere to AGILE working principles such as:
 
 - ‘Deliver working software frequently (weeks rather than months)’: The project was broken up into clearly defined sprints with each sprint outlining specific design/implementation goals. We tried to ensure that after the initial sprint, we had a working ‘minimum viable product’ with basic functionality that could be demonstrated. Successive sprints would build on our product iteratively.
-- ‘Welcome changing requirements, even in late development.’: Where the evaluation of a sprint highlighted specific issues with our design choices these issues were used to direct the goals of the subsequent sprint.
+- ‘Welcome changing requirements, even in late development.’: Where the evaluation of a sprint highlighted specific issues with our design choices, these issues were used to direct the goals of the subsequent sprint.
 
 
 <a name="sprintBreakdown"></a>
