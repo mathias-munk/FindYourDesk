@@ -180,7 +180,7 @@ If they fail to scan their U-Card within 10 minutes, the chair state reverts to 
 </p>
 
 
-When the stack changes between two states, it publishes its new state to the MQTT WebSocket (which the web client receives and updates on the website and within the database). This can be seen in the diagram above; where a condition is met, the state is changed and published to MQTT, and then the stack loops through its new state until another condition is met and the state changes again.
+When the stack changes between two states, it publishes its new state to the MQTT WebSocket (which the web client receives and updates on the website and within the database). This can be seen in the diagram below; where a condition is met, the state is changed and published to MQTT, and then the stack loops through its new state until another condition is met and the state changes again.
 
 <p align="center">
   <img src="images/Picture_9.png" />
