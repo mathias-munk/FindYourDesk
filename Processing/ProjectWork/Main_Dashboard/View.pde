@@ -83,6 +83,7 @@ void updateDashboard() {
     .setValue(0)
     .setPosition(500, 200)
     .setSize(150, 34);
+    view.publish_state = 1;
   view.build_textEntry("Add new Building", 450, 50);
 }
 
