@@ -4,7 +4,7 @@ Imagine you are a student with the stress of approaching exams. You want to head
 
 Enter FindADesk, an application which allows students to easily find and book available desks across their university&#39;s study spaces, taking away the stress of having to search manually and not knowing whether your search will be fruitful. For university administrators, use FindADesk to better manage study spaces so they can be used more efficiently, while also receiving live information about desk usage across every space in your institution.
 
-![](Portfolio/images/Picture_1.png)
+![](Portfolio/images/video.png)
 
 ### Team Members
 
