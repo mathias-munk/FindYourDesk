@@ -18,7 +18,7 @@ FindADesk has a system design composed of 3 different subsystems, intended for 3
 
 Students and administrators need a straightforward, easy to use UI for each of the subsystems which visually represent our products concept and functionality. We designed our system to comply with this, but also focussed on meeting the requirements of all the different user stories for our product.
 
-One of the 3 subsystems of our product is the desktop application that administrators can use to design rooms, add tables and chairs, and view maintenance reports. Some examples of user stories for this are:
+The first of our three sub-systems is the desktop application that administrators can use to design rooms, add tables and chairs, and view maintenance reports. Some examples of user stories for this are:
 
 - _An administrator wants to create new study spaces at their university and display this information to students, so they open the desktop application and add a new study space. This includes creating rooms, desks, chairs and buildings and being able to manage the IDs of these separate entities._
 
@@ -26,7 +26,7 @@ One of the 3 subsystems of our product is the desktop application that administr
 
 - _An administrator wants to be able to monitor usage in each of the different study spaces._
 
-The second subsystem of our product is the web application that students use to view the learning spaces, the available chairs in each and to make a booking for a chair. Some user stories are:
+The second subsystem is the web application that students use to view the learning spaces, the available chairs in each and to make a booking for a chair. Some user stories are:
 
 - _A student who is new to a university wants to see a list of all the available buildings and rooms where they can study._
 
