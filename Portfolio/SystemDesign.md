@@ -312,6 +312,10 @@ Finally, the M5Stack publishes information to the desktop application regarding 
   <img src="images/Diagram%20Folder/ERD%20For%20Software%20Dev.png" />
 </p>
 
+<p align="center">
+  <i>Figure 18. Initial database schema/i>
+</p>
+
 In the early system design stages we considered and designed a relational database (figure .. ), however we quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
 
 When we started out creating our minimum viable product, we tried using the browser’s local storage to store the data. However this would rely on the other sub-systems continuously sending out messages to ensure the web pages were concurrent with the current state of the rooms and chairs. Furthermore, the user would have to be on the website whilst a message was received from the desktop application or the stack which would result in missed data if the page crashed or was closed. Also, if a user was to delete their local storage then they would again lose all the information and could potentially try to make a booking on a chair that was already occupied by someone else.
