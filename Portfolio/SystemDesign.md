@@ -110,11 +110,16 @@ The stack can also receive information from the website and send information to 
 
 In terms of Object-Oriented design, the code for the stack itself is written in C++ in a functional way, but in terms of the entire system the stack in itself is very much a Stack object, which has an id and a state which can be passed around and stored by the processing and web applications.
 
-<div style="text-align:center"><img src="images/Picture_2.png" /></div>
 
-<div style="display:flex; align-items:center">
-  <div style="text-align:center"><i>Figure .... Booking sequence diagram</i></div>
-</div>
+<p align="center">
+  <img src="images/Picture_2.png" />
+</p>
+
+<p align="center">
+  <i>Figure .... Booking sequence diagram</i>
+</p>
+
+
 <a name="evolutionWireframes"></a>
 
 ## Evolution of Wireframes
