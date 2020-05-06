@@ -200,7 +200,7 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 </p>
 
 <p align="center">
-  <i>Figure 13. The sequence of operations occuring between the subsystems when booking a chair</i>
+  <i>Figure 13. The sequence of operations occuring between the subsystems when booking a chair.</i>
 </p>
 
 
@@ -213,9 +213,13 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 
 On the desktop application we first experimented with having a search bar to find buildings. This proved to be both difficult to implement and difficult to use for the user. Based on user feedback, we decided instead to use dropdown lists for users to navigate through buildings and rooms. We tried to do this by adapting the code from the processing code walkthrough, however quickly found out that it only partially fulfilled what we wanted to get done. By using controlP5 and by creating functions with the same names as the controlP5 controllers we were creating (similar to how you write code in CSS/javascript) we were able to extract which items were being clicked in the drop down lists and from that we could start to navigate between classrooms and display them individually.
 
-The fundamental design of the desktop UI revolves around showing the user a graphical representation of the desks and chairs on a room by room basis. Available chairs are shown in green while red chairs signal any other status. Clicking on a drop-down menu and selecting a building and room allows users to add a new desk to the room one at a time. The user can also choose to add a new room to the selected building. Users understood the UI intuitively and needed little help navigating it. One user however did comment that when creating a new room, the program should automatically navigate to the new room instead of it having to be selected post-creation. This happened after the user accidentally added more desks to the current room instead of the new one.
+The fundamental design of the desktop UI revolves around showing the user a graphical representation of the desks and chairs on a room by room basis. Available chairs are shown in green, while red chairs signal any other status. Clicking on a drop-down menu and selecting a building and room allows users to add a new desk to the room one at a time. The user can also choose to add a new room to the selected building. Users understood the UI intuitively and needed little help navigating it. One user however did comment that when creating a new room, the program should automatically navigate to the new room instead of it having to be selected post-creation. This happened after the user accidentally added more desks to the current room instead of the new one.
 
 ![](images/Picture_10.png)
+
+<p align="center">
+  <i>Figure 14. Wireframes of M5Stack</i>
+</p>
 
 The initial user interface designs for the M5Stack were basic, simply indicating the current state with text and a unique colour so that the user could see the state of the chair from a distance. The ‘lunch’ and ‘booked’ states also had timers counting down to indicate the time left in that state – both reverted back to free if the timers expired without any user input. The lunch and booked states were originally designed for the user to be able to scan their U-Card to access that chair, but as an initial temporary measure the user simply had to press the left-most button to access the chair.
 
