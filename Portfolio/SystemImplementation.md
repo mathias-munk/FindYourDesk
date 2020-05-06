@@ -118,13 +118,13 @@ Considering the difficulties of conducting user research, we decided to assign a
 
 Finally, when evaluating where we have arrived as of writing this report, we decided to conduct a SWOT analysis to identify the strengths and weaknesses of the current product to understand where to make improvements for future work. Ideally, we would have done this after a final large round of user testing, however for obvious reasons this was not possible, and may have limited the scope of our insight.
 
-![](/images/Picture_20.png)
+![](images/Picture_20.png)
 
 <a name="ethicalImplications"></a>
 
 ## Social and Ethical Implications
 
-In terms of the ethics of our project, we made sure to follow the ethical guidelines set out by the university. Participants in each user-feedback study gave verbal consent, and were both briefed and debriefed as to the purpose of each study they were involved in. In terms of the data we are currently storing all of it is related to participants’ opinions regarding the layout and design of our user interfaces, with no personal data collected. We are not aware of any way in which our user testing could cause harm, and we made sure to give participants the ability to withdraw their responses.
+In terms of the ethics of our project, we made sure to follow the ethical guidelines set out by the university. Participants in each user-feedback study gave verbal consent, and were both briefed and debriefed as to the purpose of each study they were involved in. In terms of the data we are currently storing, all of it is related to participants’ opinions regarding the layout and design of our user interfaces, with no personal data collected. We are not aware of any way in which our user testing could cause harm, and we made sure to give participants the ability to withdraw their responses.
 
 The main ethical issue to consider when the system is fully implemented is the data being collected on the individuals using the chairs. For users that don’t use their account to book chairs or take lunch breaks, no personally identifying information is collected, only chair usage by anonymous users. We don’t believe this constitutes a breach in privacy, however when users sign in on the website, then book a chair and continue to use it for the next few hours, the exact location of that student is being stored by the university. For this reason, when signing in on the web application for the first time, users will be required to consent to the university storing this information, and if they choose not to consent they are still free to sit in chairs and use libraries as they would have done before. No new personally identifying information (other than that already stored by the university) will be required by the user when they sign in, however in the future our system will be storing analytics on each user which will have to be encrypted and stored securely.
 
