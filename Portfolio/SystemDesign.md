@@ -90,7 +90,7 @@ The desktop application also contains classes representing the main dashboard an
 The web application, built using HTML, CSS and Node.js, is designed for students who wish to see the current states of the rooms. It shows an overview of all the different chair objects, showing which buildings and rooms they are contained in and its current state. It is run using an express server, so it can continuously be checking for messages from the other devices. It subscribes to the desktop application through MQTT so that the website can be updated with the correct number of rooms in each building and the correct number of tables within each room. It is assumed for this prototype that there are four chairs per table and this is calculated on the web application when displaying the number of chairs in each room.
 
 <p align="center">
-  <img src="images/chairs.png" />
+  <img src="images/chair.png" />
 </p>
 
 <p align="center">
