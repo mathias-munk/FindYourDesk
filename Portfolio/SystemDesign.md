@@ -154,6 +154,10 @@ From ‘free’, the chair can also change to the ‘booked’ state, which mean
 </p>
 
 <p align="center">
+  <img width="262" height="258" src="images/Picture_9.jpg" />
+</p>
+
+<p align="center">
   <i>Figure 9. M5Stack "lunch" state.</i>
 </p>
 
@@ -163,9 +167,6 @@ If they fail to scan their U-Card within 10 minutes, the chair state reverts to 
   <img src="images/Picture_9.png" />
 </p>
 
-<p align="center">
-  <img width="262" height="258" src="images/Picture_9.jpg" />
-</p>
 
 <p align="center">
   <i>Figure 10. M5Stack publishes its new states to MQTT.</i>
