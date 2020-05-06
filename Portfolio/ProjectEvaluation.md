@@ -38,6 +38,9 @@ We used Trello as a makeshift Kanban board, updating and checking off to-do list
   <img src="images/TrelloBoardSprint3.jpg" />
 </p>
 
+<p align="center">
+  <i>Trello kanban board from sprint 3, showing how the different topics on the kanban board were used</i>
+</p>
 
 WhatsApp ended up being an invaluable tool both for meeting organisation as well as regular team contact as we transitioned to online learning and did not have opportunities to organise meetings while at university. Any issues that arose that were not mentioned during arranged meetings were often discussed and solved here. The WhatsApp group also doubled up as a general discussion forum for non-SEGP related topics. Using it in this capacity helped improve morale and indirectly made SEGP discussions more frequent.
 
