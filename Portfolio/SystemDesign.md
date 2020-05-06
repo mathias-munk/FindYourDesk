@@ -218,16 +218,14 @@ The fundamental design of the desktop UI revolves around showing the user a grap
 ![](images/Picture_10.png)
 
 <p align="center">
-  <i>Figure 14. Wireframes of M5Stack</i>
+  <i>Figure 14. Wireframes of M5Stack.</i>
 </p>
 
 The initial user interface designs for the M5Stack were basic, simply indicating the current state with text and a unique colour so that the user could see the state of the chair from a distance. The ‘lunch’ and ‘booked’ states also had timers counting down to indicate the time left in that state – both reverted back to free if the timers expired without any user input. The lunch and booked states were originally designed for the user to be able to scan their U-Card to access that chair, but as an initial temporary measure the user simply had to press the left-most button to access the chair.
 
-Later versions of the UI include a chair id which allows administrators to know the chairs intended location within a room (by checking against the web/processing app). A prompt on the ‘in use’ screen also tells the user that they can start their lunch break by pressing the leftmost button. Implementing an RFID scanner was attempted to add the ability to scan a U-Card so it could be accessed from the ‘lunch’ and ‘booked’ states, however this proved exceptionally difficult. As a more suitable temporary measure, a unique combination of button presses is required to access these states.
+Later versions of the UI include a chair ID which allows administrators to know the chairs intended location within a room (by checking against the web/processing app). A prompt on the ‘in use’ screen also tells the user that they can start their lunch break by pressing the leftmost button. Implementing an RFID scanner was attempted to add the ability to scan a U-Card so it could be accessed from the ‘lunch’ and ‘booked’ states, however this proved exceptionally difficult. As a more suitable temporary measure, a unique combination of button presses is required to access these states.
 
-As a later design change, we also added in the fifth state of ‘broken’, which allows an administrator to scan their U-Card, press a button and report the chair as broken to the processing application (so administrators can arrange for it to be repaired).
-
-![](images/Picture_11.png)
+As a later design change, we also added in the fifth state of ‘broken’, which allows an administrator to press the centre button and report the chair as broken to the processing application (so administrators can arrange for it to be repaired).
 
 ![](images/Picture_12.png)
 
