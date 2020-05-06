@@ -198,11 +198,11 @@ Finally, the M5Stack publishes information to the desktop application regarding 
 
 ![](images/Diagram%20Folder/ERD%20For%20Software%20Dev.png)
 
-In the initial system design stages we initially considered and designed a relational database (figure .. ), however we quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
+In the early system design stages we considered and designed a relational database (figure .. ), however we quickly dropped this when we decided that we wouldn't be using user accounts in the design of our prototype.
 
 In our first attempts to achieve data persistence, we tried using the browser’s local storage to store the data. However this would rely on the other sub-systems continuously sending out messages to ensure the web pages were concurrent with the current state of the rooms and chairs. Furthermore, the user would have to be on the website whilst a message was received from the desktop application or the stack which would result in missed data if the page crashed or was closed. Also, if a user was to delete their local storage then they would again lose all the information and could potentially try to make a booking on a chair that was already occupied by someone else.
 
-Following this we considered designing a new SQL database due to some of the entities having relational features (e.g. each building contains many rooms and each room contains many chairs). However, as we were investigating this avenue, we realised that NoSQL had the advantage of allowing us to reuse the same JSON structures that we were already using to communicate, removing the need to design a relational database. Therefore, we decided to use MongoDB as it is well supported with node.js and express.
+Following this we considered designing a new SQL database due to some of the entities having relational features (e.g. each building contains many rooms and each room contains many chairs). However, as we were investigating this avenue, we realised that NoSQL had the advantage of allowing us to reuse the same JSON structures that we were already using to communicate through MQTT, removing the need to design a relational database. Therefore, we decided to use MongoDB as it is well supported with node.js and express.
 
 The database schemas were designed as below, with the room objects containing an array of chair objects. The ‘freeChairs’ attribute is calculated based on the number of chairs currently in the ‘free’ state. As mentioned previously, the ‘chair’ attribute is calculated by multiplying the number of tables by four (it is assumed there will be 4 chairs per table for this prototype).
 
