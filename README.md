@@ -8,7 +8,7 @@ Enter FindADesk, an application which allows students to easily find and book av
 
 [![Video Link](Portfolio/images/video.png)](https://youtu.be/x1G3JW9Kj6Q)
 
-##Setup Video
+## Setup Video
 
 
 [![Video Link](Portfolio/images/video.png)](https://youtu.be/I7szlhs6WyE)
