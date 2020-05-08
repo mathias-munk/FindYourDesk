@@ -16,8 +16,6 @@ Throughout the project we strived to adhere to AGILE working principles such as:
 
 ## Breakdown of the Sprints
 
-![](images/Diagram%20Folder/Gantt Chart.jpg)
-
 <a name="GanttChart"></a>
 <p align="center">
   <img src="images/Diagram%20Folder/Gantt Chart.jpg" />
