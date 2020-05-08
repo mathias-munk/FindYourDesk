@@ -22,7 +22,7 @@ Throughout the project we strived to adhere to AGILE working principles such as:
 </p>
 
 <p align="center">
-  <i>Figure 1. Gantt Chart showing timeline of the FindADesk! project.</i>
+  <i>Figure 1. Gantt Chart showing timeline of the FindADesk project.</i>
 </p>
 
 #### Sprint 1
