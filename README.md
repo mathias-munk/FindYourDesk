@@ -22,7 +22,7 @@ Matthew Meades: <mm16507@bristol.ac.uk>
 
 Philippe O&#39;Malley: <td19582@bristol.ac.uk>
 
-### Portoflio
+### Portfolio
 
 1. [System Design](/Portfolio/SystemDesign.md)
 2. [System Implementation](/Portfolio/SystemImplementation.md)
