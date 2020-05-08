@@ -16,6 +16,17 @@ Throughout the project we strived to adhere to AGILE working principles such as:
 
 ## Breakdown of the Sprints
 
+![](images/Diagram%20Folder/Gantt Chart.jpg)
+
+<a name="GanttChart"></a>
+<p align="center">
+  <img src="images/Diagram%20Folder/Gantt Chart.jpg" />
+</p>
+
+<p align="center">
+  <i>Figure 1. Gantt Chart showing timeline of the FindADesk! project.</i>
+</p>
+
 #### Sprint 1
 
 Sprint one involved group brainstorming, designing basic UI, and converting paper prototypes to tangible software. The overall objective for the first sprint was to implement a basic working version of each subsystem which could then be developed in later sprints.
@@ -127,7 +138,7 @@ Finally, when evaluating where we have arrived as of writing this report, we dec
 
 <a name="ethicalImplications"></a>
 <p align="center">
-  <i>Figure 1. SWOT analysis</i>
+  <i>Figure 2. SWOT analysis</i>
 </p>
 
 ## Social and Ethical Implications
