@@ -110,7 +110,7 @@ Further to this, a student is able to select a chair and make a booking. This wi
 </p>
 
 <p align="center">
-  <i>Figure 5. M5Stack state diagram.</i>
+  <i>Figure 5. M5Stack state machine diagram.</i>
 </p>
 
 The M5Stack subsystem is responsible for detecting the current state of the chair and displaying it, which is determined by following the above state machine diagram. When the stack initialises for the first time, it enters the 'setup' state:
