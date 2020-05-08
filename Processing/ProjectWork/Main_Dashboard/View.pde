@@ -87,6 +87,8 @@ void updateDashboard() {
   view.build_textEntry("Add new Building", 450, 50);
 }
 
+
+// finds data for the metric
 int countTotalBroken() {
   int result = 0;
 
@@ -102,6 +104,9 @@ void Buildings(int n) {
   view.listOneSelection=n;
 }
 
+
+
+// accessing what value has been pressed in a dropdown list
 void Rooms(int n) {
   view.listTwoSelection=n;
   cp5.addButton("addTable")
