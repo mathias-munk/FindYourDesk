@@ -207,8 +207,6 @@ In terms of Object-Oriented design, the code for the stack itself is written in 
 
 ## Evolution of Wireframes
 
-[View all wireframes](images/Wireframes)
-
 On the desktop application we first experimented with having a search bar to find buildings. This proved to be both difficult to implement and difficult to use for the user. Based on user feedback, we decided instead to use dropdown lists for users to navigate through buildings and rooms. We tried to do this by adapting the code from the processing code walkthrough, however quickly found out that it only partially fulfilled what we wanted to get done. By using controlP5 and by creating functions with the same names as the controlP5 controllers we were creating (similar to how you write code in CSS/javascript) we were able to extract which items were being clicked in the drop down lists and from that we could start to navigate between classrooms and display them individually.
 
 The fundamental design of the desktop UI revolves around showing the user a graphical representation of the desks and chairs on a room by room basis. Available chairs are shown in green, while red chairs signal any other status. Clicking on a drop-down menu and selecting a building and room allows users to add a new desk to the room one at a time. The user can also choose to add a new room to the selected building. Users understood the UI intuitively and needed little help navigating it. One user however did comment that when creating a new room, the program should automatically navigate to the new room instead of it having to be selected post-creation. This happened after the user accidentally added more desks to the current room instead of the new one.
@@ -225,9 +223,11 @@ Later versions of the UI include a chair ID which allows administrators to know 
 
 As a later design change, we also added in the fifth state of ‘broken’, which allows an administrator to press the centre button and report the chair as broken to the processing application (so administrators can arrange for it to be repaired).
 
-Finally, so that the stacks could be more ‘plug and play’ and the ID isn’t hard-coded, we created a sixth ‘setup’ mode into which the stack initialises, allowing an administrator to the individual IDs on the chair. This screen will only show on first use, so every other time the stack starts it will go straight to the ‘free’ state. It can however be accessed at a later date to modify the chair ID by pressing buttons 1 and 3 simultaneously – this allows chairs to be moved around buildings and reprogrammed easily.
+Finally, so that the stacks could be more ‘plug and play’ and the ID isn’t hard-coded, we created a sixth ‘setup’ mode into which the stack initialises, allowing an administrator to set the individual IDs (building, room, chair) on the chair. This screen will only show on first use, so every other time the stack starts it will go straight to the ‘free’ state. It can however be accessed at a later date to modify the chair ID by pressing buttons 1 and 3 simultaneously – this allows chairs to be moved around buildings and reprogrammed easily.
 
-For the web application UI wireframes we started with a basic paper prototype, we tested this on volunteers to try and get some early feedback.
+For the web application UI wireframes we started with a basic paper prototype which we tested on volunteers to try and get some early feedback.
+
+[View all wireframes](images/Wireframes)
 
 Some of the key points included:
 
