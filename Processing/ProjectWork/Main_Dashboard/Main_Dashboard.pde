@@ -22,6 +22,7 @@ void draw() {
   drawTables();
 }
 
+//had to have this here instead of in view as background would draw over it
 void drawTables() {
   int chairCounter = 0;
   int deskCounter = 0;
@@ -99,6 +100,8 @@ void connectionLost() {
   println("connection lost");
 }
 
+
+//decides what type of parsing needs to occur
 void messageReceived(String topic, byte[] payload) {
   String toParse = new String(payload);
   if (topic.equals("FindADesk_RequestDatabase")) {
@@ -114,6 +117,9 @@ void messageReceived(String topic, byte[] payload) {
 
   parseIncoming(toParse);
 }
+
+
+//parses messages coming in from the database
 
 void parseFromDB(String toParse){
   JSONObject rooms = parseJSONObject(toParse);
@@ -164,6 +170,8 @@ boolean checkBuildingList(String buildingName){
 }
 
 
+
+// parses messages coming from the stack
 void parseIncoming(String toParse) {
   if (toParse.length() == 0) {
     return;

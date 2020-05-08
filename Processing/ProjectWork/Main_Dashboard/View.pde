@@ -122,7 +122,26 @@ void controlEvent(ControlEvent theEvent) {
   String valueLabel = theEvent.getController().getValueLabel().getText();
   
   if (label.equals("Buildings ") || Buildings.contains(label)) {
-    if(buildingList.size() == 0){
+    buildingSelected();
+  }
+
+  println(view.listOneSelection);
+  if (label.equals("Add new Room")) {
+    addRoom(valueLabel);
+  }
+  if (label.equals("Add new Building")) {
+    runAddBuilding(valueLabel);
+  }
+
+  if (label.equals("Disconnect From Broker")) {
+    client.disconnect();
+    println("Disconnected From Broker");
+  }
+}
+
+
+void buildingSelected(){
+  if(buildingList.size() == 0){
       return;
     }
     
@@ -142,29 +161,25 @@ void controlEvent(ControlEvent theEvent) {
     view.build_list("Rooms", Rooms);
     cp5.remove("addTable");
     cp5.remove("removeTable");
-  }
+}
 
-  println(view.listOneSelection);
-  if (label.equals("Add new Room")) {
+
+void addRoom(String valueLabel){
     buildingList.get(view.listOneSelection).setRoom(new Room(valueLabel, 1, view.listOneSelection, buildingList.get(view.listOneSelection).Rooms.size()));
     cp5.remove("Rooms");
     Rooms.clear();
     Rooms.addAll(buildingList.get(view.listOneSelection).returnRoomNames());
     list_spacing = list_spacing - list_x_size -10;
     view.build_list("Rooms", Rooms);
-  }
-  if (label.equals("Add new Building")) {
+}
+
+void runAddBuilding(String valueLabel){
     buildingList.add(new Building(valueLabel, buildingList.size() -1)); 
     cp5.remove("Rooms");
     Buildings.add(valueLabel);
     updateDashboard();
-  }
-
-  if (label.equals("Disconnect From Broker")) {
-    client.disconnect();
-    println("Disconnected From Broker");
-  }
 }
+
 void addTable(int theValue) {
   if (view.button_state >1) {
     buildingList.get(view.listOneSelection).Rooms.get(view.listTwoSelection).addDesk();
