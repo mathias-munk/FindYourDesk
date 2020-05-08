@@ -8,6 +8,9 @@ Enter FindADesk, an application which allows students to easily find and book av
 
 [![Video Link](Portfolio/images/video.png)](https://youtu.be/x1G3JW9Kj6Q)
 
+##Setup Video
+[![Video Link](https://www.youtube.com/watch?v=I7szlhs6WyE&feature=youtu.be)
+
 ### Team Members
 
 Benjamin Bennett: <bb0139@bristol.ac.uk>
