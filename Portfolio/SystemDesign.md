@@ -9,8 +9,9 @@
 - [Data Persistence](#dataPersistence)
 - [Web Technologies](#webTechnologies)
 
-FindADesk has a system design composed of 3 different subsystems, intended for 3 different user cases. These are a desktop application, a web application and an IoT device application (M5Stack). It centers around ‘chair’ objects, with the 3 different sub-systems all interacting with ‘chair’ objects in different ways. Information is communicated between the systems regarding the number and location of chairs, the state that any chairs are currently in and if there is a booking made for the chair. This allows students to see exactly where any chairs are and whether they are available. The communication is carried out by sending JSON objects through MQTT, a lightweight messaging protocol, with the message sending automated by each of the sub-systems.
+FindADesk has a system design composed of three different sub-systems: the Processing desktop application, the website, and the IoT device (M5Stack). Each of these sub-systems is designed to fulfil three different use cases and facilitate the full setup and use of the entire FindADesk system. The desktop application enables administrators to setup each building with rooms and chairs, which is then sent to the website where students can view the current capacity of rooms and status of the chairs, and finally the M5Stack detects people using the chairs and controls the current chair state.
 
+Communication between the systems is centred around ‘chair’ objects with each sub-system interacting with them in different ways. Information is sent regarding the number and location of chairs, the current state of all chairs, and if a booking has been made for a specific chair. The communication is carried out by sending JSON objects through MQTT, a lightweight messaging protocol, with the message sending automated by each of the sub-systems.
 
 <p align="center">
   <img src="images/Picture_17.png" />
